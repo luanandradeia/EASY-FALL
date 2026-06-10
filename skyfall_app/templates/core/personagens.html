@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Personagens — Skyfall RPG{% endblock %}
+{% block header_title %}Personagens{% endblock %}
+{% block content %}
+<div class="seclabel"><span class="idx">01</span><span class="name">Suas Personagens</span><span class="rule"></span></div>
+
+{% for pers in personagens %}
+  <a href="{% url 'ficha' pers.pk %}">
+    <div class="card tap">
+      <div class="head">
+        <span class="nome">{{ pers.nome }}</span>
+        <span class="meta">nível {{ pers.nivel }}</span>
+        <span class="spacer"></span>
+        <span class="meta" style="color:var(--blood)">PV {{ pers.pv_atual }}/{{ pers.pv_maximo }}</span>
+      </div>
+      <div class="muted mt" style="margin-top:5px;">
+        {{ pers.legado.nome|default:"—" }} · {{ pers.classe.nome|default:"—" }}{% if pers.trilha %} · {{ pers.trilha.nome }}{% endif %}
+      </div>
+    </div>
+  </a>
+{% empty %}
+  <p class="muted">Nenhuma personagem ainda. Crie a primeira!</p>
+{% endfor %}
+
+<a href="{% url 'personagem_novo' %}" class="btn mt" style="width:100%;">+ NOVA PERSONAGEM</a>
+{% endblock %}

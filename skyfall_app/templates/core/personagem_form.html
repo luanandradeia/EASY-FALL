@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ titulo }} — Skyfall RPG{% endblock %}
+{% block header_title %}{{ titulo }}{% endblock %}
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  <div class="seclabel"><span class="idx">01</span><span class="name">Identidade</span><span class="rule"></span></div>
+  <div class="panel form-grid">
+    <div>{{ form.nome.label_tag }}{{ form.nome.errors }}{{ form.nome }}</div>
+    <div>{{ form.pronomes.label_tag }}{{ form.pronomes }}</div>
+    <div>{{ form.jogadore.label_tag }}{{ form.jogadore }}</div>
+    <div>{{ form.nivel.label_tag }}{{ form.nivel.errors }}{{ form.nivel }}</div>
+  </div>
+
+  <div class="seclabel"><span class="idx">02</span><span class="name">Origem & Trilha</span><span class="rule"></span></div>
+  <div class="panel form-grid">
+    <div>{{ form.classe.label_tag }}{{ form.classe }}</div>
+    <div>{{ form.trilha.label_tag }}{{ form.trilha }}</div>
+    <div>{{ form.legado.label_tag }}{{ form.legado }}</div>
+    <div>{{ form.heranca.label_tag }}{{ form.heranca }}</div>
+    <div>{{ form.antecedente.label_tag }}{{ form.antecedente }}</div>
+    <div>{{ form.maldicao.label_tag }}{{ form.maldicao }}</div>
+    <div class="full">{{ form.melancolia.label_tag }}{{ form.melancolia }}</div>
+  </div>
+
+  <div class="seclabel"><span class="idx">03</span><span class="name">Atributos</span><span class="rule"></span></div>
+  <div class="panel attr-grid">
+    <div>{{ form.f_for.label_tag }}{{ form.f_for }}</div>
+    <div>{{ form.f_des.label_tag }}{{ form.f_des }}</div>
+    <div>{{ form.f_con.label_tag }}{{ form.f_con }}</div>
+    <div>{{ form.f_int.label_tag }}{{ form.f_int }}</div>
+    <div>{{ form.f_sab.label_tag }}{{ form.f_sab }}</div>
+    <div>{{ form.f_car.label_tag }}{{ form.f_car }}</div>
+  </div>
+
+  <div class="seclabel"><span class="idx">04</span><span class="name">Recursos & Vida</span><span class="rule"></span></div>
+  <div class="panel form-grid">
+    <div>{{ form.pv_maximo.label_tag }}{{ form.pv_maximo }}</div>
+    <div>{{ form.pv_atual.label_tag }}{{ form.pv_atual }}</div>
+    <div>{{ form.pv_temporario.label_tag }}{{ form.pv_temporario }}</div>
+    <div>{{ form.dados_vida_total.label_tag }}{{ form.dados_vida_total }}</div>
+    <div>{{ form.dados_vida_usados.label_tag }}{{ form.dados_vida_usados }}</div>
+    <div>{{ form.catarse.label_tag }}{{ form.catarse }}</div>
+    <div>{{ form.enfase_total.label_tag }}{{ form.enfase_total }}</div>
+    <div>{{ form.enfase_atual.label_tag }}{{ form.enfase_atual }}</div>
+    <div>{{ form.sombra.label_tag }}{{ form.sombra }}</div>
+    <div>{{ form.morte_sucessos.label_tag }}{{ form.morte_sucessos }}</div>
+    <div>{{ form.morte_falhas.label_tag }}{{ form.morte_falhas }}</div>
+  </div>
+
+  <div class="seclabel"><span class="idx">05</span><span class="name">Combate & Riquezas</span><span class="rule"></span></div>
+  <div class="panel form-grid">
+    <div>{{ form.reducao_dano.label_tag }}{{ form.reducao_dano }}</div>
+    <div>{{ form.iniciativa_bonus.label_tag }}{{ form.iniciativa_bonus }}</div>
+    <div>{{ form.tamanho.label_tag }}{{ form.tamanho }}</div>
+    <div>{{ form.deslocamento.label_tag }}{{ form.deslocamento }}</div>
+    <div>{{ form.trocados.label_tag }}{{ form.trocados }}</div>
+    <div>{{ form.pecas.label_tag }}{{ form.pecas }}</div>
+  </div>
+
+  <button class="btn mt" style="width:100%;">SALVAR</button>
+  {% if personagem %}
+  <button form="form-excluir" class="btn danger mt" style="width:100%;"
+          onclick="return confirm('Excluir {{ personagem.nome }}?')">EXCLUIR PERSONAGEM</button>
+  {% endif %}
+</form>
+{% if personagem %}
+<form id="form-excluir" method="post" action="{% url 'personagem_excluir' personagem.pk %}">{% csrf_token %}</form>
+{% endif %}
+{% endblock %}

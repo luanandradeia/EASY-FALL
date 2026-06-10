@@ -1,0 +1,722 @@
+[
+  {
+    "nome": "Abraço da Noite",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE CONTROLE MÁGICO\nVocê invoca poderes da noite e das sombras \ncriando um vínculo entre a criatura afetada e a \nescuridão.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: uma cena.\nEfeito: a criatura afetada recebe vantagem em \ntestes de DES relacionados à furtividade pela \nduração da magia.\nM +1 PC [MUDA]\nDuração: uma cena"
+  },
+  {
+    "nome": "Barreira de Proteção",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE CONTROLE SUPORTE\nMÁGICO\nUma barreira mágica de proteção se forma em \nvolta da criatura, protegendo-a de ataques.\nAlcance: toque.\nAlvo: uma criatura voluntária.\nComponentes: V, S, M\nDuração: uma cena.\nEfeito: o alvo fica Protegido contra o próximo \nataque que sofrer.\nM +1 PC [MUDA] \nExecução: B uma ação bônus\nAlcance: 3 m (2 q)"
+  },
+  {
+    "nome": "Corrente Psiônica",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE      OFENSIVO ATAQUE \nMÁGICO  PSÍQUICO\nVocê dispara uma corrente de energia psiônica que \nafeta a mente do alvo.\nAlcance: 18 m (12 q).\nAlvo: uma criatura. \nComponentes: V.\nDuração: instantânea.\nAtaque: mágico vs SAB.\nAcerto: o alvo sofre 1d6 de dano PSÍQUICO.\nM Ampliar 15+:\nEm um acerto, além do dano você comanda o alvo \na realizar uma das ações a seguir:\n• Pasmar: o próximo ataque que o alvo realizar até final do seu próximo turno é feito com \ndesvantagem.\n• Sentar: o alvo senta no chão e fica Caído.\n• Largar: o alvo solta quaisquer itens que esteja empunhando.\nM [RASA]:\nAcerto: o alvo sofre +1d6 pontos de dano PSÍQUICO\nM [PROFUNDA]:\nAcerto: o alvo sofre +2d6 pontos de dano PSÍQUICO\nM +1 PC [MUDA]:\nAmpliar 10+"
+  },
+  {
+    "nome": "Disparo Arcano",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE OFENSIVO ATAQUE\nMÁGICO ENERGÉTICO\nVocê atira força mágica, na forma  \nde um disparo arcano. \nAlcance: 18 m (12 q).\nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs FOR.\nAcerto: o alvo sofre 1d10 pontos de dano do tipo \nENERGÉTICO.\nM [RASA] \nEspecial: você pode lançar um disparo adicional \nlogo após lançar o primeiro, como parte da mesma \nação. É necessário repetir o teste de ataque e é \npermitido escolher um novo alvo.\nM [PROFUNDA] \nEspecial: você pode lançar dois disparos adicionais logo após lançar o primeiro, como parte da \nmesma ação. É necessário repetir o teste de ataque para cada disparo e é permitido escolher um \nnovo alvo para cada um. \nM 1 PC [ADICIONA]\nAcerto: o alvo é empurrado 3 m (2 q) ou tem seu \ndeslocamento reduzido em 3 m (2 q) até o final de \nseu próximo turno."
+  },
+  {
+    "nome": "Drenar Fortitude",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "reação",
+    "descricao": "TRUQUE CONTROLE MÁGICO\nVocê evoca uma névoa necrótica na direção do \ncorpo de uma criatura e drena o que resta de sua \nvitalidade.\n Alcance: 9 m (6 q)\nAlvo: você\nComponentes: V,S\nDuração: instantânea\nGatilho: uma criatura em \nalcance morreu\nEfeito: o alvo recebe 5 pontos de vida temporários. \nEspecial: uma criatura só pode ser alvo deste \ntruque uma vez por descanso. \nM +1 PC [MUDA] \nAlvo: criaturas à sua escolha."
+  },
+  {
+    "nome": "Ilusão Menor",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE UTILITÁRIO MÁGICO\nILUSÃO CRIAÇÃO\nVocê invoca uma pequena ilusão,  \npara efeitos discretos.\nAlcance: 9 m (6 q).\nAlvo: um ponto no \nalcance.\nComponentes: S, M.\nDuração: uma cena.\nEfeito: você cria um som ou uma imagem de um \nobjeto. Pode ser criado um som cujo volume pode \nir de um sussurro a um grito, podendo ser sua \nvoz, a voz de outra pessoa, o som de uma criatura, \num instrumento musical etc.\nEspecial: a ilusão termina se for dissipada com \numa ação ou se for conjurada novamente.\nM 1 PC [MUDA]:\nEfeito: como o normal, mas você pode escolher \ncriar imagem e som simultaneamente. Se uma \ncriatura utilizar uma  A ação para examinar o \nsom ou a imagem, pode usar uma B ação bônus \npara fazer um ataque de INT contra a Proteção \ndo seu atributo-chave de conjuração. Se vencer, \na criatura descobre que é uma ilusão."
+  },
+  {
+    "nome": "Lâmina Cósmica",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE  OFENSIVO MÁGICO\nVocê empodera uma arma que está empunhando e \ndesfere um golpe capaz de recuperar sua energia vital.\nAlcance: toque.\nAlvo: uma arma que \nesteja empunhando. \nComponentes: V, M.\nDuração: instantânea.\nEfeito: como parte da execução da magia, você \nrealiza um ATAQUE com a ARMA. Se acertar, você \nrecebe pontos de vida temporários igual a 1d4 + \no atributo-chave de conjuração (além de causar \ndano e outros efeitos que aplicaria normalmente).\nM [RASA]\nAumenta o dano causado pela magia em +1d4 \npontos de dano TROVEJANTE e os pontos de \nvida temporários aumentam para 1d6 + o atributo-chave de conjuração.\nM [PROFUNDA]\nAumenta o dano causado em +1d6 pontos de dano de \nTROVEJANTE e os pontos de vida temporários aumentam para 1d8 + o atributo-chave de conjuração.\nM 1 PC [ADICIONA]: AMPLIAR 15+:\nVocê pode atacar uma segunda criatura em alcance da arma, também recebendo pontos de vida \ntemporários (não cumulativos com os do primeiro \nataque). Você pode aplicar essa modificação após \nrealizar o ataque."
+  },
+  {
+    "nome": "Luz",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE  UTILITÁRIO MÁGICO\nVocê deposita energia arcana em um objeto, fazendo com que ele passe a emitir luz.\nAlcance: toque.\nAlvo: um objeto que não \nseja maior do que 3 m (2 \nq) em qualquer direção.\nComponentes: V, M.\nDuração: até o final do \npróximo descanso.\nEfeito: objeto emite luz plena em um raio de 6 \nm (4 q) e penumbra por 6 m (4 q) adicionais. A \nluz pode ser da cor de sua preferência. Cobrir \ncompletamente o objeto com algo opaco bloqueia \na luz. O feitiço termina se você conjurá-lo novamente ou se o dissipar com uma A ação. Se você \ndesignar como alvo um objeto sendo carregado \nou usado por uma criatura hostil, você deve acertar um ataque mágico contra a DES do alvo.\nM 1 PC [MUDA]:\nAlcance: 9 m (6 q).\nAlvo: quatro pontos no alcance.\nEfeito: você cria quatro pontos luminosos flutuantes, que se parecem com tochas, lanternas ou esferas luminosas. Cada uma ilumina um raio de 3 m (2 \nq) e pode ser movido para um novo local a até 18 m \n(12 q) de você com uma B ação bônus. Além disso, você pode unificar ou separar os pontos como \numa ação livre. Ao fazer isso, o raio iluminado pelos \npontos é somado ou subtraído, não podendo haver \nmais do que quatro pontos luminosos."
+  },
+  {
+    "nome": "Mão Esquelética de Brunhil",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE    OFENSIVO ATAQUE\nMÁGICO NECRÓTICO\nVocê cria uma mão esquelética e fantasmagórica \nque se agarra uma criatura.\nAlcance:  36 m (24 q).\nAlvo: uma criatura. \nComponentes: V, S.\nDuração: uma rodada.\nAtaque: mágico vs \nCON.\nAcerto: 1d8 pontos de dano NECRÓTICO e o alvo \nnão pode recuperar pontos de vida até o final do \nseu próximo turno\nM [RASA]\nAcerto: aumenta o dano causado em +1d8 pontos \nde dano do mesmo tipo.\nM [PROFUNDA]\nAcerto: aumenta o dano causado em +2d8 pontos \nde dano do mesmo tipo.\nM 1 PC [MUDA]: \nDuração: uma cena (concentração).\nEspecial: no final de cada um de seus turnos, \nvocê pode refazer o ATAQUE contra uma criatura \nque esteja no espaço ocupado pela mão no momento em que ela foi conjurada, repetindo assim \no efeito da magia"
+  },
+  {
+    "nome": "Mãos Mágicas",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE    UTILITÁRIO MÁGICO \nCRIAÇÃO \nVocê cria uma mão flutuante e espectral.\nAlcance:  9 m (6 q).\nAlvo: ponto no alcance.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: a mão permanece pela duração da magia \nou até você dispensar com uma ação. Você pode \nusar sua ação para controlar a mão, que pode \ninteragir com itens e com o ambiente. Você também pode mover ela a até 9 m (6 q) cada vez que \nfor utilizada.\nEspecial: a mão não pode atacar, ativar itens mágicos ou carregar mais de 5 quilos. Além disso, ela \ndesaparece se ficar a mais de 9 m (6 q) do conjurador ou se você conjurar a magia novamente.\nM +1 PC [ADICIONA]: \nEspecial: a mão é Invisível a outras criaturas que \nnão sejam você."
+  },
+  {
+    "nome": "Marca de Sangue",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "1 minuto ou mais",
+    "descricao": "TRUQUE UTILITÁRIO MÁGICO\nVocê toca um objeto e marca ele com um pouco de seu \nsangue, criando um vínculo que facilita a localização.\nExecução: um minuto.\nAlcance: toque.\nAlvo: um objeto com até \n5 de carga.\nComponentes: V, S, M.\nDuração: ver Efeito.\nEfeito: enquanto o objeto estiver em até 9 m (6 \nq), você sabe sua localização exata, mesmo que \nnão consiga vê-lo. A duração da marca depende \nde um teste de Ataque feito no momento que \nconjura a magia (CD 10 para um dia e mais um dia \npara cada 5 pontos que superarem a CD).\nM 1 PC [ADICIONA]:\nEspecial: se for pequeno ou menor e estiver a \naté 24 m (16 q), você pode usar uma reação para \nfazer com que ele venha voando até você (caso \nesteja sendo segurado, é necessário fazer um \nataque mágico contra FOR do alvo). Se tiver uma \nmão livre, você pode pegá-lo como parte da reação, senão ele cai no mesmo espaço que você.\nA mão da Dragonesa Preta, Brunhil."
+  },
+  {
+    "nome": "Orientação",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE   CONTROLE  MÁGICO\nSUPORTE\nVocê usa sua magia para prestar auxílio em um \nmomento de dificuldade. \nAlcance: toque.\nAlvo: uma criatura \nvoluntária.  \nComponentes: V, S.\nDuração:  uma (concentração).\nEfeito: uma vez antes de a magia terminar, o alvo \npode jogar um d4 e somar o número obtido a um \nteste de atributo à escolha dele. Ele pode jogar o \ndado antes ou depois de fazer o teste. A magia, \nentão, encerra.\nM +1 PC [MUDA]\nAlcance: 9 m (6 q).\nDuração: uma cena."
+  },
+  {
+    "nome": "Palminha Sagrada",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE   OFENSIVO  DIVINO   \nATAQUE   MÁGICO RADIANTE\nO conjurador bate suas mãos acima da cabeça \ncriando um clarão mágico de luz divina\nAlcance: 1,5 m (1 q).\nAlvo: criaturas a sua \nescolha.\nComponentes: V, S.\nDuração: instantânea.\nAtaque: mágico vs SAB.\nAcerto: 1d6 pontos de dano RADIANTE.\nM [RASA]:\nAcerto: o dano muda para 1d8 de pontos de dano \nRADIANTE e o ampliar da modificação muda para 12+.\nM [PROFUNDA]:\nAcerto: o dano muda para 1d8 de pontos de dano RADIANTE e o Ampliar da modificação muda para 10+.\nM +1 PC [ADICIONA] Ampliar 15+:\nAcerto: os alvos ficam Desorientados até o início \ndo seu próximo turno."
+  },
+  {
+    "nome": "Raio Elemental",
+    "camada": "truque",
+    "tipo": "ofensivo",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE      OFENSIVO ATAQUE \nMÁGICO   ELEMENTAL\nVocê invoca a força dos elementos contra o alvo.\nAlcance: 18 m (12 q).\nAlvo: uma criatura. \nComponentes: V, S.\nDuração: instantânea.\nAtaque: mágico vs DES.\nAcerto: 1d8 pontos de dano do tipo escolhido.\nAcerto: o alvo é afetado magicamente pelo elemento escolhido:\n• Água: O alvo tem seu deslocamento reduzido \nem 3 m (2 q) até o final do seu próximo turno.\n• Ar: o próximo ATAQUE bem-sucedido contra \no alvo até final do seu próximo turno causa \n+1d6 pontos de dano ELÉTRICO\n• Fogo: o alvo fica Em Chamas.\n• Terra: o alvo fica Desprotegido (Físico) \ncontra o próximo ataque contra uma Proteção \nfísica que sofrer até o final do seu próximo \nturno.\nEspecial: ao aprender essa magia, escolha um \nelemento. O dano e efeito são do tipo desse elemento.\nM [RASA]:\nAcerto: o ataque causa +1d8 pontos de dano do \nmesmo tipo.\nM [PROFUNDA]:\nAcerto: o ataque causa +2d8 pontos de dano do \nmesmo tipo. O dano do efeito adicional muda pra 1d8 \n(se houver).\nM +1 PC [ADICIONA]: Especial:\nEspecial: na primeira vez que o efeito adicional for \nacabar, você pode gastar uma R reação para fazer \ncom que ele dure mais uma rodada."
+  },
+  {
+    "nome": "Reparar",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "1 minuto ou mais",
+    "descricao": "TRUQUE    UTILITÁRIO  MÁGICO  \nLuzes mágicas cobrem um objeto para repará-lo ou \ncausar fissuras a ponto de quebrá-lo.\nExecução: 1 minuto.\nAlcance: toque.\nAlvo: um objeto de até 1 \nde carga ou criatura do \ntipo constructo.\nComponentes: V, S.\nDuração: instantânea.\nEfeito: repara uma quebra ou ruptura em um objeto que você toque, como um elo de corrente quebrado, duas metades de uma chave quebrada, um \nmanto rasgado ou um odre vazando. Se a quebra \nou ruptura não for maior do que 30 centímetros \nem qualquer direção, é reparada sem deixar traços \ndo dano anterior. Se usada em uma criatura do tipo \nConstructo, ela recupera 1d4 pontos de vida.\nM +1 PC [MUDA] e [ADICIONA]\n[MUDA] Execução:  B 1 ação bônus.\n[ADICIONA] Efeito: remove o descritor QUEBRADIÇO de um equipamento."
+  },
+  {
+    "nome": "Resistência de Ruedim",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE       CONTROLE   MÁGICO \nSUPORTE \nA força protetora de Ruedim é manifestada por meio \ndo Arcanum, protegendo você ou um aliado.\nAlcance: toque.\nAlvo: uma criatura \nvoluntária.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito: você toca uma criatura voluntária. Uma \nvez antes da magia terminar, o alvo pode jogar 1d4 \ne subtrair o número obtido de um ATAQUE que \nsofreria. Ele pode jogar o dado antes ou depois de \nsaber o resultado do ataque. A magia, então, se \nencerra.\nM + 1 PC [MUDA]:\nAlcance: 9 m (6 q).\nDuração: uma cena."
+  },
+  {
+    "nome": "Sorriso de Sa'Al",
+    "camada": "truque",
+    "tipo": "controle",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "descricao": "TRUQUE    CONTROLE   MÁGICO  \nVocê toca uma criatura voluntária para encantá-la \ncom a beleza da titã Sa’al’Lima.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: a criatura recebe vantagem no seu próximo teste de CAR.\nEspecial: uma criatura só pode receber esse \nbenefício uma vez por cena.\nM +1 PC [MUDA]:\nEfeito: a criatura recebe vantagem em todos os \nseus testes de CAR. A magia encerra-se mais cedo \ncaso o alvo falhe em um teste de CAR."
+  },
+  {
+    "nome": "Transmutar em Arma",
+    "camada": "truque",
+    "tipo": "utilitario",
+    "custo_enfase": 0,
+    "execucao": "ação bônus",
+    "descricao": "TRUQUE       UTILITÁRIO  MÁGICO  \nVocê consegue transmutar pedaços de matéria-prima em armamentos que podem ser aprimorados.\nAlcance: toque\nAlvo: pedaço de madeira ou metal com até 2 \nde volume.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: você toca um pedaço de madeira ou metal \npara transformá-lo em uma arma simples. Pela \nduração da magia, o objeto é transformado em \numa arma simples corpo a corpo que causa 1d6 \nde dano CONTUNDENTE, CORTANTE ou PERFURANTE (à sua escolha). Seu atributo-chave de \nconjuração pode ser usado em vez de FOR ou \nDES para as jogadas de ataque e dano. A magia \ntermina se for conjurada novamente ou se você \nsoltar a arma.\nM +1 PC [ADICIONA]:\nEfeito: além do normal, a arma recebe um descritor não-mágico de equipamento (à sua escolha). \n\nCamada Superficial"
+  },
+  {
+    "nome": "Alarme",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "1 minuto ou mais",
+    "descricao": "SUPERFICIAL UTILITÁRIO MÁGICO\nVocê monta um alarme contra intrusos indesejados. \nExecução: 1 minuto.\nAlcance: 9 m (6 q).\nAlvo: uma porta, janela \nou área igual ou menor \nque um cubo de 6 m (4 q) \nde lado.\nComponentes: V, S, M. \nDuração: até o final do \npróximo descanso.\nEfeito: quando uma criatura minúscula ou maior \ntocar ou entrar na área afetada, um alarme alerta \nvocê. Você pode escolher como esse alarme funciona: \n• Um alarme mental avisa com um sibilo em \nsua mente se você estiver a 1,5 km do alcance \nda área afetada, lhe despertando caso esteja \ndormindo.\n• Um alarme audível produz o som de uma \nsineta durante 10 segundos no alcance de 18 m \n(12 q).\nEspecial: ao conjurar a magia, você pode escolher criaturas que não dispararão o alarme."
+  },
+  {
+    "nome": "Aríete Elemental",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL OFENSIVO ATAQUE\nMÁGICO ELEMENTAL\nVocê invoca um aríete mágico com alta potência arcana.\nAlcance: 3 m (2 q).\nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: Mágico vs FOR.\nAcerto: O alvo sofre 3d10 pontos de dano do tipo do \nelemento escolhido.\nAcerto: 3d10 pontos de dano do tipo escolhido. O alvo \ntambém sofre um efeito adicional de acordo com o \nelemento escolhido\n• Água: todas as resistências a dano são perdidas e \nimunidades a dano passam a ser resistências. Esse \nefeito dura até o começo do seu próximo turno. \n• Ar: o alvo flutua 3 m (2 q) acima do chão até o final \nde seu próximo turno, reduzindo seu movimento a \n0 m. Ao final do efeito, ele sofre dano de queda e \nfica Caído. Criaturas com deslocamento de voo são \nimunes\n• Fogo: o alvo fica Em Chamas.\n• Terra: é empurrado 3 m (2 q).\nErro: metade do dano e não sofre o efeito adicional.\nEspecial: ao aprender essa magia, escolha um elemento. O dano e efeito são do tipo desse elemento.\nM +1 PE [ADICIONA]\nAcerto: aumenta o dano em +1d10. Você pode aplicar \nessa modificação quantas vezes quiser.\nM +2 PE [ADICIONA]\nAcerto: o efeito adicional é aprimorado.\n• Água: a duração aumenta em um turno.\n• Ar: aumenta a distância do chão em +3 m (2 q). \nVocê pode aplicar essa modificação quantas vezes \nquiser.\n• Fogo: o dano de Em Chamas muda para 1d8.\n• Terra: aumenta o empurrão em +3 m (2 q). Você \npode aplicar essa modificação quantas vezes quiser.\nM +2 PE [ADICIONA]\nEspecial: o dano causado contra objetos e constructos é dobrado, desde que você tenha se movido pelo \nmenos 3 m (2 q) neste turno.\nM +3 PE [MUDA]\nAcerto: você e o alvo se movem até um espaço desocupado em 9 m (6 q). O alvo sofre 4d10 pontos de \ndano ENERGÉTICO e fica Desprotegido (físico) até o \nfinal do seu próximo turno.\nPiedade brande sua \nespada mágica."
+  },
+  {
+    "nome": "Arma Elemental",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL OFENSIVO SUPORTE\nMÁGICO ENERGÉTICO\nVocê deposita energia arcana na arma, fazendo \ncom que ela pulse com poder elemental.\nAlcance: toque.\nAlvo: uma arma.\nComponentes: V, S.\nDuração: cena (concentração).\nEfeito: a arma recebe o descritor MÁGICO e ELEMENTAL e causa 1d4 pontos de dano adicionais do \ntipo escolhido.\nEspecial: ao aprender essa magia, escolha um elemento. O dano é do tipo desse elemento.\nM +2 PE [MUDA]\nAcerto: o dano adicional muda para 1d6."
+  },
+  {
+    "nome": "Armamento Espectral",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL OFENSIVO MÁGICO\nCRIAÇÃO\nVocê cria uma arma espectral flutuante.\nAlcance: 18 m (12q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: você cria uma arma espectral flutuante. \nVocê pode usar uma ação bônus para utilizar a \nhabilidade “Golpe Espectral” dela. Essa magia se \nencerra caso você a conjure novamente.\nEspecial: você escolhe um tipo de dano entre \nCONTUNDENTE, CORTANTE, e PERFURANTE. \nEsse é o tipo de dano causado pela arma.\nB Golpe Espectral 0 pe\nSUPERFICIAL ATAQUE MÁGICO\nENERGÉTICO\nAlcance: 1,5 m (1 q).\nAlvo: uma criatura.\nAtaque: mágico vs DES.\nAcerto: o alvo sofre 1d8 + o atributo de conjuração pontos de dano.\nEspecial: a arma pode se mover para um ponto \nem até 6 m (4 q) antes ou depois de atacar. Ao ser \nconjurada, a execução da habilidade muda para L \nação livre, até o final do turno."
+  },
+  {
+    "nome": "Augúrio",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "1 minuto ou mais",
+    "descricao": "OFENSIVO MÁGICO CRIAÇÃO\nVocê recebe um presságio de uma entidade que \nvaga pelo Arcanum sobre os resultados de uma \nação que planeja tomar.\nExecução: 1 minuto.\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S, M.\nDuração: instantânea.\nEfeito: você recebe um presságio sobre os resultados de um determinado curso de ação que \nplaneja tomar dentro dessa cena ou na próxima \n(à sua escolha). A Mestre escolhe entre os presságios possíveis a seguir:\n• prosperidade, para bons resultados\n• infortúnio, para maus resultados;\n• prosperidade e infortúnio, para resultados \nbons e maus; \n• nada, para resultados que não são especialmente bons ou maus.\nA magia não leva em conta quaisquer circunstâncias possíveis que possam mudar o resultado \nfuturo, como a conjuração de magias adicionais \nou a perda ou ganho de um companheiro. \nEspecial: se você executar a magia duas ou mais \nvezes antes de concluir seu próximo descanso longo, há uma chance cumulativa de 25% para cada \nconjuração após a primeira de obter uma resposta aleatória. A Mestre faz esta jogada em segredo.\nLiesel usa a magia \"Arma Elemental\" em suas adagas."
+  },
+  {
+    "nome": "Compreensão",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL OFENSIVO MÁGICO\nCRIAÇÃO\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S, M.\nDuração: uma cena.\nEfeito: pela duração da magia, você consegue \nentender qualquer idioma escrito ou falado e \nrecebe vantagem em todos os testes de INT para \ninterpretar informações. \nEspecial: esta magia não decodifica mensagens \nsecretas em um texto, ou um glifo – como um \nsímbolo arcano – que não faça parte de um idioma escrito. Além disso, ela não permite que você \nfale um idioma que não tenha aprendido."
+  },
+  {
+    "nome": "Curar Ferimentos",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL CONTROLE MÁGICO\nCURA\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: instantânea. \nEfeito: o alvo recupera uma quantidade de pontos de vida igual a 1d8 + o seu atributo-chave de \nconjuração.\nEspecial: essa magia não tem efeito sobre mortos-vivos ou constructos.\nM +2 PE [ADICIONA]: \nEfeito: o alvo recupera +1d8+1 pontos de vida \nadicionais.\nM +2 PE [MUDA]: \nAlvo: 9 m (6 q)."
+  },
+  {
+    "nome": "Detectar Magia",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL UTILITÁRIO MÁGICO\nVocê sente a presença de energia mágica ao seu redor.\nAlcance: pessoal. \nAlvo: você.\nComponentes: V, S.\nDuração: cena (concentração). \nEfeito: você pode usar sua A ação para ver \numa tênue aura ao redor de qualquer criatura ou \nobjeto visíveis mágico ou afetado por uma magia a \naté 9 m (6 q) de você. Você sabe o tipo e mais um \ndescritor da magia ou a camada mais profunda \nque a criatura é capaz de conjurar. \nEspecial: Essa magia pode atravessar a maioria \ndas barreiras, mas é bloqueada por 30 centímetros de pedra, 2,5 centímetros de metal comum, \numa folha fina de chumbo ou por 1 metro de \nmadeira ou terra.\nM +2 PE [ADICIONA]: \nEfeito: além do normal, você recebe vantagem \nem todos os testes que envolvam detectar armadilhas, passagens secretas ou locais escondidos.\nBiso usa a magia \"Curar \nFerminetos\"."
+  },
+  {
+    "nome": "Elo do Destino de Talyiesin",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL CONTROLE MÁGICO\nEssa magia protege uma criatura, criando uma \nconexão mística entre o conjurador e ela.\nAlcance: toque.\nAlvo: 1 criatura voluntária.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: cria-se uma conexão mística entre você e \no alvo. Enquanto ele estiver a até 18 m (12 q) de \nvocê, ele ganha um bônus de +1 em todas as Proteções e tem resistência a todo tipo de dano. \nEspecial: sempre que ele sofrer dano, você sofre \na mesma quantidade de dano. A magia termina se \nvocê cair a 0 pontos de vida ou se o alvo estiver a \nmais de 18 m (12 q) de você. Ela também termina \nse essa magia for conjurada novamente em qualquer uma das criaturas conectadas.\nM +3 PE [MUDA]: \nEspecial: você passa a receber os mesmos bônus \nda magia que o alvo recebe, também causando \ndano a ele caso sofra dano. Além disso, sempre \nque uma das criaturas conectadas for alvo de um \nefeito que recupera pontos de vida, a outra criatura também os recupera. \nM +2 PE [MUDA]:\nAlvo: duas criaturas\nEfeito: em vez de você, duas criaturas são conectadas. A conjurar a magia você define qual criatura recebe os bônus e qual criatura recebe dano \nsem receber benefícios"
+  },
+  {
+    "nome": "Escudo Arcano",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 1,
+    "execucao": "reação",
+    "descricao": "SUPERFICIAL CONTROLE MÁGICO\nUm escudo de energia se materializa,  \nte protegendo do perigo.\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S.\nDuração:  até o final do \nturno.\nEfeito: você recebe +2 em todas as Proteções.\nM +2 PE [MUDA]:\nEfeito: você recebe +5 em todas as Proteções."
+  },
+  {
+    "nome": "Escuridão",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL CONTROLE MÁGICO\nUma escuridão mágica se espalha pela área.\nAlcance: 18 m (12 q).\nAlvo: um ponto em \nalcance.\nComponentes: V, M.\nDuração: uma cena (concentração).\nEfeito: uma escuridão mágica espalha-se dentro \nde uma esfera de 4,5 m (3 q).\nEspecial: uma criatura com visão no escuro não \npode ver através da escuridão mágica. A área não \npode ser iluminada por fontes não mágicas e uma \nluz criada por uma magia de camada igual ou mais \nprofunda dissipa o efeito dessa magia.\nM +1 PE [ADICIONA]: \nEfeito: o raio da esfera aumenta em +1,5 m. Você \npode aplicar essa modificação quantas vezes quiser.\nM +2 PE [MUDA]:\nAlvo: um objeto. \nAtaque: mágico vs DES de quem estiver empunhando, segurando ou vestindo o objeto.\nAcerto: escuridão mágica emana a partir do alvo, \nem uma esfera de 4,5 m (3 q) que se move junto \ncom ele. \nEspecial: cobrir completamente a origem da \nescuridão com um objeto opaco, como uma tigela \nou elmo, bloqueia a escuridão. Criaturas voluntárias e objetos soltos têm um acerto automático."
+  },
+  {
+    "nome": "Força Anuro",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL UTILITÁRIO MÁGICO\nSUPORTE\nUma criatura tem suas pernas torneadas e fortalecidas, tornando-se uma exímia saltadora.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: uma cena.\nEfeito: o alvo pode saltar o triplo da distância \nnormal."
+  },
+  {
+    "nome": "Grito Agonizante de Warpinier",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "reação",
+    "descricao": "SUPERFICIAL OFENSIVO ATAQUE\nMÁGICO TROVEJANTE\nVocê urra de dor, retaliando um dano que sofrer \nAlcance: 18 m (12 q).\nAlvo: a criatura que lhe \ncausou dano.\nComponentes: V, S, M.\nDuração: instantânea.\nGatilho: ao sofrer dano.\nAtaque: mágico vs DES.\nAcerto: 2d10 pontos de dano TROVEJANTE.\nErro: o alvo sofre metade do dano\nM +2 PE [ADICIONA]\nAcerto: aumenta o dano em +1d10. Você pode \naplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Imagem Silenciosa",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL UTILITÁRIO CRIAÇÃO\nILUSÃO\nVocê manifesta uma ilusão visual média.\nAlcance: 18 m (12 q).\nAlvo: um ponto no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena (concentração).\nEfeito: você cria a imagem de um objeto, criatura ou algum fenômeno visual que não seja maior \nque um cubo de 4,5 m (3 q) de lado. A imagem é \npuramente visual e intangível.\nEspecial: criaturas que toquem a imagem percebem que se trata de uma ilusão. Outras criaturas \npodem fazer testes para tentar percebê-la, de \nacordo com decisão da Mestre. Nesses casos a CD \né igual ao seu atributo-chave de conjuração.\nM +1 PE [ADICIONA]:\nEspecial: você pode usar uma ação bônus para \nfazer a imagem se deslocar para qualquer lugar dentro do alcance da magia. À medida que \na imagem muda de lugar, você pode alterar sua \naparência para que seus movimentos pareçam \nnaturais (como fazer com que uma criatura esteja \nandando, por exemplo)."
+  },
+  {
+    "nome": "Infligir Ferimentos",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL OFENSIVO ATAQUE\nMÁGICO NECRÓTICO\nVocê condensa energia negativa na ponta de seu \ndedo e transfere rapidamente para o alvo, que \nsofre uma dor excruciante.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: instantânea.\nAtaque: mágico vs \nCON.\nAcerto: 3d10 pontos de dano NECRÓTICO.\nErro: o alvo sofre metade do dano.\nM +2 PE [ADICIONA]:\nAcerto: aumenta o dano adicional em +2d10. \nVocê pode aplicar essa modificação quantas vezes \nquiser."
+  },
+  {
+    "nome": "Inspiração Heroica",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL  CONTROLE MÁGICO \nINSPIRAÇÃO SUPORTE\nO conjurador reconta um feito heróico  \ne as imagens conjuradas do Arcanum  \ninspiram seus aliados. \nAlcance: 9 m (6 q).\nAlvo: até três criaturas \nvoluntárias.\nComponentes: V.\nDuração: uma cena \n(concentração).\nEfeito: o alvo fica Inspirado. Enquanto estiver \ninspirado dessa maneira, ele pode jogar 1d4 e \nadicionar em um teste de atributo ou teste de \nmorte. Além disso, ao ser alvo de um ataque, ele \npode escolher jogar 1d4 e adicionar o resultado à \nProteção atacada até o final do turno, deixando \nde estar Inspirado.\nM +2 PE [MUDA]:\nEfeito: o dado muda de d4 para 1d6."
+  },
+  {
+    "nome": "Malícia Mental de Fofuxa",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL  OFENSIVO  ATAQUE  \nMÁGICO  PSÍQUICO\nVocê penetra na mente do alvo, aumentando seu \nsofrimento sempre que ele sofrer dano.\nAlcance: 36 m (24 q).\nAlvo: uma criatura.\nComponentes: V.\nDuração: cena (concentração).\nAtaque: mágico vs. \nSAB.\nAcerto: ATAQUES contra o alvo causam +1d6 \npontos de dano PSÍQUICO.\nM +2 PE [ADICIONA] \nAcerto: o dano adicional aumenta em +1d6. Você \npode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Manifestação das Profundezas",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL   OFENSIVO  ATAQUE  \nMÁGICO  ELEMENTAL GÉLIDO\nVocê manifesta o poder dos profundos, invocando \ndois tentáculos espectrais.\nAlcance: 6 m (4 q).\nAlvo: até duas criaturas.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs DES.\nAcerto: cada tentáculo afeta uma criatura em alcance, que sofre 2d6 de dano GÉLIDO e não pode \nrealizar reações até o seu próximo turno.\nErro: metade do dano e não perde sua reação.\nM +1 PE [ADICIONA]: \nAlvo: mais uma criatura. Você pode aplicar essa \nmodificação quantas vezes quiser.\nM +1 PE [ADICIONA]: \nAcerto: aumenta o dano em +1d6 Você pode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Manifestar Familiar",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 2,
+    "execucao": "1 minuto ou mais",
+    "descricao": "SUPERFICIAL    UTILITÁRIO  MÁGICO\nCRIAÇÃO\nVocê desenha um pequeno círculo de conjuração e, \ndepois de esperar um pouco, uma pequena criatura é conjurada.\nExecução: 1 minuto. \nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance. \nComponentes: V, S, M.\nDuração: instantânea.\nEfeito: Quando conjurar essa magia, escolha um \ntipo de familiar. Você pode usar uma B ação \nbônus para comandá-lo:\n• Bruto: o familiar ataca uma criatura adjacente. Faça um ATAQUE Mágico vs DES. Se acertar, \ncausa 1d6 + seu bônus de proficiência pontos \nde dano ENERGÉTICO.\n• Defensor: o familiar protege você e seus \naliados adjacentes ao familiar, que recebem 5 \npontos de vida temporários.\n• Viajante: o familiar abre uma pequena fissura \nno Arcanum. Você e seu familiar trocam de lugar.\nM +1 PE [MUDA]:\nExecução: A uma ação."
+  },
+  {
+    "nome": "Mísseis Mágicos de Clebinho",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL    OFENSIVO  MÁGICO\nENERGÉTICO\nO conjurador cria dardos mágicos de pura energia \narcana, que são disparados contra inimigos.\nAlcance: 36 m (24 q).\nAlvo: até três criaturas.\nComponentes: V, S.\nDuração: instantânea.\nEfeito: você dispara três dardos. Cada dardo \ncausa 1d4+1 pontos de dano ESPECIAL automaticamente no seu alvo. Os dardos acertam ao \nmesmo tempo e você pode direcioná-los para \numa criatura ou várias.\nM +2 PE [ADICIONA]:\nEfeito: aumenta a quantidade de dardos criados \nem +2 (para um total de cinco dardos). Você pode \naplicar essa modificação uma segunda vez (para \num total de sete dardos)."
+  },
+  {
+    "nome": "Passo Nebuloso",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL UTILITÁRIO MÁGICO\nUma rápida névoa prateada forma-se em volta do \nconjurador, que desaparece e reaparece em outro \nlocal próximo.\nAlcance: pessoal.\nAlvo: você.\nComponentes: V.\nDuração: instantânea.\nEfeito: você se teletransporta para um espaço \nvazio que possa ver em até 9 m (6 q).\nM +2 PE [ADICIONA]:\nEfeito: além do normal, você pode levar consigo uma criatura voluntária adjacente. Você \npode aplicar essa modificação quantas vezes \nquiser."
+  },
+  {
+    "nome": "Pele-Casca",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL     CONTROLE MÁGICO \nASPECTO  SUPORTE\nA pele da criatura afetada por essa magia fica áspera e com aparência de uma casca de árvore, tornando-se tão resistente quanto as árvores de Sarfo.\nAlcance: toque.\nAlvo: uma criatura \nvoluntária.\nComponentes: V, S, M.\nDuração: cena (concentração).\nEfeito: as Proteções físicas do alvo não poderão \nser menores do que 16, independentemente de \nseus atributos."
+  },
+  {
+    "nome": "Presas",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL     OFENSIVO ATAQUE\nELEMENTAL  VENENOSO\nAs unhas crescem rapidamente e atacam como \npresas peçonhentas.\nAlcance: toque.\nAlvo: uma criatura. \nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs \nCON.\nAcerto: 2d8+2 pontos de dano VENENOSO. Além \ndisso, suas unhas ficam cravadas na criatura pela \nduração. Enquanto estiverem cravadas dessa \nmaneira, você pode usar uma B ação bônus em \ncada um de seus turnos para causar 1d8+1 pontos \nde dano Venenoso no alvo.\nErro: metade do dano e suas unhas não ficam \ncravadas nele.\nM +2 PE [ADICIONA]:\nAcerto: aumenta o dano causado em ambos os \nefeitos em +1d8+1. Você pode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Profanar Solo",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL   MÁGICO CONTROLE  \nVocê toca o solo e cria uma zona de magia necrótica\nAlcance: toque.\nAlvo: criaturas em uma \nesfera de 6 m (4 q) de \nraio.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito: qualquer ATAQUE com o descritor NECRÓTICO realizado na área é feito com vantagem.\nEspecial: além disso, qualquer criatura imune a \ndano NECRÓTICO torna-se resistente e qualquer \ncriatura resistente a dano desse tipo perde sua \nresistência (enquanto estiver dentro da área).\nM +2 PE [MUDA]:\nAlvo: criaturas em uma esfera de 9 m (6 q) de raio."
+  },
+  {
+    "nome": "Queda Suave",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "reação",
+    "descricao": "SUPERFICIAL UTILITÁRIO   MÁGICO \nSUPORTE \nVentos mágicos sopram rapidamente para evitar \nque criaturas sofram dano de queda.\nAlcance: 18 m (12 q).\nAlvo: três criaturas no \nalcance.\nComponentes: V, M\nDuração: até o final da \ncena ou quando o alvo \ntocar o chão.\nGatilho: você ou uma \ncriatura no alcance \ncomeçam a cair.\nEfeito: criaturas afetadas não sofrem dano de \nqueda.\nM +1 PE [ADICIONA]:\nAlvo: aumenta o número de criaturas em +1. Você \npode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Raio Brilhoso da Fé",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL       OFENSIVO  ATAQUE  \nMÁGICO    RADIANTE\nO conjurador condensa uma luz cegante que abala as estruturas dos mais fracos.\nAlcance: 36 m (24 q).\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: instantânea.\nAtaque: mágico vs. \nCAR.\nAcerto: 3d6 pontos de dano RADIANTE e o alvo \nfica Desprotegido até o início do seu próximo \nturno.\nErro: metade do dano.\nM +1 PE [ADICIONA]:\nAcerto: aumenta o dano causado em +1d6. Você \npode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Raio do Enfraquecimento",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL OFENSIVO    ATAQUE  \nMÁGICO \nUm feixe negro surge em suas mãos, pulsando com \nenergia debilitante.\nAlcance: 18 m (12 q).\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs \nCON.\nAcerto: o alvo causa apenas metade do dano em \nATAQUES não-mágicos. No final de cada um dos \nturnos do alvo, repita o ataque. Se falhar, a magia \nse encerra.\nM +2 PE [MUDA]:\nAcerto: o alvo causa apenas metade do dano em \nATAQUES."
+  },
+  {
+    "nome": "Reflexos de Thyesba",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL      CONTROLE   MÁGICO \nILUSÃO \nVocê conjura diversas imagens espelhadas suas, gerando confusão em qualquer um que tente acertá-lo. \nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S, M.\nDuração: uma cena\nEfeito: o próximo ataque contra você é feito com \ndesvantagem e encerra o efeito da magia.\nM +2 PE [ADICIONA]:\nEfeito: você aumenta a quantidade de ataques \nque pode receber antes de encerra o efeito da \nmagia em +1. Você pode aplicar essa modificação \nquantas vezes quiser."
+  },
+  {
+    "nome": "Restauração Menor",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL        CONTROLE   MÁGICO \nSUPORTE \nVocê toca uma criatura e pode tanto curar uma \ndoença ou uma condição que a aflija.\nAlcance: toque.\nAlvo: uma criatura \nvoluntária.\nComponentes: V, S\nDuração: instantânea.\nEfeito: escolha uma doença, um veneno ou uma \ncondição (entre Atordoado, Desorientado, Encantado, Envenenado ou Paralisado) que esteja \nafetando o alvo. Você encerra seu efeito"
+  },
+  {
+    "nome": "Silêncio Sepulcral",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL CONTROLE MÁGICO\nVocê conjura uma zona mágica que dissipa os \nbarulhos dentro dela e expulsa sons externos.\nAlcance: 36 m (24 q).\nAlvo: uma esfera de 6 m \n(4 q) de raio. \nComponentes: V,S.\nDuração: uma cena (concentração).\nEfeito: nenhum som pode ser criado dentro ou \nentrar na área, impedindo comunicação, uso de \nhabilidades com o descritor voz e magias com \ncomponentes verbais.\nM +1 PE [ADICIONA]\nEfeito: criaturas e objetos dentro da área recebem imunidade a dano TROVEJANTE.\nM +2 PE [ADICIONA]:\nAlvo: aumenta a área em +3 m (2 q). Você pode \naplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Simpatia Animal",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL      UTILITÁRIO  MÁGICO  \nVocê passa a entender e consegue se comunicar com \nanimais, feras e outras bestas.\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, M\nDuração: uma cena.\nEfeito: você se torna capaz de conversar com \nqualquer criatura do tipo Fera. A comunicação é \nlimitada por sua compreensão da linguagem do \nanimal, mas você pode fazer perguntas simples e \nreceber respostas simples.\nM +2 PE [MUDA]:\nDuração: instantânea.\nEfeito: você escolhe um animal dentro do alcance \nda magia e convence-o a entregar uma mensagem. Ele viaja até o destinatário especificado, \nentregando a mensagem assim que o encontrar. O \nanimal viaja uma quantidade de quilômetros igual \na 100 vezes o seu bônus de proficiência. Se o \nanimal for morto, a mensagem será perdida.\nM +1 PE [MUDA]:\nEfeito: você escolhe um animal amigável dentro \ndo alcance da magia. Ele fará o que puder para \najudá-lo pela duração, desde que não coloque em \nrisco sua vida ou bem-estar ou seja ameaçado por \nvocê ou um de seus companheiros. Você pode \naplicar essa modificação quantas vezes quiser, \npara afetar animais adicionais.\nJack é alvo da magia \"Sono \nde Notzferah\"."
+  },
+  {
+    "nome": "Sono de Notzferah",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL      CONTROLE   MÁGICO  \nO pó mágico do titã da passagem é invocado a partir do Arcanum, adormecendo os alvos\nAlcance: 27 m (18 q).\nAlvo: criaturas em uma \nesfera de 6 m (4 q) de \nraio.\nComponentes: V, S, M.\nDuração: uma cena.\nEfeito: jogue 5d8; o total é a quantidade de \npontos de vida que a magia vai afetar. Começando \npela criatura que tem os pontos de vida atuais \nmais baixos (ignorando criaturas Inconscientes) \nsubtraia os pontos de vida atuais de cada alvo do \ntotal antes de passar para o próximo alvo, em ordem crescente. Os pontos de vida de uma criatura \ndevem ser iguais ou menores que o total restante \npara que ela seja afetada. Um alvo afetado fica \nInconsciente até que a magia termine, ele sofra \ndano ou alguém use uma ação para acordá-lo.\nM +2 PE [ADICIONA]:\nEfeito: aumenta os dados jogados em +2d8. Você \npode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Sugestão",
+    "camada": "superficial",
+    "tipo": "controle",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL        CONTROLE   ENCANTAMENTO  \nMÁGICO \nVocê lança palavras de comando pelo Arcanum \nque afetam a mente do alvo para obedecer a um \ncomando.\nAlcance: toque.\nAlvo: uma criatura humanóide.\nComponentes: V, M.\nComponentes: V, M.\nDuração: 8 horas (concentração).\nAtaque: Mágico vs CAR.\nAcerto:  você sugere um curso de ação (limitado \na uma sentença ou duas) e influencia magicamente uma criatura à sua vista no alcance da magia e \nque possa ouvi-lo e compreendê-lo. A sugestão \nprecisa ser dita de uma forma que faça o curso de \nação parecer razoável. Pedir à pessoa para realizar \num ato evidentemente danoso contra ela mesma \nencerra a magia. O alvo segue os atos sugeridos \nda melhor forma dentro de suas habilidades.\nEspecial: a magia se encerra caso o alvo sofra \ndano enquanto está afetado por ela, ou se ele \nconcluir a atividade sugerida.\nM +4 PE [MUDA]:\nAlcance: 18m (12q).\nDuração: 24 horas.\nAlvo: até 3d6 criaturas humanoides.\nJack é alvo da magia \"Sono de Notzferah\"... de novo."
+  },
+  {
+    "nome": "Tele-entrega",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL      UTILITÁRIO  MÁGICO  \nUma pequena fenda no Arcanum é aberta, possibilitando transportar objetos pequenos.\nAlcance: 9 m (6 q).\nAlvo: Uma criatura \nvoluntária.\nComponentes: V, S.\nDuração: instantânea.\nEfeito: você envia um objeto de até 3 de volume \nque esteja vestindo ou empunhando para uma \ncriatura voluntária no alcance da magia. Caso \ntenha uma mão livre, ela pode escolher segurar o \nobjeto, senão ele cai no mesmo espaço ocupado \npela criatura.\nM +1 PE [ADICIONA]:\nAlcance: aumenta em +9 m (6 q). Você pode aplicar essa modificação quantas vezes quiser.\nM +1 PE [ADICIONA]:\nEspecial: aumenta o volume máximo do objeto \ntransportado em +2. Você pode aplicar essa modificação quantas vezes quiser.\nM 3 PE [MUDA & ADICIONA]:\nMUDA: Execução: RReação.\nADICIONA: Gatilho: você saca um item. Efeito: o \nitem sacado é enviado."
+  },
+  {
+    "nome": "Tufão",
+    "camada": "superficial",
+    "tipo": "ofensivo",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "descricao": "SUPERFICIAL OFENSIVO    MÁGICO   \nELEMENTAL \nVocê invoca um redemoinho, criando ventos fortes \ne poderosos sob seu controle.\nAlcance: 18 m (12 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito: esta magia cria uma zona mágica circular de 3 m (2 q) de raio. Qualquer criatura que \ncomeçar o turno dentro dela sofre 2d10 pontos \nde dano CONTUNDENTE e é empurrada 3 m (2 \nq). Enquanto a zona permanecer ativa, você pode \nusar a habilidade “Movimentar Tufão”.\nM +2 PE [ADICIONA]:\nEfeito: aumenta o dano causado pela magia em \n+1d10 e pela habilidade “Movimentar Tufão” em \n+1d6 pontos de dano do mesmo tipo (respectivamente). Você pode aplicar essa modificação \nquantas vezes quiser.\nB Movimentar Tufão 0 PE\nSUPERFICIAL ATAQUE MÁGICO\nELEMENTAL ELÉTRICO\nAlcance: zona mágica.\nAlvo: uma criatura dentro da zona ou adjacente a \nela.\nAtaque: mágico vs DES.\nAcerto:  1d6 + atributo-chave de conjuração pontos de dano ELÉTRICO.\nErro: você pode escolher movimentar a zona mágica em até 3 m (2 q) antes ou depois de atacar."
+  },
+  {
+    "nome": "Ventriloquismo",
+    "camada": "superficial",
+    "tipo": "utilitario",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "descricao": "SUPERFICIAL        UTILITÁRIO    MÁGICO \nILUSÃO \nVocê projeta sua voz em um ponto distante.\nAlcance: 36 m (24 q).\nAlvo: ponto no alcance.\nComponentes: V, M.\nDuração: uma cena  \n(concentração).\nEfeito: criaturas que estão no local conseguem \nouvir sua voz como se você estivesse naquele \nponto. Você pode falar até 25 palavras por vez \ne pode usar habilidades com o descritor VOZ a \npartir daquele ponto (não é possível conjurar \nmagias a partir daquele ponto). Uma criatura \npode usar sua Bação bônus para fazer um teste \nde INT contra a Proteção do seu atributo-chave \nde conjuração. Em um sucesso, ela percebe que \né uma ilusão e não pode ser afetada por habilidades de VOZ usadas a partir daquele ponto.\nCamada Rasa"
+  },
+  {
+    "nome": "Acalma-multidão",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE ATAQUE\nMÁGICO\nVocê tenta suprimir emoções fortes em um grupo.\nAlcance: 18 m (12 q).\nAlvo: humanóides dentro de uma esfera de 6 \nm (4 q) de raio.\nComponentes: V,S.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs SAB.\nAcerto: escolha um dos efeitos a seguir:\n• você remove a condição Encantado ou \nAmedrontado do alvo e encerra a magia.\n• você torna o alvo Indiferente a criaturas \nhostis à sua escolha. Essa indiferença termina se o alvo for atacado ou se testemunhar \nquaisquer de seus aliados sendo atacados. Ao \nfinal da magia, o alvo percebe que havia sido \nafetado.\n• você melhora a atitude do alvo em uma \ncategoria.\nErro: o alvo percebe que tentou ser afetado.\nEspecial: o alvo pode escolher ser acertado, sem \nnecessidade de teste.\nM +2 [MUDA]\nComponentes: V.\nM +2 [MUDA]\nComponentes: S.\nM +4 [MUDA]\nAcerto: atitude do alvo melhora para a categoria \nAliado. Caso falhe no teste, o alvo percebe que \ntentou ser afetado e tem sua atitude diminuída \nem uma categoria.\nKwame não permite que a magia \n\"Ventriloquismo\" o distraia."
+  },
+  {
+    "nome": "Amarras Elementais",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA OFENSIVO ATAQUE\nMÁGICO ELEMENTAL\nVocê conjura uma série de correntes espectrais que \nprendem a criatura\nAlcance: 9 m (6 q).\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: uma cena \n(concentração).\nEfeito: o alvo fica Agarrado. Ele pode usar uma \nação para fazer um teste de FOR contra a Proteção do seu atributo-chave de conjuração para \nsoltar-se. Em um sucesso, ele sofre 3d6 pontos \nde dano do tipo escolhido e rompe as correntes, \nencerrando a condição. O dano é reduzido em 1d6 \npara cada 5 pontos que superar sua Proteção.\nEspecial: ao aprender essa magia, escolha um \nelemento. O dano é do tipo desse elemento.\nM +2 [MUDA]\nAlcance: 18 m (12 q).\nM +2 PE [ADICIONA]\nEfeito: aumenta o dano causado em +1d6 pontos \nde dano do mesmo tipo, criando mais uma corrente. Você pode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Asas Douradas de Seraph",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA OFENSIVO ATAQUE\nMÁGICO DIVINO RADIANTE\nVocê invoca um par de asas douradas carregadas \nde energia divina, permitindo que você arranque \ne arremesse as penas para atacar.\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S, M.\nDuração: uma cena (concentração).\nEfeito: você ilumina uma esfera de 9 m (6 q) \ncentrada em você. Enquanto a magia estiver ativa, \nvocê pode usar a habilidade “Arrancar Penas”.\nEspecial: ao conjurar essa magia, todas as criaturas adjacentes a você sofrem 1d8 pontos de dano \nRADIANTE.\nB Arrancar Penas 0 pe\nRASA ATAQUE MÁGICO \nDIVINO  RADIANTE\nAlcance: 9 m (24 q).\nAlvo: um criatura.\nAtaque: mágico vs CAR.\nAcerto: escolha um dos efeitos:\n• 2d6 pontos de dano RADIANTE.\n• o alvo fica Desorientado.\n• o alvo recupera 1d6 pontos de vida. Ele pode \nescolher ser acertado neste ataque. \nRainor, um Devoto d'A Vida, usa uma magia \nradiante contra um inimigo."
+  },
+  {
+    "nome": "Aspecto Aracnoide",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE ASPECTO \nMÁGICO  \nVocê toca uma criatura, fazendo com que ela manifeste poderes como uma aranha humanoide.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: uma cena\nEfeito: o alvo recebe deslocamento de escalada \nigual ao seu deslocamento terrestre. Além disso, ele pode usar as habilidades “Bola de Teia” e \n“Tecer Teia”.\nB Bola de Teia 0 pe\nRASA ATAQUE MÁGICO \nAlcance: 18m (12q).\nAlvo: uma criatura.\nAtaque: mágico vs DES.\nAcerto: escolha um dos efeitos:\n• 1d8 pontos de dano CONTUNDENTE\n• o alvo fica Contido até o final da cena.\n• o alvo fica silenciado (não pode usar habilidades com o descritor VOZ ou magias com o \ncomponente verbal) até o final da cena. \nA Tecer teia 0 pe\nRASA ATAQUE MÁGICO \nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nAtaque: Mágico vs DES.\nEfeito: você cria uma rede de teia em uma área \nde 4,5 m (3 q) de raio em alcance, tornando a \nárea terreno difícil. Sempre que criaturas entrarem na área ou começarem seu turno nela, você \npode fazer um ataque mágico vs DES delas. Em \num acerto, a criatura fica presa na teia até o final \ndo seu próximo turno. Uma criatura presa pode \nusar uma ação para tentar libertar-se, repetindo \no ataque. Em um erro, a criatura solta-se e pode \nmover-se normalmente."
+  },
+  {
+    "nome": "Atoleiro Mágico de Dom Guilherme",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA UTILITÁRIO MÁGICO\nUsando as poderosas forças do Arcanum, você \nmanifesta parte do atoleiro mágico que está sob \ncuidados de Dom Guilherme das Vieiras, o Dragão Verde da Nova Alvorada.\nAlcance:  9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito: você cria uma poça elemental de 1,5 m \n(1 q) no alvo. Em seguida, ela expande para 12 \nespaços adicionais à sua escolha, desde que cada \nespaço esteja tocando pelo menos um espaço de \npoça. Inimigos que começarem o turno em cima \nde um espaço de poça sofrem 4d10 pontos de \ndano ÁCIDO. Durante seu turno, você pode usar \numa B ação bônus para reposicionar um número \nde espaços de poça igual ao seu bônus de proficiência.\nEspecial: enquanto você ou um aliado estiver em \ncima de um espaço de poça, ele causa +2d6 de \ndano VENENOSO em seus ataques.\nM +1 PE [ADICIONA]\nEfeito: aumenta o número de poças em +2. Você \npode escolher essa modificação quantas vezes \nquiser."
+  },
+  {
+    "nome": "Bola de Fogo",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA OFENSIVO ATAQUE\nMÁGICO ELEMENTAL ÍGNEO\nUm rastro brilhante lampeja de seu dedo, desabrochando em uma explosão de chamas.\nAlcance: 27 m (18 q).\nAlvo: criaturas dentro de \numa esfera de 6m (4q) \nraio.\nComponentes: V,S,M\nDuração: instantânea.\nAtaque: mágico vs DES.\nAcerto: 8d6 pontos de dano ÍGNEO.\nErro: metade do dano.\nM +1 PE [ADICIONA]\nAcerto: aumenta o dano causado em +1d6. Você pode \naplicar essa modificação quantas vezes quiser.\nM +4 PE [MUDA]\nA magia não explode instantaneamente, sendo concentrada em uma esfera elemental minúscula.\nDuração: uma cena (concentração).\nAcerto: 12d6 pontos de dano ÍGNEO.\nEspecial: ao final do seu turno, o dano da magia aumenta em +1d6. Você pode detonar a esfera com uma \nR reação, encerrando o efeito. Se a esfera for tocada, \nela é detonada e encerra o efeito."
+  },
+  {
+    "nome": "Carroça Astral",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "1 minuto ou mais",
+    "descricao": "SUPERFICIAL UTILITÁRIO MÁGICO \nCRIAÇÃO\nVocê convoca uma carroça vinda diretamente do Arcanum. \nExecução: 1 turno completo.\nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S ,M.\nDuração: até o final do \npróximo descanso longo.\nEfeito: você uma carroça mágica. Ela é grande o suficiente para transportar 6 criaturas Médias de maneira \nconfortável, ignora terreno difícil e se movimenta ao \nseu comando, ignorando a necessidade de um piloto. \nEla tem deslocamento de 12 m (8 q) e reduz as consequências de deslocamento em Cenas de Exploração \nem uma categoria. \nEspecial: caso seja necessário um teste para conduzi-\n-la, você pode usar Arcanismo nesse teste.\nM +2 PE [ADICIONA]\nEfeito: aumenta a capacidade da carroça em +2 criaturas. \nVocê pode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Cubo Gentil",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE CURA\nMÁGICO CRIAÇÃO\nVocê busca energias positivas do Arcanum, que se \ncondensam em um cubo de cores vibrantes.\nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S.\nDuração: uma cena. \nEfeito: um cubo colorido de 1,5 m (1 q) de lado é \ninvocado no espaço. Ele tem uma quantidade de \ncargas igual a 2d6 + o atributo-chave de conjuração.\nUma criatura aliada adjacente a ele pode tocá-lo \npara recuperar pontos de vida. Ela pode gastar uma \nA ação e duas cargas para recuperar 2d4+2 pontos \nde vida, ou uma B ação bônus e uma carga para \nrecuperar 1d4+1 pontos de vida. Essa magia não tem \nefeito sobre mortos-vivos ou constructos.\nEspecial: você pode usar uma  B ação bônus para \nmover o cubo para um espaço desocupado em até \n6 m (4 q), desde que esteja a até 9 m (6 q) dele. \nQuando a última carga for gasta, o cubo desfaz-se \nem purpurina. \nM +1 PE [ADICIONA]\nEfeito: aumenta a quantidade de cargas em \n+1d6+1. Você pode aplicar essa modificação quantas vezes quiser.\nM +2 PE [MUDA]\nEfeito: a criatura recupera 1d6+1 pontos de vida \ncom uma  B ação bônus e 2d6+2 pontos de vida \ncom uma A ação.\nM +2 PE [MUDA] e [ADICIONA]\n[MUDA] Duração: cena (concentração).\n[ADICIONA] Efeito: ao ser invocado, criaturas \nadjacentes ao cubo recuperam 1d4 + 1 pontos de \nvida. No começo do seu turno, você pode gastar \numa quantidade de cargas a sua escolha. Para cada \ncarga que gastar, uma criatura adjacente ao cubo \nrecupera 1d4 + 1 pontos de vida."
+  },
+  {
+    "nome": "Derreter Mente",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 5,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE ATAQUE\nMÁGICO PSÍQUICO\nVocê emana uma forte sobrecarga mental no alvo, \nquebrando seus bloqueios mentais\nAlcance: 27 m (18 q).\nAlvo: toque. \nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs SAB. \nAcerto: 10d6 pontos de dano PSÍQUICO. Além \ndisso, escolha um atributo mental do alvo. Ele fica \nDesprotegido naquele atributo até o próximo \ndescanso.\nErro: metade do dano e não fica permanentemente Desprotegido.\nM +2 PE [ADICIONA]\nAcerto: aumenta o dano causado em +2d6.\nM +4 PE [MUDA]\nEfeito: 10d6 pontos de dano PSÍQUICO. Além disso, fica permanentemente Desprotegido (mental).\nEspecial: você deve sacrificar 2 pontos de ênfase \ntotais para conjurar essa magia."
+  },
+  {
+    "nome": "Desespero das Almas Perdidas",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA OFENSIVO ATAQUE\nMÁGICO NECRÓTICO\nVocê rompe a realidade para buscar gritos e lamentos de almas no Corredor d’A Morte, condensando-as em uma esfera de energia negativa.\nAlcance: 27 m (18 q).\nAlvo:  criaturas dentro \nde uma esfera de 6 m (4 \nq) de raio.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs CON \nAcerto: 6d6 pontos de dano NECRÓTICO.\nErro: metade do dano.\nEspecial: Mortos-vivos e criaturas não vivas são \nimunes a essa magia.\nM +2 PE [ADICIONA]\nAlvo: aumenta o raio da esfera em +3 m (2 q). \nVocê pode aplicar essa modificação quantas vezes \nquiser. \nM +2 PE [ADICIONA]\nAcerto: o alvo fica Amedrontado até o final do \nseu próximo turno. \nM +4 PE [MUDA]\nDuração:  uma cena (concentração). \nEfeito: a esfera de energia negativa permanece no \nlocal pela duração. No início de cada um dos seus \nturnos, você pode fazer um repetir o ataque contra as criaturas na área. \nEspecial: você pode mover a esfera até 9 m (6 \nq) em um local à sua escolha com uma  B ação \nbônus. \nUm poderoso Ocultista, em conexão \ncom o Arcanum."
+  },
+  {
+    "nome": "Gosma Ácida Amigável",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA OFENSIVO CRIAÇÃO \nMÁGICO ELEMENTAL ÁCIDO\nVocê invoca uma gosma ácida amorfa ácida que \né nojenta, fedida e pegajosa, aterrorizando seus \ninimigos.\nAlcance: 18 m (12 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nAtaque: Mágico vs FOR.\nAcerto: criaturas em um cubo de 3 m (2 q) em \nque a gosma foi invocada ou adjacentes à ela sofrem 4d10 pontos de dano ÁCIDO.\nEfeito: esta magia invoca uma gosma ácida (tamanho Grande). Enquanto ela estiver ativa, você \npode usar a habilidade “Comandar Gosma”.\nM +2 PE [ADICIONA]\nEfeito: aumenta o dano causado pela magia e \npelo ataque da habilidade “Comandar Gosma” em \n+1d10 pontos de dano do mesmo tipo. Você pode \naplicar essa modificação quantas vezes quiser.\nB Comandar Gosma 0 pe\nRASA ATAQUE MÁGICO \nELEMENTAL  ÁCIDO\nAlcance: 36 m (24 q).\nAlvo: 1 criatura dentro da gosma ou adjacente a \nela.\nAtaque: Mágico vs FOR.\nAcerto: Escolha um dos efeitos:\n• 1d10 pontos de dano ÁCIDO;\n• o alvo tem sua movimentação reduzida pela metade até o início de seu próximo turno;\n• o alvo fica Agarrado e a gosma fica Agarrando o \nalvo. Ela usa seu atributo-chave de conjuração em \ntestes opostos para continuar agarrando um alvo.\nEspecial: você pode escolher movimentar a gosma 6 m (4 q) antes ou depois do ataque.\nM +2 PE [MUDA]\nAlvo: uma criatura Agarrada pela gosma.\nAcerto: 4d10 pontos de dano ácido e o alvo fica \nDesprotegido até o início do seu próximo turno."
+  },
+  {
+    "nome": "Imobilizar Criatura",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE ATAQUE\nMÁGICO\nUma rajada de energia mental é disparada contra \numa criatura que pode ficar paralisada.\nAlcance: toque.\nAlvo: uma criatura do \ntipo Humanoide, Animal, Planta ou Morto-vivo à sua vista no alcance \nda magia.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs FOR.\nAcerto: o alvo fica Paralisado. Você deve repetir \no ataque no início de cada um de seus turnos, \nencerrando a magia em uma falha.\nM +2 [MUDA]:\nAtaque: mágico vs SAB.\nM +2 [ADICIONA]:\nAlvo:  você também pode escolher uma criatura \ndos tipos Celestial, Constructo, Gosma e Feérico.\nM +2 [ADICIONA]:\nAlvo: você também pode escolher uma criatura \ndos tipos Elemental, Ínfero, Gigante e Monstro."
+  },
+  {
+    "nome": "Invisibilidade da Testemunha",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA CONTROLE ASPECTO \nMÁGICO\nVocê toca uma criatura, que se torna invisível.\nAlcance: toque.\nAlvo: uma criatura.  \nComponentes: V, S, M\nDuração: uma cena \n(concentração).\nEfeito: o alvo fica invisível. Qualquer coisa que \nele estiver usando ou carregando torna-se invisível enquanto estiver em sua posse.\nEspecial: se o alvo efetuar um ataque ou conjurar \numa magia, o efeito encerra-se, assim como a magia.\nM+1 PE [ADICIONA]:\nAlvo: a magia afeta uma criatura adicional. Você \npode aplicar essa modificação quantas vezes quiser.\nM +3 PE [REMOVE]\nEspecial: se o alvo realizar um ataque ou conjurar \numa magia, o efeito encerra-se, assim como a magia."
+  },
+  {
+    "nome": "Ligação Telepática",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA  UTILITÁRIO  MÁGICO\nSUPORTE\nVocê une as consciências através de energia psíquica, criando um elo mental entre os alvos.\nAlcance: toque.\nAlvo: duas criaturas \nvoluntárias.  \nComponentes: S.\nDuração: até o final \ndo próximo descanso \nlongo.\nEfeito: Efeito: enquanto a magia estiver ativa, os \nalvos podem se comunicar telepaticamente, sem \ndependerem de idioma ou distância, mas não \npodendo estar em mundos diferentes.\nM +1 PE [ADICIONA]: \nAlvo:  aumenta o número de criaturas afetadas \nem +1. Você pode aplicar essa modificação quantas vezes quiser.\nM +1 PE [MUDA]\nAlcance: 6 m (4 q).\nM +2 [ADICIONA]:\nEfeito:  além disso, os idiomas conhecidos pelas \ncriaturas passam a ser compartilhados."
+  },
+  {
+    "nome": "Maldição Fúngica de Simon",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA  ATAQUE   MÁGICO\nVENENO \nVocê faz com que cogumelos cresçam e prejudiquem as articulações do alvo.\nAlcance: 18 m (12 q).\nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: instantânea\nAtaque: mágico vs \nCON.\nAcerto: 10d6 pontos de dano VENENOSO e tem \ndesvantagem em testes com atributos físicos até \no início do seu próximo turno.\nErro: metade do dano e não sofre desvantagem.\nM +2 PE [ADICIONA]\nAlcance:  aumenta o dano causado em +2d6 pontos de dano do mesmo tipo."
+  },
+  {
+    "nome": "Mapeamento de Brunmul",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "1 minuto ou mais",
+    "descricao": "RASA UTILITÁRIO MÁGICO\nA magia começa a fluir pelo seu corpo, mapeando \nem um pedaço de papel a região.\nExecução: um minuto.\nAlcance: 15 km.\nAlvo: um pedaço de \npapel que você esteja \nsegurando.\nComponentes: V, S, M.\nDuração: uma cena.\nEfeito: você transforma o papel em um mapa de \ntoda a região no alcance da magia. Enquanto estiver dentro da região mapeada, qualquer criatura \nque estiver segurando o mapa recebe +10 em \ntestes realizados em Cenas de Exploração.\nEspecial: se usado em ambientes fechados, a \nmagia não tem efeito.\nM +1 PE [MUDA]:\nEspecial: a magia funciona em ambientes fechados, revelando as portas secretas do andar. O \npapel não mostra a localização das portas, mas \nbrilha quando você está próximo de uma.\nM +2 PE [ADICIONA]:\nAlcance: aumenta o alcance da magia em +15 km. \nVocê pode aplicar essa modificação quantas vezes \nquiser. \nM +4 PE [MUDA]:\nDuração: uma cena (concentração).\nEfeito: a magia não desenha um mapa estático, mas, sim, um mapa dinâmico de uma região \nmenor (até 5 km), que se atualiza conforme você \nse move pela área. Você pode ver as mudanças no \nterreno, no clima e na presença de criaturas em \ntempo real."
+  },
+  {
+    "nome": "Montaria Arcana",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 4,
+    "execucao": "1 minuto ou mais",
+    "descricao": "RASA      CONTROLE MÁGICO \nELEMENTAL   SUPORTE\nVocê invoca uma montaria diretamente do Arcanum.\nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, M.\nDuração: até o final de \nseu próximo descanso \nlongo.\nEfeito: você invoca uma criatura do tipo montaria com ND igual ou menor a 2. Enquanto estiver \nmontado nela, você tem acesso a todas as suas \nhabilidades de montaria e não precisa fazer testes \npara conjurar magias.\nEspecial: você pode usar seu atributo-chave de \nconjuração em testes que envolvam conduzi-la.\nM +1 PE [ADICIONA]:\nEfeito: você aumenta o ND da criatura em +1. Você \npode aplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Pele de Urodelo",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA      CONTROLE MÁGICO \nELEMENTAL   SUPORTE\nO alvo afetada por essa magia fica com a pele \ncoberta por pintinhas mágicas capazes de ampliar \na resistência contra dano elemental.\nAlcance: toque.\nAlvo: uma criatura.\nComponentes: V, S.\nDuração: uma cena \n(concentração).\nEfeito: escolha um elemento. O alvo fica Protegido contra todos os ataques com que causem dano \ndo mesmo tipo que o elemento ou que tenham o \ndescritor ELEMENTAL. Além disso, o alvo ganha \nresistência ao tipo de dano do elemento escolhido.\nM +1 PE [ADICIONA]:\nAlvo: uma criatura adicional é afetada. Você pode \naplicar essa modificação quantas vezes quiser.\nM +2 PE [MUDA]:\nDuração: uma cena.\nM +3 PE [ADICIONA]:\nEfeito: o alvo passa a ter vantagem em ataques \ncontra criaturas do tipo ELEMENTAL."
+  },
+  {
+    "nome": "Portal Dimensional",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "TRUQUE UTILITÁRIO MÁGICO\nVocê rompe o Arcanum temporariamente, criando \nportais interconectados.\nAlcance: 18 m (12 q).\nAlvo: dois espaços \nvazios no alcance.\nComponentes: V, S, M.\nDuração: até o final do \nseu próximo turno.\nEfeito: você cria dois portais de 1,5 m (1 q) de diâmetro, um dentro do alcance e outro em qualquer \nlugar que possa ver, desde que não esteja ocupado por uma criatura ou um objeto. Os portais são \nconectados por um túnel extradimensional que \ndura até o final do seu próximo turno. Qualquer \ncriatura que entrar em um dos portais sai pelo outro, e vice-versa. Você pode usar sua ação bônus \npara fechar um dos portais, encerrando a magia.\nM +2 PE [ADICIONA]: \nEfeito: aumenta o diâmetro dos portais em +1,5 m \n(1 q). Você pode aplicar essa modificação quantas \nvezes quiser.\nM +2 PE [ADICIONA]:\nEfeito: você pode criar um portal adicional em \num lugar que possa ver, desde que não esteja \nocupado por uma criatura ou um objeto. Pode conectar os portais da forma que quiser, como ação \nlivre, desde que cada portal tenha apenas uma \nsaída. Você pode aplicar essa modificação quantas \nvezes quiser.\nM +4 PE [MUDA & ADICIONA]:\n[MUDA]: Duração: uma cena.\n[ADICIONA]: Especial: os portais não se fecham \napós o seu próximo turno, mas permanecem \nabertos pela duração. Você pode usar sua B ação \nbônus para abrir ou fechar um dos portais, sem \nencerrar a magia. Também pode mudar a localização de um dos portais com sua B ação bônus \npara um lugar que possa ver, desde que não esteja \nocupado por uma criatura ou um objeto."
+  },
+  {
+    "nome": "Pó Ruidoso Catalisado",
+    "camada": "rasa",
+    "tipo": "ofensivo",
+    "custo_enfase": 3,
+    "execucao": "ação bônus",
+    "descricao": "RASA     OFENSIVO  MÁGICO \nTROVEJANTE \nVocê invoca um punhado de pó ruidoso catalisado \ndiretamente do Arcanum.\nAlcance: toque. \nAlvo: Uma arma com o \ndescritor DISPARÁVEL \nou ARREMESSÁVEL.\nComponentes: S.\nDuração: uma cena.\nEfeito: ao acertar um ataque com essa arma, \nvocê pode detonar o pó em um estrondo barulhento para causar +2d6 pontos de dano adicional TROVEJANTE e pode usar a habilidade \n“Detonação Ruidosa”.\nEspecial: após usar a habilidade “Detonação Ruidosa”, o efeito da magia é encerrado.\nM +1 PE [ADICIONA]:\nEfeito: aumenta o dano causado pela magia e \npela habilidade “Detonação Ruidosa” em +1d6 \npontos de dano do mesmo tipo. Você pode aplicar \nessa modificação quantas vezes quiser.\nM +2 PE [ADICIONA]:\nEfeito: além do normal, em um acerto, você \nempurra os alvos em uma direção a sua escolha. \nEles são empurrados 1,5 m (1 q) para cada d6 de \ndano que sofrerem (tanto pela magia quanto pela \nhabilidade “Detonação Ruidosa”).\nM +3 PE [MUDA]: \nEspecial: a magia não se encerra após o pó ser \ndetonado, mas isso só pode acontecer uma vez \npor rodada. Também não é possível detoná-lo \nduas rodadas seguidas.\nL Detonação \nRuidosa 0 pe\nRASA ATAQUE MÁGICO\nTROVEJANTE\nAlvo: criaturas em uma \nesfera de raio 4,5 m (3 \nq) centrada no alvo do \nataque.\nDuração: instantânea.\nAtaque: mágico vs \nCON.\nAcerto: 2d6 pontos de dano TROVEJANTE.\nErro: metade do dano.\nEspecial: a detonação é centrada no alvo do ataque que você aplicou o “Pó Ruidoso Catalisado”."
+  },
+  {
+    "nome": "Psionismo",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 4,
+    "execucao": "ação",
+    "descricao": "RASA     CONTROLE  MÁGICO  \nVocê cria um padrão distorcido de cores que serpenteia no ar, hipnotizando os alvos.\nAlcance:  36 m (24 q).\nAlvo: criaturas dentro \nde um cubo de 9 m (6 \nq) de lado.\nComponentes: S, M.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs SAB.\nAcerto: os alvos ficam Enfeitiçados. Criaturas \nafetadas por esta magia estão incapacitadas e têm \ndeslocamento igual a 0 m.\nEspecial: a magia se encerra caso o alvo sofra \ndano enquanto está afetado por ela, ou se alguém \nusar uma ação para sacudi-lo.\nM +2 PE [ADICIONA]:\nVocê projeta sua mente para um local, podendo \nver e ouvir a partir de lá.\nExecução: 10 minutos.\nAlcance: 1,5 km.\nAlvo: um local famíliar (um lugar que visitou ou \nque já tenha visto), ou um local óbvio, mas que \nnão lhe seja familiar (como atrás de uma porta, \ncontornando uma esquina ou em um bosque).\nEfeito: você cria um sensor invisível no local e \npode ver e ouvir como se estivesse no espaço \nocupado por ele. \nEspecial: o sensor não pode ser atacado nem \nser alvo de qualquer outro tipo de interação, mas \numa criatura que possa ver objetos invisíveis o \nvê, enxergando um orbe luminoso e intangível do \ntamanho de um punho."
+  },
+  {
+    "nome": "Revelar Motivação Oculta",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "descricao": "RASA     UTILITÁRIO  MÁGICO  \nVocê usa os buracos do Arcanum para entrar na \nmente do seu alvo e procurar informações importantes.\nAlcance: 18 m (12 q).\nAlvo: uma criatura no \nalcance.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs CAR.\nAcerto: escolha dois dos efeitos:\n• Amor ou Desejo: revela o nome da criatura \nou objeto de grande afeto.\n• Intenção: revela o curso de ações nas próximas rodadas (pode mudar de acordo com \nações futuras)\n• Origens: revela o tipo da criatura, além da \nhierarquia e arquétipos se tiver.\n• Habilidades: revela todas as informações \nde 1d4 habilidades, iniciando por aquelas com \nrecarga e seguindo por ordem da ficha\n• Passos da Morte: revela quantas falhas em \ntestes de morte a criatura já teve\n• Pontos de Sombra: revela quantos pontos \nde sombra a criatura ainda tem disponíveis.\nErro: escolha apenas um dos efeitos.\nErro: Escolha 1 em vez disso.\nM +2 PE [ADICIONA]:\nAcerto: escolha +1 dos efeitos dentre as opções."
+  },
+  {
+    "nome": "Seraph da Guarda",
+    "camada": "rasa",
+    "tipo": "utilitario",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA  UTILITÁRIA      ATAQUE    \nMÁGICO  DIVINO CRIAÇÃO\nVocê convoca um corifeu menor para sua proteção.\nAlcance: 9 m (6 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena.\nEfeito: você invoca um Seraph, que o acompanha. Enquanto estiver adjacente a você, você fica \nProtegido (físico).\nEfeito: você pode usar uma B ação bônus para \nmover o corifeu para um espaço desocupado a até \n9 m (6 q) de uma criatura, que passa a ser acompanhada por ele, recebendo seus benefícios. O anjo \ndesloca-se junto da criatura que está acompanhando.\nM +1 PE [MUDA]:\nEfeito: o corifeu deixa a criatura acompanhada \nProtegida (mental).\nM +4 PE [ADICIONA]:\nEfeito: sempre que a criatura acompanhada for \nalvo de uma magia com o descritor CURA, ela \nrecebe +1 de redução, cumulativo. O máximo de \nredução que pode ser obtido dessa maneira é \nigual ao seu atributo-chave de conjuração.\nAlthea Ralel usa o poder de \nsua herança ancestral."
+  },
+  {
+    "nome": "Velocidade de Enoch",
+    "camada": "rasa",
+    "tipo": "controle",
+    "custo_enfase": 3,
+    "execucao": "ação",
+    "descricao": "RASA  CONTROLE     MÁGICO   \nSUPORTE \nVocê concentra a energia cinética de Enoch que \npaira pelo Arcanum em uma criatura singular, \nexpandindo sua capacidade de movimento e ação.\nAlcance: 9 m (6 q).\nAlvo: uma criatura \nvoluntária.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito:  o deslocamento do alvo é dobrado, ganhando +2 em Proteções físicas e ganhando uma \nação bônus adicional em cada um de seus turnos. \nEssa ação não pode ser usada para conjurar magias.\nEspecial: quando a magia termina, o alvo não \npode mover-se ou executar ações até o final de \nseu próximo turno, por conta da onda de letargia \nque o domina.\nM +2 PE [ADICIONA]:\nEfeito: a criatura recebe uma ação adicional em \nvez de uma ação bônus.\nM +2 PE [MUDA]:\nDuração: uma cena.\nM +4 PE [ADICIONA]:\nEfeito: a criatura recebe uma ação adicional, além \nda ação bônus adicional. Ao final da magia, a criatura também fica Desprotegida (todos) até o final \ndo próximo turno.\nCamada Profunda"
+  },
+  {
+    "nome": "Atração Gravitacional de Carminha",
+    "camada": "profunda",
+    "tipo": "utilitario",
+    "custo_enfase": 6,
+    "execucao": "ação",
+    "descricao": "PROFUNDA UTILITÁRIO MÁGICO\nAlcance: pessoal.\nAlvo: você.\nComponentes: V, S.\nDuração: uma cena (concentração). \nEfeito: você pode usar a habilidade “Controle Gravitacional”.\nB Controle \nGravitacional -\nPROFUNDA UTILITÁRIO ATAQUE\nMÁGICO \nAlcance: 18 m (12 q).\nAlvo: um objeto que não pese mais do que 500 quilos e \nnão esteja sendo empunhado, vestido ou carregado\nDuração: instantânea.\nEfeito: você pode mover o alvo a até 9 m (6 q) em \nqualquer direção, dentro do alcance da magia.\nEspecial: você é capaz de exercer um controle preciso \nsobre objetos agarrados pela telecinésia, podendo \ninteragir com ele como se estivesse empunhando ele e \nignorasse o seu peso.\nEspecial: você pode usar essa habilidade com uma ação \nlivre até o final do turno em que conjurou a magia.\nM +0 PE [MUDA]\nAlvo: uma criatura. \nDuração: instantânea. \nAtaque: mágico vs CON.\nAcerto: 9d6 pontos de dano CONTUNDENTE.\nM+0 PE [MUDA]\nAlvo: uma criatura. \nDuração: até o final do \nseu próximo turno.\nAtaque: mágico vs FOR.\nAcerto: o alvo fica Agarrado e é movido 9 m (6 q) em \nqualquer direção (inclusive para cima), ficando suspenso no ar. Ele não pode ser movido para além do alcance \nda habilidade desta forma.\nM+0 PE [MUDA]\nAlvo: uma criatura.  \nDuração: instantânea.\nAtaque: mágico vs DES.\nAcerto: você puxa um objeto que não pesa mais do que \n500 quilos em posse do alvo, movendo-o para até 9 m (6 \nq) em qualquer direção, dentro do alcance da magia."
+  },
+  {
+    "nome": "Carruagem Elemental de Ruedim",
+    "camada": "profunda",
+    "tipo": "ofensivo",
+    "custo_enfase": 7,
+    "execucao": "ação",
+    "descricao": "PROFUNDA OFENSIVO ATAQUE\nMÁGICO ELEMENTAL\nVocê manifesta poderosa energia arcana e evoca \numa carruagem elemental voadora, que bombardeia as criaturas na área.\nAlcance: 9 m (6 q).\nAlvo: criaturas em uma \nlinha reta de 9 m (6 q) \nno caminho da carruagem.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs DES.\nAcerto: 15d6 pontos de dano do elemento escolhido.\nErro: metade do dano.\nEfeito: uma carruagem elemental de tamanho \nGrande é invocada a até 3 m (2 q) de altura e desloca-se em linha reta.\nEspecial: ao aprender essa magia, escolha um \nelemento. O dano é do tipo desse elemento.\nM +1 PE [ADICIONA]\nAcerto: aumenta o dano causado em +1d6 pontos \nde dano do mesmo tipo. Você pode aplicar essa \nmodificação quantas vezes quiser.\nM +1 PE [ADICIONA]\nAlvo: a largura da linha aumenta em +1,5 m (1 \nq). Você pode aplicar essa modificação quantas \nvezes quiser.\nM+2 PE [ADICIONA]\nDescritor: MOVIMENTAÇÃO\nEspecial: escolha um aliado no caminho da carruagem. Ele não sofre o dano da magia e é transportado com ela. No final do movimento dela, o \naliado escolhe um espaço adjacente ao da carruagem para ficar."
+  },
+  {
+    "nome": "Cone de Peste",
+    "camada": "profunda",
+    "tipo": "ofensivo",
+    "custo_enfase": 6,
+    "execucao": "ação",
+    "descricao": "PROFUNDA OFENSIVO ATAQUE\nMÁGICO NECRÓTICO\nVocê espalha um miasma de morte.\nAlcance: pessoal.\nAlvo: criaturas dentro de \num cone de 18m (12q ) de \ncomprimento.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs \nCON.\nAcerto: 8d8 pontos de dano NECRÓTICO. Além \ndisso, o alvo fica envenenado até o final da cena.\nErro: metade do dano e não sofre a condição.\nM +1 PE [ADICIONA]\nAcerto: aumenta o dano causado em +2d8 pontos \nde dano do mesmo tipo."
+  },
+  {
+    "nome": "Escolher a Proteção",
+    "camada": "profunda",
+    "tipo": "controle",
+    "custo_enfase": 9,
+    "execucao": "ação",
+    "descricao": "PROFUNDA CONTROLE MÁGICO\nVocê controla como o combate se desenrola, escolhendo como o alvo é acertado.\nAlcance: 9 m (6 q).\nAlvo: uma criatura.\nComponentes: V,S\nDuração:  uma cena.\nAtaque: mágico vs (Ver \no Especial).\nAcerto: escolha uma Proteção. Todos os ataques \nfeitos contra Proteções do mesmo tipo (física ou \nmental) deverão ser feitos contra ela.\nEspecial: o ataque dessa magia é feito contra a \nProteção escolhida.\nEspecial: aliados são acertados automaticamente \npor essa magia e ela recebe o descritor ASPECTO.\nM +3 PE [ADICIONA]\nAcerto: todos os ataques feitos contra o alvo são \nfeitos contra a Proteção escolhida."
+  },
+  {
+    "nome": "Grande Mão Arcana",
+    "camada": "profunda",
+    "tipo": "utilitario",
+    "custo_enfase": 6,
+    "execucao": "ação",
+    "descricao": "PROFUNDA UTILITÁRIO CRIAÇÃO \nMÁGICO\nVocê invoca uma mão imensa para agarrar e \nesmagar seus inimigos.\nAlcance: 36 m (24 q).\nAlvo: espaço vazio no \nalcance.\nComponentes: V, S, M.\nDuração: uma cena \n(concentração).\nEfeito: você cria e controla uma mão de tamanho \nGrande. Enquanto estiver ativa, pode usar a habilidade “Punho Cerrado”. Além disso, pode fazer \n“Ataques de Superioridade” a partir da mão, tendo vantagem em testes contra alvos de tamanho \nMédio ou menor.\nEspecial: Você pode movê-la 18 m (12 q) com uma \nB ação bônus.\nM +2 PE [ADICIONA] \nEspecial: aumenta o dano causado pela mão em \nmais dois dados do mesmo tipo. Você pode aplicar \nessa modificação quantas vezes quiser.\nA Punho Cerrado 0 pe\nPROFUNDA UTILITÁRIO CRIAÇÃO \nMÁGICO ATAQUE ENERGÉTICO\nAlcance: uma criatura.\nAlvo: 1,5 m (1 q) dela.\nAtaque: mágico vs DES.\nAcerto: 4d8 pontos de dano ENERGÉTICO.\nM +0 PE [ADICIONA] \nExecução: B ação bônus. \nAlvo: uma criatura que a mão esteja Agarrando.\nAcerto: o alvo fica Agarrado.\nEfeito: 2d6 + o atributo-chave de conjuração \npontos de dano CONTUNDENTE."
+  },
+  {
+    "nome": "Familiar Maior de Telaril",
+    "camada": "profunda",
+    "tipo": "utilitario",
+    "custo_enfase": 6,
+    "execucao": "1 minuto ou mais",
+    "descricao": "PROFUNDA UTILITÁRIO MÁGICO\nCRIAÇÃO\nVocê toca uma criatura ou objeto sem consciência \ne o desperta temporariamente através do conhecimento obtido pelos dos labirintos do Arcanum.\nExecução: 8 horas.\nAlcance: toque.\nAlvo: uma criatura do \ntipo Fera ou um objeto \ninanimado de até 20 de \nvolume.\nComponentes: V, S, M.\nDuração: até o final do \npróximo descanso.\nEfeito: você desperta consciência no alvo. Se for \num objeto inanimado, primeiro ele é transformado em uma Fera com ND igual ou inferior ao seu \nbônus de proficiência. Se o alvo for uma Fera (ou \nfoi transformado em Fera), é transformado em \num familiar (veja a magia Manifestar Familiar). Ele \nretém todas as características e estatísticas da \ncriatura e recebe os benefícios de familiar, além \nde:\n• seus ataques causam +1d6 pontos de dano \npor bônus de proficiência;\n• ele recebe o dobro de cargas de vida;\n• ele tem todos os tipos de um familiar.\nM +4 PE [MUDA] e [ADICIONA] \n[MUDA] Duração: permanente. \n[ADICIONA] Especial: você só pode ter um familiar permanente por vez. Quando conjurar essa \nmagia novamente com essa modificação, o familiar \nantigo é destruído."
+  },
+  {
+    "nome": "Ilha Cadente",
+    "camada": "profunda",
+    "tipo": "ofensivo",
+    "custo_enfase": 8,
+    "execucao": "1 minuto ou mais",
+    "descricao": "PROFUNDA OFENSIVO MÁGICO\nESPECIAL\nContrário a todo e qualquer bom-senso, você \nconsegue raptar um grande pedaço de terra do \nArcanum e fazê-lo colidir com Opath.\nExecução: 1 hora.\nAlcance:  72 m (48 q).\nAlvo: criaturas dentro \nde uma esfera de 18 m \n(12 q) de raio.\nComponentes: V, S, M.\nDuração: instantânea.\nEfeito: 10d12+60 pontos de dano ESPECIAL.\nEspecial: o esforço necessário para conjurar essa \nmagia faz com que você sacrifique 3 pontos de \nênfase permanentemente."
+  },
+  {
+    "nome": "Palavras de Poder",
+    "camada": "profunda",
+    "tipo": "controle",
+    "custo_enfase": 8,
+    "execucao": "ação",
+    "descricao": "PROFUNDA CONTROLE MÁGICO\nVocê evoca palavras ancestrais, afetando o alvo de \nmaneira brutal.\nAlcance: 18 m (12 q).\nAlvo: uma criatura que \npossa ouvi-lo.\nComponentes: V.\nDuração: instantânea.\nAtaque: mágico vs SAB.\nAcerto: o alvo fica Machucado e seus pontos de \nvida são diminuídos de acordo.\nErro: 10d12 pontos de dano ESPECIAL.\nEspecial: você deve sacrificar 1 ponto de ênfase \npermanentemente para conjurar essa magia.\nM +3 PE [MUDA] \nAlvo: uma criatura \nMachucada que possa \nouvi-lo.\nDuração: até o início do \nseu próximo turno.\nAlvo: o alvo fica Atordoado.\nEspecial: você não precisa sacrificar pontos de \nênfase permanentemente para conjurar essa \nmagia.\nM +4 PE [MUDA] \nAlvo: uma criatura Machucada.\nAcerto:  alvo morre.\nEspecial: você deve sacrificar 3 pontos de ênfase \npermanentemente para conjurar essa magia."
+  },
+  {
+    "nome": "Porta com P Maiúsculo",
+    "camada": "profunda",
+    "tipo": "utilitario",
+    "custo_enfase": 7,
+    "execucao": "1 minuto ou mais",
+    "descricao": "PROFUNDA UTILITÁRIA  MÁGICO\nVocê invoca uma Porta, que dá acesso a uma Sala \n(lembre-se de requerer autorização da DIPS para \nsua Saleta).\nAlcance: 90 m (60 q). \nComponentes: V, S, M.\nDuração: 24 horas.\nEfeito: você conjura uma sala extradimensional. \nVocê escolhe onde a única entrada está localizada \n– ela pode ser de qualquer tipo e forma, podendo \nser acessada com uma palavra de comando ou \nativação manual específica. Dentro da Porta existe \numa Sala.\nEspecial: o local pode ter a configuração que \nvocê preferir, com no máximo 100 cubos (considerando que cada cubo tem 1,5 m (1 q) de lado). \nO lugar é mobiliado e decorado à escolha de \nquem conjura a magia. Mobiliário e outros objetos \ncriados por esta magia dissipam-se em fumaça se \nforem retirados da Sala.\nEspecial: quando a magia termina, quaisquer \ncriaturas dentro do espaço extradimensional são \nexpelidas em espaços abertos o mais próximo da \nentrada.\nM +1 PE [ADICIONA] \nEfeito: se conjurar essa magia na mesma sala por \numa lua (5 dias), a Porta torna-se permanente.\nEspecial: é preciso sacrificar 1 ponto de ênfase \npara torná-la permanente."
+  },
+  {
+    "nome": "Quarteto de Sopro da Ordem",
+    "camada": "profunda",
+    "tipo": "controle",
+    "custo_enfase": 6,
+    "execucao": "ação",
+    "descricao": "PROFUNDA     CONTROLE   MÁGICO \nTROVEJANTE \nTrompetas mágicas repletas de olhos e asas angelicais formam-se ao seu redor e, quando sopram os \ncânticos d’A Ordem, as criaturas à sua volta têm \nsuas mentes despedaçadas.\nAlcance: 36 m (24 q).\nAlvo: criaturas à sua \nescolha.\nComponentes: V, M.\nDuração: uma cena \n(concentração).\nAtaque: mágico vs. \nCAR.\nAcerto: 12d6 pontos de dano TROVEJANTE. \nErro: metade do dano.\nEfeito: o quarteto fica flutuando à sua volta. \nDurante seus turnos, você pode usar uma ação \nbônus para conjurar a magia “Sugestão” sem usar \npontos de ênfase. Você pode fazer isso quatro \nvezes antes de a magia dissipar."
+  },
+  {
+    "nome": "Raio Ricocheteante de Roberto",
+    "camada": "profunda",
+    "tipo": "ofensivo",
+    "custo_enfase": 7,
+    "execucao": "ação",
+    "descricao": "PROFUNDA     OFENSIVO    ATAQUE  \nMÁGICO  TROVEJANTE\nVocê invoca uma reação em cadeia para derrubar \nvários inimigos. \nAlcance: 27 m (18 q). \nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: instantânea.\nAtaque: mágico vs \nCON.\nAcerto:  8d8 pontos de dano TROVEJANTE.\nErro: metade do dano.\nEfeito: quatro raios saltam do alvo, afetando quatro criaturas a até 9 m (6 q) do alvo à sua escolha.\nEspecial: ma criatura só pode ser atingida por um \nraio por turno. \nM +2 PE [ADICIONA]\nEfeito: um raio adicional salta do alvo. Você pode \naplicar essa modificação quantas vezes quiser."
+  },
+  {
+    "nome": "Regeneração de Mirandinha",
+    "camada": "profunda",
+    "tipo": "controle",
+    "custo_enfase": 8,
+    "execucao": "ação",
+    "descricao": "PROFUNDA     CONTROLE     CURA   \nMÁGICO  \nVocê toca uma criatura e estimula a capacidade \nde cura natural dela\nAlcance: Toque. \nAlvo: uma criatura.\nComponentes: V, S, M.\nDuração: cena (concentração).\nAcerto: o alvo recupera 20 pontos de vida. Além \ndisso, no início de cada um dos seus turnos, o alvo \nrecupera 1 ponto de vida.\nEspecial: membros amputados do corpo do alvo \n(dedos, pernas, cauda e assim por diante) há menos de um dia são restaurados após 2 minutos. Se \nvocê tiver a parte amputada do corpo e segurar \nela no coto, a magia instantaneamente faz com \nque o membro se conecte.\nEspecial: se conjurada fora de uma cena de desafio ou combate, a duração dessa magia muda para \n1 hora.\nM +1 PE [ADICIONA]\nEfeito: aumenta a quantidade de pontos de vida \nrecuperados ao ser afetado em +5 e no início do \nturno em +1. Você pode aplicar essa modificação \nquantas vezes quiser"
+  }
+]

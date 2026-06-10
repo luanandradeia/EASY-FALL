@@ -1,0 +1,10 @@
+[
+  {"nome": "Magia com Gatilho", "raridade": "comum", "multiplicador": 1, "descricao": "Guarda um comando vocal que determina um gatilho para disparar a magia. Quando afetada pela magia, guarda o efeito, disparando apenas quando o gatilho acontecer."},
+  {"nome": "Magia Distante", "raridade": "comum", "multiplicador": 1, "descricao": "Dobra o alcance da magia."},
+  {"nome": "Magia com Novo Alvo", "raridade": "incomum", "multiplicador": 2, "descricao": "Guarda um comando vocal que determina um novo alvo para magias (de 'a criatura mais próxima' até 'aquele ogro lá na frente'). Mantém o alcance normal."},
+  {"nome": "Magia Potente", "raridade": "incomum", "multiplicador": 2, "descricao": "Magias de dano causam +3 pontos de dano por cada dado de dano da magia."},
+  {"nome": "Magia em Área (Esfera)", "raridade": "rara", "multiplicador": 3, "descricao": "Muda a área de efeito para uma esfera de 3m de raio. Conserva o alcance original, que se torna o centro da esfera."},
+  {"nome": "Magia em Área (Cone)", "raridade": "rara", "multiplicador": 3, "descricao": "Muda a área de efeito para um cone de 9m a partir da sinapse."},
+  {"nome": "Magia em Área (Linha)", "raridade": "rara", "multiplicador": 3, "descricao": "Muda a área de efeito para uma linha de 18m a partir da sinapse."},
+  {"nome": "Magia Permanente", "raridade": "muito_rara", "multiplicador": 4, "descricao": "A magia fica com efeito permanente enquanto a sinapse estiver ativa."}
+]

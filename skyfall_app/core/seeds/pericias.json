@@ -1,0 +1,18 @@
+[
+  {"nome": "Apresentação", "descricao": "Trato com público ao performar — música, dança, atuação, narrativa ou outra forma de entretenimento — além de manter um personagem e estar bem apresentado. Substitui Atuação."},
+  {"nome": "Aptidão", "descricao": "Habilidade com ferramentas e entendimento de processos de profissões comuns (Forja, Veneno, Pescaria, Alquimia, Destilação, Cartografia, Alfaiataria, Culinária, Pintura, Artesanato, Navegação, Instrumentos musicais). Ao escolher, vira 'Aptidão com __'. Substitui Ferramentas."},
+  {"nome": "Arcanismo", "descricao": "Domínio de assuntos e atividades mágicas relativas ao Arcanum: magias, itens mágicos, símbolos esotéricos e cosmologia de Opath."},
+  {"nome": "Cultura", "descricao": "Sociedade, atualidades, costumes e noções culturais ao redor de Opath, teóricas e práticas. Substitui História."},
+  {"nome": "Diplomacia", "descricao": "Capacidade de ser diplomático e convincente e conhecimento das relações político-diplomáticas. Substitui Persuasão."},
+  {"nome": "Doutrinas", "descricao": "Religião, liturgia, teologia, conhecimento das deusas, titãs, mitos, rituais e símbolos divinos. Substitui Religião."},
+  {"nome": "Furtividade", "descricao": "Capacidade de esgueirar-se, passar despercebido, ser sigiloso, silencioso ou ocultar objetos."},
+  {"nome": "Intimidação", "descricao": "Ameaçar, coagir ou cooptar alguém a algo."},
+  {"nome": "Intuição", "descricao": "Determinar as verdadeiras intenções por trás de uma ação, notar mentiras ou prever um próximo movimento; perceber o que está dissonante em uma situação."},
+  {"nome": "Magitec", "descricao": "Atividades magitec, como campo de estudo e como ofício na construção de objetos tecnológicos feitos com base em magia. Pode ser utilizada como uma Aptidão."},
+  {"nome": "Malandragem", "descricao": "Ter os contatos certos, saber se virar em ambientes urbanos, arrombar portas e sabotar mecanismos. Substitui Prestidigitação."},
+  {"nome": "Manipulação", "descricao": "Manipular a verdade e as pessoas, mentir e trapacear sem ser notado. Substitui Enganação."},
+  {"nome": "Medicina", "descricao": "Primeiros socorros, necrópsia, doenças, enfermidades, ferimentos, medicamentos e cura."},
+  {"nome": "Natureza", "descricao": "Ambiente natural, terrenos, biomas, plantas, animais, ciclos e fenômenos naturais; rastrear criaturas e adestrar animais. Unifica Natureza, Adestrar Animais e Sobrevivência."},
+  {"nome": "Percepção", "descricao": "Detectar, ouvir ou notar a presença de algo, procurar pistas ou examinar textos em busca de informação. Unifica Percepção e Investigação."},
+  {"nome": "Preparo Físico", "descricao": "Preparo físico: agilidade, resistência e condicionamento — saltos, corridas, natação, escalada e acrobacias. Unifica Acrobacia e Atletismo."}
+]

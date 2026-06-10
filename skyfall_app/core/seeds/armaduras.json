@@ -1,0 +1,11 @@
+[
+  {"nome": "Armadura acolchoada", "categoria": "leve", "preco": 5, "reducao_dano": 1, "volume": 1, "descritores": ["BARULHENTA"], "descricao": "Proteção simples, feita de pele e enchimento de penas. Extremamente desconfortável."},
+  {"nome": "Armadura de couro", "categoria": "leve", "preco": 20, "reducao_dano": 1, "volume": 2, "descritores": [], "descricao": "Proteção comum entre mercenários e aventureiros inexperientes, reforçada com pequenas placas de couro em locais estratégicos."},
+  {"nome": "Couro batido", "categoria": "leve", "preco": 40, "reducao_dano": 2, "volume": 3, "descritores": [], "descricao": "Armadura utilizada por guardas de pequenas cidades e reforçada com pequenas placas metálicas."},
+  {"nome": "Brunea", "categoria": "pesada", "preco": 40, "reducao_dano": 3, "volume": 3, "descritores": ["BARULHENTA"], "descricao": "Armadura pesada com placas metálicas."},
+  {"nome": "Cota de malha", "categoria": "pesada", "preco": 100, "reducao_dano": 3, "volume": 4, "descritores": [], "descricao": "Armadura composta por uma malha metálica resistente, geralmente feita de anéis hexagonais."},
+  {"nome": "Meia armadura", "categoria": "pesada", "preco": 350, "reducao_dano": 4, "volume": 7, "descritores": ["BARULHENTA"], "descricao": "Armadura de placas que cobre parte do corpo, foco em equilíbrio entre proteção e mobilidade."},
+  {"nome": "Armadura completa", "categoria": "pesada", "preco": 1500, "reducao_dano": 5, "volume": 9, "descritores": ["BARULHENTA"], "descricao": "Armadura metálica que cobre o corpo inteiro do combatente."},
+  {"nome": "Escudo leve", "categoria": "escudo", "preco": 5, "reducao_dano": 1, "volume": 2, "descritores": [], "descricao": "Escudo de couro reforçado."},
+  {"nome": "Escudo pesado", "categoria": "escudo", "preco": 15, "reducao_dano": 2, "volume": 3, "descritores": [], "descricao": "Escudo feito com liga metálica."}
+]

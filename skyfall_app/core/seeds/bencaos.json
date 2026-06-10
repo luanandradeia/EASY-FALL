@@ -1,0 +1,122 @@
+[
+  {
+    "nome": "A Civilidade e o Equilíbrio",
+    "descricao": "você tem vantagem \nem testes para decifrar mentiras e desvantagem \nem testes para mentir ou enganar."
+  },
+  {
+    "nome": "A Lei",
+    "descricao": "você recebe proficiência em Cultura. Além \ndisso, você nunca esquece uma informação que \nregistrou por escrito."
+  },
+  {
+    "nome": "A Sorte Sorri",
+    "descricao": "sempre que for jogar um dado de \ncatarse, você pode usar 1 ponto de ênfase para \nusar dados de oito faces (d8) em vez de dados \nde seis faces (d6)."
+  },
+  {
+    "nome": "Abraço Ctônico",
+    "descricao": "você aprende o truque “Raio \nElemental (T erra)”. A partir do 5º e 9º nível, \nconsidere como se tivesse acesso a magias de camada RASA e PROFUNDA, respectivamente, para \ndeterminar modificações nesse truque."
+  },
+  {
+    "nome": "Abraço d’A Vida",
+    "descricao": "você aprende a magia \"Curar \nFerimentos\". Além disso, aumenta a quantidade \nde pontos de vida restaurados por essa magia \nem +1d8."
+  },
+  {
+    "nome": "Adequar-se ao Meio",
+    "descricao": "você recebe vantagem em \ntodos os testes que envolvam esconder-se ou \nmisturar-se a multidões."
+  },
+  {
+    "nome": "Aquilo Que Alimenta o Fogo",
+    "descricao": "você consegue \ndesvendar o que realmente motiva uma criatura. Você pode usar a habilidade “Alimento das \nChamas”.\nA Alimento das \nchamas 2 PE\nBENÇÃO MÁGICO"
+  },
+  {
+    "nome": "Aprimorar e Desenvolver",
+    "descricao": "ao final de uma Cena \nde Descanso longo, você pode usar 2 pontos de \nênfase para aplicar um descritor de equipamento (não mágico) em uma arma à sua escolha. O \ndescritor permanece na arma até seu próximo \ndescanso longo."
+  },
+  {
+    "nome": "Chamas da Vingança",
+    "descricao": "as chamas d’A Fúria \nqueimam seu corpo, mas são destinadas aos seus \ninimigos. Você sabe usar a habilidade “Engolfar \nem Chamas da Vingança”.\nB\nEngolfar em \nChamas da \nVingança \n1 PE\nBENÇÃO MÁGICO ÍGNEO"
+  },
+  {
+    "nome": "Corpo São e Mente Sã",
+    "descricao": "você recebe +1 ponto de \nvida adicional por nível de personagem (inclusive calculado de maneira retroativa)."
+  },
+  {
+    "nome": "Dedicar-se ao Outro",
+    "descricao": "sempre que realizar uma \nação para auxiliar uma personagem, ela pode \njogar um dado de catarse no seu próximo teste \n(sem gastar pontos de catarse)."
+  },
+  {
+    "nome": "Dor em Combustível",
+    "descricao": "na primeira vez que receber dano em uma cena, você recebe um número \nde pontos de ênfase temporários igual ao seu \nbônus de proficiência. Esses pontos temporários duram até o final do seu próximo turno."
+  },
+  {
+    "nome": "Em Constante Movimento",
+    "descricao": "ficar em movimento \né necessário para aqueles que desejam seguir os \npassos nebulosos d’A Maré. Você pode usar a \nhabilidade “Como o Vento”.\nL Como o Vento 1 PE\nBENÇÃO MÁGICO MOVIMENTO"
+  },
+  {
+    "nome": "Encare o Inexorável",
+    "descricao": "após realizar um teste de \nmorte, você recebe 1 ponto de catarse."
+  },
+  {
+    "nome": "Força Equivalente",
+    "descricao": "você causa +2 de dano em \ncriaturas que lhe causaram dano nessa cena."
+  },
+  {
+    "nome": "Interfira Quando Necessário",
+    "descricao": "no começo do seu \nturno, você pode escolher não agir. Se o fizer, \naumenta a quantidade de reações disponíveis na \nrodada em +2 (para um total de 3 reações)."
+  },
+  {
+    "nome": "Misericórdia Com os Fracos",
+    "descricao": "você tem vantagem em testes de CAR para interagir com \ncriaturas Machucadas."
+  },
+  {
+    "nome": "Negue a Escuridão",
+    "descricao": "ao tornar-se um devoto d’A \nMorte, você abandona seus Pontos de Sombra. \nA partir desse momento, não pode mais negociar com essa entidade. Os pontos de sombra \nabandonados tornam-se Efígies, as Moedas \nd’A Morte, que aparecem magicamente no seu \nbolso. Enquanto tiver Efígies, você pode recuperar PV normalmente (ver Pontos de Sombra, \nno Capítulo 1), mas é vulnerável a dano NECRÓTICO. Quando não tiver mais Efígies, não \npode mais recuperar pontos de vida (exceto por \ndescanso), e quando for reduzido a 0 pontos de \nvida ou menos, você morre instantaneamente.\nSempre que for para o corredor da morte, \nantes de fazer o teste de morte, você pode escolher gastar uma de suas Efígies. Se o fizer, você \nretorna com 1 PV ."
+  },
+  {
+    "nome": "O Acaso te Protegerá",
+    "descricao": "sempre que usar pelo \nmenos um ponto de catarse para reduzir o dano \ncausado por um inimigo, você pode usar 1 \nponto de ênfase para jogar novamente todos os \ndados de catarse e escolher o resultado."
+  },
+  {
+    "nome": "O Imóvel é Eterno",
+    "descricao": "ao final do seu turno, caso \nnão tenha se deslocado, você aumenta sua redução em +1 até começo do seu próximo turno."
+  },
+  {
+    "nome": "O Vento e a Água",
+    "descricao": "você tem vantagem em todos \nos testes que envolvam se manter em movimento."
+  },
+  {
+    "nome": "O Ofício Edifica a Alma",
+    "descricao": "você recebe proficiência em duas Aptidões à sua escolha."
+  },
+  {
+    "nome": "O Prêmio",
+    "descricao": "você sempre encontra um excelente \nnegócio e consegue vender itens por 10% a \nmais que o normal e comprar por 10% a menos."
+  },
+  {
+    "nome": "O Verdadeiro Contato",
+    "descricao": "enquanto estiver descalço \ne tocando o solo com seus pés, você não depende de sua visão para perceber seus arredores em \naté 36 m (24 q)."
+  },
+  {
+    "nome": "Partilhar o Fardo",
+    "descricao": "aqueles que sofrem precisam \nser amparados. Você pode usar a habilidade \n“Compartilhar a Dor”.\nR Compartilhar  \na Dor 1 PE\nBENÇÃO MÁGICO"
+  },
+  {
+    "nome": "Paz no Fim",
+    "descricao": "quando sua personagem morrer, você \npode escolher um benefício de aposentadoria (veja \nCapítulo 5 sobre aposentadoria de personagens)."
+  },
+  {
+    "nome": "Permanecer Vigilante",
+    "descricao": "você recebe um bônus de \n+1d6 em seus testes de iniciativa."
+  },
+  {
+    "nome": "Planejar e Improvisar",
+    "descricao": "você não sofre penalidades em testes por não estar utilizando ferramentas adequadas. Além disso, tem proficiência \nataques improvisados."
+  },
+  {
+    "nome": "Presentear é Dar o Coração",
+    "descricao": "sempre que usar \num ponto de catarse para influenciar o resultado de um teste de outro jogador, você joga 2d6 \ne escolhe o resultado."
+  },
+  {
+    "nome": "Restaurar o Caos",
+    "descricao": "quando realizar um teste que \nseja proficiente e que não seja um ATAQUE, você \npode usar 3 pontos de ênfase para escolher o \nresultado 10 em vez de lançar o dado.\n\nO Tabulário Divino, uma ilustração por Emanuelle Fontes."
+  }
+]

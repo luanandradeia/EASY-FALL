@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}{{ p.nome }} — Ficha{% endblock %}
+{% block header_title %}Ficha · {{ p.nome }}{% endblock %}
+{% block header_extra %}
+<a href="{% url 'personagem_editar' p.pk %}" class="btn ghost mini">EDITAR</a>
+{% endblock %}
+{% block content %}
+
+<div class="seclabel"><span class="idx">01</span><span class="name">Identidade</span><span class="rule"></span></div>
+<div class="panel">
+  <div class="flexrow">
+    <div>
+      <div style="font-size:18px;font-weight:600;">{{ p.nome }}</div>
+      <div class="muted">{{ p.pronomes }}{% if p.jogadore %} · jogadore: {{ p.jogadore }}{% endif %}</div>
+    </div>
+    <span class="spacer"></span>
+    <span class="chip">NÍVEL {{ p.nivel }}</span>
+    <span class="chip">PROF +{{ p.proficiencia }}</span>
+  </div>
+  <div class="muted mt">
+    {{ p.legado.nome|default:"—" }}{% if p.heranca %} ({{ p.heranca }}){% endif %} ·
+    {{ p.classe.nome|default:"—" }}{% if p.trilha %} · {{ p.trilha.nome }}{% endif %}
+    {% if p.antecedente %} · {{ p.antecedente.nome }}{% endif %}
+  </div>
+  {% if p.melancolia or p.maldicao %}
+  <div class="mt">
+    {% if p.melancolia %}<span class="chip" style="color:var(--catarse);border-color:rgba(231,182,90,.35)">MELANCOLIA: {{ p.melancolia }}</span>{% endif %}
+    {% if p.maldicao %}<span class="chip" style="color:var(--sombra);border-color:rgba(163,123,255,.35)">MALDIÇÃO: {{ p.maldicao.nome }}</span>{% endif %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="seclabel"><span class="idx">02</span><span class="name">Atributos & Proteções</span><span class="rule"></span></div>
+<div class="attr-grid">
+  {% for sigla, valor, prot in atributos %}
+  <div class="attr">
+    <div class="sig">{{ sigla }}</div>
+    <div class="val">{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
+    <div class="prot">PROT <b>{{ prot }}</b></div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="seclabel"><span class="idx">03</span><span class="name">Vida & Recursos</span><span class="rule"></span></div>
+<div class="panel">
+  <div class="flexrow mb">
+    <span class="micro">PV</span>
+    <span class="mono" style="font-size:21px;font-weight:700;color:var(--blood)">
+      <span id="v-pv_atual">{{ p.pv_atual }}</span><span class="muted">/{{ p.pv_maximo }}</span>
+    </span>
+    {% if p.pv_temporario %}<span class="chip">+<span id="v-pv_temporario">{{ p.pv_temporario }}</span> TEMP</span>{% endif %}
+    <span class="spacer"></span>
+    <button class="counter-btn btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','pv_atual',-1)">−</button>
+    <button class="counter-btn btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','pv_atual',1)">+</button>
+  </div>
+  <div class="bar red mb" id="bar-pv_atual" data-max="{{ p.pv_maximo }}">
+    <span style="width:{% widthratio p.pv_atual p.pv_maximo 100 %}%"></span>
+  </div>
+
+  <div class="grid-2">
+    <div class="counter catarse">
+      <span class="lbl">Catarse (máx 5)</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','catarse',-1)">−</button>
+      <span class="num" id="v-catarse">{{ p.catarse }}</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','catarse',1)">+</button>
+    </div>
+    <div class="counter enfase">
+      <span class="lbl">Ênfase</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',-1)">−</button>
+      <span class="num"><span id="v-enfase_atual">{{ p.enfase_atual }}</span><span class="muted" style="font-size:12px;">/{{ p.enfase_total }}</span></span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',1)">+</button>
+    </div>
+    <div class="counter sombra">
+      <span class="lbl">Sombra</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','sombra',-1)">−</button>
+      <span class="num" id="v-sombra">{{ p.sombra }}</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','sombra',1)">+</button>
+    </div>
+    <div class="counter">
+      <span class="lbl">Dados de Vida</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','dados_vida_usados',-1)">−</button>
+      <span class="num"><span id="v-dados_vida_usados">{{ p.dados_vida_usados }}</span><span class="muted" style="font-size:12px;">/{{ p.dados_vida_total }}</span></span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','dados_vida_usados',1)">+</button>
+    </div>
+  </div>
+
+  <div class="flexrow mt">
+    <span class="micro">Testes de Morte</span>
+    <span class="spacer"></span>
+    <span class="micro" style="color:var(--arc)">✓ <span id="v-morte_sucessos">{{ p.morte_sucessos }}</span>/3</span>
+    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','morte_sucessos',1)">+✓</button>
+    <span class="micro" style="color:var(--blood)">✗ <span id="v-morte_falhas">{{ p.morte_falhas }}</span>/3</span>
+    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','morte_falhas',1)">+✗</button>
+  </div>
+</div>
+
+<div class="seclabel"><span class="idx">04</span><span class="name">Combate</span><span class="rule"></span></div>
+<div class="panel flexrow">
+  <span class="chip">REDUÇÃO {{ p.reducao_dano }}</span>
+  <span class="chip">INICIATIVA {% if p.iniciativa_bonus >= 0 %}+{% endif %}{{ p.iniciativa_bonus }}</span>
+  <span class="chip">{{ p.tamanho|upper }}</span>
+  <span class="chip">DESLOC {{ p.deslocamento }}</span>
+</div>
+
+<div class="seclabel"><span class="idx">05</span><span class="name">Perícias</span><span class="rule"></span></div>
+<div class="panel" style="padding-top:4px;">
+  {% for pp in pericias %}
+  <div class="pericia-row">
+    <button class="prof-dot {% if pp.expert %}e{% elif pp.proficiente %}p{% endif %} tap"
+            data-id="{{ pp.pk }}" data-estado="{% if pp.expert %}expert{% elif pp.proficiente %}prof{% else %}nenhum{% endif %}"
+            onclick="ciclaPericia(this)">{% if pp.expert %}E{% elif pp.proficiente %}P{% else %}·{% endif %}</button>
+    <span class="nome">{{ pp.pericia.nome }}</span>
+    <span class="micro">{{ pp.atributo }}</span>
+    <span class="bonus" id="bonus-{{ pp.pk }}">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function ciclaPericia(btn) {
+  const ordem = {nenhum: 'prof', prof: 'expert', expert: 'nenhum'};
+  const novo = ordem[btn.dataset.estado];
+  const body = new URLSearchParams({id: btn.dataset.id, estado: novo});
+  const r = await fetch("{% url 'pericia_toggle' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (!r.ok) return;
+  const d = await r.json();
+  btn.dataset.estado = novo;
+  btn.className = 'prof-dot tap ' + (novo === 'expert' ? 'e' : novo === 'prof' ? 'p' : '');
+  btn.textContent = novo === 'expert' ? 'E' : novo === 'prof' ? 'P' : '·';
+  const b = document.getElementById('bonus-' + btn.dataset.id);
+  b.textContent = (d.bonus >= 0 ? '+' : '') + d.bonus;
+}
+</script>
+{% endblock %}

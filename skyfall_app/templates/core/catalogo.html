@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Catálogo — Skyfall RPG{% endblock %}
+{% block header_title %}Catálogo de Opath{% endblock %}
+{% block content %}
+
+<div class="tab-row mb">
+  {% for s, nome in nomes_secoes %}
+  <a href="?secao={{ s }}" class="{% if secao == s %}on{% endif %}">{{ nome }}</a>
+  {% endfor %}
+</div>
+
+<form method="get" class="flexrow mb">
+  <input type="hidden" name="secao" value="{{ secao }}">
+  <input type="text" name="q" value="{{ q }}" placeholder="Buscar…" class="field" style="flex:1;">
+  <button class="btn mini">BUSCAR</button>
+</form>
+
+<div class="flexrow mb">
+  {% if secao == 'armas' or secao == 'armaduras' or secao == 'equipamentos' or secao == 'consumiveis' or secao == 'magitech' %}
+    <a href="{% url 'item_novo' %}" class="btn ghost mini">+ CRIAR ITEM CUSTOM</a>
+  {% elif secao == 'magias' %}
+    <a href="{% url 'magia_nova' %}" class="btn ghost mini">+ CRIAR MAGIA CUSTOM</a>
+  {% elif secao == 'habilidades' %}
+    <a href="{% url 'habilidade_nova' %}" class="btn ghost mini">+ CRIAR HABILIDADE CUSTOM</a>
+  {% endif %}
+  <span class="spacer"></span>
+  <span class="micro">{{ resultados|length }} registros</span>
+</div>
+
+{% for r in resultados %}
+<div class="card">
+  <div class="head">
+    <span class="nome">{{ r.nome }}</span>
+    {% if r.criado_por_id %}<span class="chip custom">CUSTOM</span>{% endif %}
+    <span class="spacer"></span>
+    {% if r.preco %}<span class="meta" style="color:var(--catarse)">T$ {{ r.preco }}</span>{% endif %}
+    {% if r.aumento_preco %}<span class="meta" style="color:var(--catarse)">+T$ {{ r.aumento_preco }}</span>{% endif %}
+  </div>
+  <div style="margin-top:5px;">
+    {% if r.dano %}<span class="chip">DANO {{ r.dano }}</span>{% endif %}
+    {% if r.reducao_dano %}<span class="chip">RD {{ r.reducao_dano }}</span>{% endif %}
+    {% if r.alcance %}<span class="chip">{{ r.alcance }}</span>{% endif %}
+    {% if r.volume %}<span class="chip">VOL {{ r.volume }}</span>{% endif %}
+    {% if r.camada %}<span class="chip" style="color:var(--sombra)">{{ r.get_camada_display|upper }}</span>{% endif %}
+    {% if r.custo_enfase or r.custo_enfase == 0 and r.camada %}<span class="chip">{{ r.custo_enfase }} PE</span>{% endif %}
+    {% if r.grau %}<span class="chip">{{ r.grau }}º GRAU</span>{% endif %}
+    {% if r.cargas %}<span class="chip">{{ r.cargas }} CARGAS</span>{% endif %}
+    {% if r.raridade %}<span class="chip">{{ r.get_raridade_display|upper }}</span>{% endif %}
+    {% if r.fonte_nome %}<span class="chip">{{ r.fonte_nome|upper }}</span>{% endif %}
+    {% if r.categoria %}<span class="chip">{{ r.categoria|upper }}</span>{% endif %}
+    {% for d in r.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}
+  </div>
+  {% if r.efeito %}<div class="desc">{{ r.efeito }}</div>
+  {% elif r.descricao %}
+    {% if r.descricao|length > 320 %}
+      <details><summary>ver descrição completa</summary><div class="desc">{{ r.texto|default:r.descricao }}</div></details>
+    {% else %}<div class="desc">{{ r.descricao }}</div>{% endif %}
+  {% endif %}
+  {% if r.imbuindo %}<div class="desc" style="color:var(--sombra)">Imbuindo: {{ r.imbuindo }}</div>{% endif %}
+</div>
+{% empty %}<p class="muted">Nada encontrado nesta seção.</p>{% endfor %}
+{% endblock %}

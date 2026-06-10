@@ -1,0 +1,266 @@
+[
+  {
+    "nome": "Inflar",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "legado",
+    "fonte_nome": "Anuro",
+    "descricao": "ANURO ASPECTO\nAlcance: pessoal. \nAlvo: você. Duração: uma cena.\nEfeito: você fica inflado. Enquanto estiver inflado, \nrecebe vantagem em testes de CAR que envolvam \nIntimidação ou Persuasão e todos os seus ATAQUES \naumentam seu alcance em +1,5 m (1 q).\nRanin\nSeu corpo é pequeno e ágil e você recebe as seguintes características:\nCorpo Ágil: seu tamanho é Pequeno e você tem \ndeslocamento de escalada igual a 9 m (6 q).\nPele Venenosa: você recebe resistência a dano  \nVENENOSO.\nCatalisador Epidérmico: sua pele tem propriedades especiais e você é capaz de utilizar fluidos expelidos por ela para curar condições em \ncriaturas com apenas um toque. Você pode usar \na habilidade“Produzir Soro”."
+  },
+  {
+    "nome": "Produzir Soro",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "fonte_tipo": "legado",
+    "fonte_nome": "Anuro",
+    "descricao": "ANURO\nAlcance: toque. \nAlvo: uma criatura voluntária.\nEfeito: você cura a condição Envenenado ou \ndiminui uma doença em um nível.\nUm anuro de Sodori se prepara para \nviajar pelo continente de Opath.\n\nTalentos de Anuro\nBolota Devastadora: enquanto está inflado, \nvocê consegue transformar-se em uma esfera \nde destruição. Você pode usar a habilidade \n“Esfera Anuri da Destruição”. Pré-requisito: \nHerança Bufonin.\nA Esfera Anuri da \nDestruição 1 PE\nANURO MOVIMENTO\nPré-Requisito: você precisa estar inflado pela \nhabilidade “Inflar”.\nAlcance: pessoal. \nAlvo: você.\nDuração: até o final do \nturno.\nEfeito: você não gera ataques de oportunidade. \nAlém disso, toda vez que uma criatura entrar \nem um espaço no alcance de uma de suas armas \nempunhadas, você pode usar a habilidade “Ataque \nCorpo a Corpo” como L ação livre (limitado a \numa vez por alvo neste turno). Você não pode \naplicar modificações n"
+  },
+  {
+    "nome": "Sopro Dracônico",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "fonte_tipo": "legado",
+    "fonte_nome": "Draco",
+    "descricao": "DRACO ATAQUE MÁGICO\nELEMENTAL\nAlcance: pessoal.\nAlvo: criaturas dentro \nde um cone de 3 m (2 \nq) de comprimento.\nDuração: instantânea.\nAtaque: mágico vs \nDES.\nAcerto: 2d6 pontos de dano de acordo com sua \nherança dracônica.\nErro: metade do dano.\nEspecial: você é considerado proficiente nesse \nataque. Além disso, o dano dessa habilidade \naumenta para 3d6 no 6º nível e para 4d6 no 11º \nnível.\nArmas Dracônicas: você pode usar suas garras, \nchifres, cauda ou sua mordida como arma natural Suas armas naturais têm os descritores ARMA, \nLEVE e SUPERIOR. Escolha entre CONTUNDENTE, \nPERFURANTE e CORTANTE. Essa arma causa 1d6 \npontos de dano do tipo escolhido.\n\nRonaldo, um draco mercernário de Norvak.\n\nHeranças \ndracônicas\nDracos carregam em seu sangue a herança do \nDragão responsável pelo seu sangue ominoso. Escolha uma das heranças dracônicas abaixo. Você \nrecebe todas as características listada"
+  },
+  {
+    "nome": "Caça Predatória",
+    "custo_enfase": 1,
+    "execucao": "ação",
+    "fonte_tipo": "legado",
+    "fonte_nome": "Gnomo",
+    "descricao": "GNOMO MOVIMENTO\nAlcance: pessoal.\nAlvo: você. Duração: instantânea.\nEfeito: você move metade do seu deslocamento \nna direção de outra criatura que possa ver. Se \nterminar seu deslocamento adjacente a um \ninimigo, pode realizar um “Ataque corpo a corpo” \ncom uma arma que esteja empunhando como \numa L ação livre.\nDentes Afiados: seus dentes \nsão afiados e é possível usá-\n-los como armas naturais. \nSuas armas naturais têm os \ndescritores ARMA, LEVE e \nLETAL e causam 1d6 pontos \nde dano PERFURANTE.\nCouraça: sua pele é dura como \ncouro. Você recebe +1 de redução.\nHeranças Menores\nCorredor: seu deslocamento é aumentado em +3 \nm (2 q).\nCamuflagem: você consegue misturar-se com o \nambiente e recebe vantagem em testes relacionados à Furtividade.\nEscalador: você pode escalar com velocidade \nigual ao seu deslocamento. \nMembros Alongados: você é capaz de agarrar \ncriaturas de tamanho até Grande. Al"
+  },
+  {
+    "nome": "Teimosia",
+    "custo_enfase": 2,
+    "execucao": "reação",
+    "fonte_tipo": "legado",
+    "fonte_nome": "Tôra",
+    "descricao": "TÔRA\nAlcance: pessoal. \nAlvo: você. \nDuração: instantânea.\nGatilho: você falha em \num teste.\nEfeito: você faz o teste novamente.\nEspecial: você só pode usar essa habilidade uma \nvez por descanso.\nTörmundiano\nEm dados momentos, sua melancolia é uma \nvantagem e você sabe explorar isso. Você recebe os \nseguintes benefícios:\nT oque da Ruína: seu bônus de proficiência é \nsomado ao dano de ATAQUE contra objetos e \ncriaturas do tipo Construto. Além disso, seus \nataques desarmados e magias com o alcance de \ntoque ignoram redução.\nLamber as Feridas: sempre \nque usar um dado de vida \nem um descanso curto, \nvocê considera um resultado 3 ou menor como 4. \nAlém disso, você recupera \num ponto de ênfase adicional por dado de vida \nusado durante o descanso.\nAlguns tôras marcam seus corpos \ncom símbolos de suas guildas. \n\ntalentos de Tôras\nA Resistência da T erra: o corpo pode resistir \nàquilo em que a"
+  },
+  {
+    "nome": "Só Um Arranhão",
+    "custo_enfase": 0,
+    "execucao": "reação",
+    "fonte_tipo": "classe",
+    "fonte_nome": "Combatente",
+    "descricao": "COMBATENTE\nAlcance: pessoal. \nAlvo: você. \nDuração: instantânea.\nGatilho: você inicia seu \nturno Machucado.\nEfeito: você pode usar uma quantidade de dados \nde vida, limitada ao seu bônus de proficiência, \npara ganhar pontos de vida temporários. Você \nganha um número de pontos de vida temporários \nigual ao resultado da jogada dos dados de vida + \nCON + bônus de proficiência.\nEspecial: você recupera o uso de sua reação.\nNível 4\nTalento Adquirido\nVocê deve escolher um talento para sua personagem. Esse talento pode ser de classe, trilha, legado \nou maldição.\nNível 5\nAtaque em Sequência: você é capaz de realizar \numa série de ataques rápidos e poderosos. Você \npode usar a habilidade “Atacar em Sequência”.\nA Atacar em \nSequência 1 PE\nCOMBATENTE\nAlcance: pessoal. \nAlvo: você. Duração: instantânea.\nEfeito: você pode realizar duas vezes qualquer \ncombinação de habilidades dentre “Ataque Corpo \na Corpo”, “Ataque à Distância” e “Ataque de \nSuperioridade” como L ação livre.\nNível 6\nTalento Adquirido\nVocê deve escolher um talento para sua personagem. Esse talento pode ser de classe, trilha, legado \nou maldição.\nNível 7\nTrilha Avançada\nVocê recebe as habilidades avançadas da trilha que \nescolheu"
+  },
+  {
+    "nome": "Tente De Novo",
+    "custo_enfase": 4,
+    "execucao": "reação",
+    "fonte_tipo": "classe",
+    "fonte_nome": "Combatente",
+    "descricao": "COMBATENTE\nAlcance: pessoal. \nAlvo: você. \nDuração: instantânea.\nGatilho: você é \nacertado por um \nataque. \nEfeito: a criatura que o atacou deve repetir o \nataque.\nEspecial: você só pode usar essa habilidade uma \nvez por rodada.\nCombate Megacrítico: ataques precisos causam \no maior estrago e você aprendeu como fazer \nisso da melhor forma possível. O crítico de seus \nATAQUES passa a ser 18-20.\nCombate Supercarregado: um ataque carregado depois de uma corrida é uma ferramenta \nletal de combate. Você pode usar a habilidade \n“Ataque Carregado”.\nA Ataque \nCarregado 4 Pe\nCOMBATENTE MOVIMENTO\nAlcance: pessoal.Alvo: \nvocê. Duração: instantânea.\nEfeito: você se desloca na direção de uma \ncriatura (até o máximo de seu deslocamento) \ne faz a ação “Atacar em Sequência” contra \nela. Todos os ATAQUES realizados como \nparte dessa ação são feitos com vantagem e \ncausam +2d6 pontos de dano.\nEspecial: vo"
+  },
+  {
+    "nome": "Amedrontar",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "classe",
+    "fonte_nome": "Especialista",
+    "descricao": "ESPECIALISTA ATAQUE MEDO\nAlcance: 9 m (6 q). \nAlvo: uma criatura.\nDuração: instantânea.\nAtaque: FOR ou CAR vs \nCON.\nAcerto: o alvo fica Amedrontado até o final do \nprimeiro turno dele. \nEspecial: você é proficiente nesse ataque.\nM +1 PE [MUDA]:\nExecução: L Ação Livre\nEspecial: você deve usar essa habilidade depois \nde jogar a iniciativa.\n\nArtimanha de Intuição: você aprendeu a ler os \nsinais para agir antes que as coisas aconteçam e \npode fazer um teste de DES (Intuição) em testes \nde iniciativa. Se uma característica permitir que \nvocê use outro atributo em testes de iniciativa, \nvocê ainda pode usar Intuição no teste.\nArtimanha Magitec: você sabe sabotar equipamentos magitec e pode usar a habilidade “Sabotar Equipamento Magitec”.\nB\nSabotar \nEquipamento \nMagitec\n0 PE\nESPECIALISTA\nAlcance: toque. \nAlvo: um equipamento \nmagitec.\nDuração: uma cena.\nEfeito: faça um teste de DES ou INT \n(Ma"
+  },
+  {
+    "nome": "Lançar Granada",
+    "custo_enfase": 0,
+    "execucao": "ação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Alquimista",
+    "descricao": "ALQUIMISTA ATAQUE MÁGICO\nARREMESSÁVEL ALQUÍMICO GRANADA\nAlcance: 6m (4q).\nAlvo: uma criatura.\nDuração: instantânea.\nAtaque: de acordo com \na fórmula.\nAcerto: de acordo com a fórmula.\nErro: de acordo com a fórmula.\nEfeito: de acordo com a fórmula.\nEspecial: você é proficiente nesse ataque. \nPerito da Transmutação\nSeus estudos na arte da transmutação renderam-\n-lhe um vasto conhecimento alquímico. Você é \ncapaz de manipular catalisadores para tornar seus \nelixires ainda mais perigosos por meio de modificações. Você começa sua jornada com um catalisador e aprende um adicional sempre que seu \nbônus de proficiência aumentar.\n\nElixir Von-Moura\nDuração: uma cena.\nEfeito: aumenta duas Proteções do alvo em +1 \n(à sua escolha).\nAmbrosia Áurea \nSubstância divina que restaura o alvo, curando suas \nferidas de maneira ardente. Você pode usar as habilidades “Granada Áurea” e “Elixir de Ambrosia”.\nGran"
+  },
+  {
+    "nome": "Armamento Tóxico",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Assassino",
+    "descricao": "ASSASSINO\nPré-Requisito: você \ntem uma ou mais toxinas \ndisponíveis.\nDuração: até o início do \nseu próximo turno.\nEfeito: você consome uma de suas toxinas para imbuí-\n-la em uma ARMA que esteja empunhando. Ela fornece \n+1 em testes de ATAQUE. Além disso, você pode aplicar uma ou mais modificações da lista de Incrementos \ntóxicos aos seus ATAQUES com a arma (escolhidos \nquando você imbui a toxina na arma).\nM + 0 PE [MUDA]:\nExecução: uma ação.\nEspecial: você usa -1 pontos de ênfase para aplicar \nmodificações da lista de Incrementos Tóxicos em seus \nATAQUES com a ARMA.\nPreparado Para Ação: você recebe uma ação \nbônus adicional no primeiro turno de combate.\nLista de Incrementos Tóxicos \nM Debilitante +2 PE [ADICIONA]:\nAcerto: o alvo fica Desprotegido em um atributo \nespecífico até o início do seu próximo turno.\nM Doloroso +1 PE [ADICIONA]:\nAcerto: você causa +1d6 pontos de dano \nVENENOSO. V"
+  },
+  {
+    "nome": "Capturar",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nAlcance: 1,5 m (1 q).\nAlvo: uma criatura.\nDuração: instantânea.\nAtaque: mandíbulas vs. \nFOR\nAcerto: sua libélula captura um inimigo. O alvo \nestá Agarrado. Você deve soltá-lo até o final do \nturno. Ao soltá-lo, o alvo cai (podendo sofrer \ndano de queda).\nLista de Comandos \nTópteros\nLibélula, leve!: você pode usar a habilidade “Carregar”."
+  },
+  {
+    "nome": "Carregar",
+    "custo_enfase": 2,
+    "execucao": "ação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nAlcance: 1,5 m (1 q). Alvo: um aliado.\nEfeito: sua libélula carrega o alvo até o final do \nturno. Ao final do turno, ele é colocado em um \nespaço adjacente ao seu.\n\nYarmani e sua libélula Jade descansam após uma longa jornada.\n\nLibélula, ataque!: o dano do ataque com mandíbula da sua libélula aumenta em +1d6. Além \ndisso, pode usar a habilidade “Ataque T óptero”."
+  },
+  {
+    "nome": "Ataque Tóptero",
+    "custo_enfase": 1,
+    "execucao": "livre",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nATAQUE\nAlcance: 1,5m (1 q)\nAlvo: uma criatura. Duração: instantânea.\nEfeito: sua libélula faz um ataque de Mandíbulas.\nLibélula, posição!: você pode usar a habilidade \n“Ameaçar”."
+  },
+  {
+    "nome": "Ameaçar",
+    "custo_enfase": 1,
+    "execucao": "livre",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nMEDO\nAlcance: toque. Alvo: sua libélula \ngigante.\nEfeito: você assume uma postura ameaçadora \nde combate com sua libélula. Todos os ataques \nfeitos por ela até o final da rodada são feitos com \nvantagem.\nLibélula, avance!: você pode usar a habilidade \n“Avançar”."
+  },
+  {
+    "nome": "Avançar",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nAlcance: toque. Alvo: sua libélula \ngigante.\nEfeito: você aumenta a adrenalina de sua libélula. \nO deslocamento dela aumenta +3 m (2 q) até o \nfinal da rodada.\nLibélula, fuja!: você pode usar a habilidade “Fuga \nEstratégica”."
+  },
+  {
+    "nome": "Fuga Estratégica",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Cavaleiro Tóptero",
+    "descricao": "CAVALEIRO \nTÓPTERO\nCOMANDO \nTÓPTERO MONTARIA\nAlcance: toque. Alvo: você e sua libélula \ngigante.\nEfeito: você e sua libélula gigante usam a ação \n“Desengajar”.\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo é +5.\nT opteria Avançada: enquanto estiver montado \nem uma libélula gigante, sempre que ela fizer um \nataque com Mandíbula, você pode usar sua ação \nlivre para fazer um ATAQUE com uma ARMA com \no descritor MONTADA ou conjurar um truque.\n\nAmbulância Aérea: a habilidade \"Carregar\" recebe a seguinte modificação:\nM +2 PE [MUDA]\nExecução: R Reação \nDuração: até o final do seu próximo turno.\nGatilho: um aliado é reduzido a 0 pontos de vida \nou menos.\nÁs dos Ares: você pode causar o dano adicional \nda habilidade “Ataque Especializado” caso tenha \nusado um de seus Comandos T ópteros no mesmo turno. Pré-requisito: Especialista"
+  },
+  {
+    "nome": "Comando Tático",
+    "custo_enfase": 0,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Comandante",
+    "descricao": "COMANDANTE VOZ\nAlcance: 9 m (6 q).\nAlvo: uma criatura voluntária que possa ouvi-lo.\nDuração: instantânea.\nEfeito: o alvo pode movimentar-se metade \nde seu deslocamento. Ele não gera ataques de \noportunidade em decorrência desse movimento.\nM Ataque Comandado +1 PE [ADICIO -\nNA]:\nEfeito: o alvo usa uma R reação para realizar um \n“Ataque Corpo a Corpo”, “Ataque à Distância”, \n“Ataque de Superioridade” ou conjurar um \ntruque. Ele pode usar seu CAR em vez do atributo \npadrão para realizar o ataque (mas causa dano \nnormalmente).\nM Uso Comandado +1 PE [ADICIONA]:\nEfeito: o alvo usa uma R reação para utilizar um \nitem que esteja no local em que ele está.\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo \né +5.\nGeneral da Tática: você torna-se um guia para \nseus aliados no campo de batalha. Ao jogar iniciativa, você pode usar a habilidade “Comando \nT ático” como ação livre. Além disso, ela recebe \nas seguintes modificações:\nM +0 PE [MUDA]:\nEfeito: o alvo pode movimentar-se até seu \ndeslocamento. Ele não gera ataques de \noportunidade em decorrência desse movimento.\nM Ataque Avançado +3 PE [ADICIONA]:\nEfeito: o alvo usa sua reaçã"
+  },
+  {
+    "nome": "Provocação Tática",
+    "custo_enfase": 1,
+    "execucao": "reação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Comandante",
+    "descricao": "COMANDANTE VOZ\nAlcance: 3 m (2 q). \nAlvo: uma criatura. \nDuração: até o início do \nseu próximo turno.\nGatilho:o alvo realiza \num ATAQUE que não \ninclua você como alvo.\nAcerto: o alvo fica Provocado. Enquanto o alvo \nestiver Provocado dessa maneira ele sofre dano \nadicional igual seu bônus de proficiência.\nComandante do Oculto:  sempre que conjurar \numa magia com o descritor CONTROLE, você \npode utilizar a habilidade “Comando T ático” \ncomo ação livre. Pré-requisito: Ocultista.\nDo Jeito que Você Treinou!: você é um líder que \ndomina o campo de batalha. Você recebe a habilidade “Reforço T ático\". Pré-requisito: Especialista."
+  },
+  {
+    "nome": "Reforço Tático",
+    "custo_enfase": 2,
+    "execucao": "reação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Comandante",
+    "descricao": "COMANDANTE VOZ\nAlcance: 9 m (6 q).\nAlvo: uma criatura.\nDuração: instantânea\nGatilho: o alvo falha \nem um teste de \nATAQUE.\nEfeito: o  alvo pode fazer o ATAQUE novamente.\nEspecial: você só pode usar essa habilidade uma \nvez por alvo na mesma cena.\nLíder Nato: sua voz inspira seus aliados. Suas \nhabilidades com o descritor VOZ  e magias UTILITÁRIAS recebem a seguinte modificação:\nM +1 PE [ADICIONA]:\nEfeito: o alvo recebe pontos de vida temporários \nigual ao seu bônus de proficiência.\nTalentos de Comandante"
+  },
+  {
+    "nome": "Aura Divina",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Devoto",
+    "descricao": "DEVOTO DIVINA AURA\nASPECTO\nAlcance: pessoal. \nAlvo: você. Duração: uma cena.\nEfeito: você cria uma aura de 3 m de raio a partir \nde você. Aliados dentro da aura recebem +1 em \nsuas Proteções (mentais)\nEspecial: enquanto essa habilidade estiver ativa, \nvocê deve usar 1 ponto de ênfase no começo do \nseu turno para manter a aura ativa.\nTatá canaliza suas magias através \ndas bênçãos da maré\n\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo \né +5.\nDevoção Avançada: você recebe a terceira benção \nd’A Deusa escolhida. \nTalentos de Devoto\nAbençoar Aliados: sua devoção é capaz de inspirar aliados. Ao final de um descanso longo, você \npode escolher um número de aliados igual ao \nseu bônus de proficiência para serem abençoados até o fim do seu próximo descanso longo. \nEnquanto estiverem abençoados, eles recebem \numa de suas bênçãos a"
+  },
+  {
+    "nome": "Golpe Energizado",
+    "custo_enfase": 0,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Elementalista",
+    "descricao": "ELEMENTALISTA ELEMENTAL MANOBRA  \nELEMENTAL\nAlcance: 9 m (6 q). \nAlvo: uma criatura \nvoluntária.\nDuração: até o final do \nseu próximo turno.\nEfeito: o próximo ATAQUE que a criatura acertar \ncausa +1d8 pontos de dano do tipo do elemento \ncom o qual você está em afinidade.\nEspecial: você precisa estar em afinidade \nelemental para usar essa habilidade.\n\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo é +5.\nMestre do Elemento: Você recebe imunidade ao \ntipo de dano de seu elemento e adiciona manobras avançadas à lista de manobras elementais \nque pode usar.  \nManobras \nAvançadas"
+  },
+  {
+    "nome": "Arma Elemental",
+    "custo_enfase": 0,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Elementalista",
+    "descricao": "ELEMENTALISTA MANOBRA  \nELEMENTAL\nAlcance: pessoal. \nAlvo: você. Duração: uma cena.\nEfeito: você invoca uma arma na qual seja \nproficiente. Ela é considerada MÁGICA e tem \no sigilo de 2º Grau ELEMENTAL (do tipo do \nelemento em afinidade), como se tivesse um \nfragmento imbuído. Além disso, ao acertar um \nataque com ela, pode usar 1 ponto de ênfase \npara aumentar o dano extra causado naquele \nataque em +1d6. A arma dura até o final da cena, \nquando se desfaz em uma inofensiva explosão do \nelemento da qual é feita.\nEspecial: você precisa estar em afinidade \nelemental para usar essa habilidade.\nB\nDisparo de \nSuperioridade \nElemental \n0 PE\nELEMENTALISTA ATAQUE ELEMENTAL\nMÁGICO MANOBRA  \nELEMENTAL\nAlcance: 9 m (6 q). \nAlvo: uma criatura em \nalcance.\nDuração: instantânea.\nEfeito: você faz um “Ataque de Superioridade” \ncontra o alvo, usando seu atributo-chave de \nconjuração em vez de FOR no ata"
+  },
+  {
+    "nome": "Estado De Fluidez",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Guerreiro Koi",
+    "descricao": "GUERREIRO KOI ESTADO DE \nFLUIDEZ ASPECTO\nAlcance: pessoal. \nAlvo: você.\nDuração: uma cena.\nEfeito: você entra em um estado de fluidez. \nEnquanto estiver nesse estado, recebe os \nseguintes benefícios: \n• você pode usar CAR em vez de FOR ou \nDES para realizar ATAQUES com ARMAS e \ncalcular o dano desses ataques;\n• você recebe proficiência em Preparo \nFísico; \n• você não pode ser alvo de “Ataques \nde Oportunidade” de criaturas que foram \nacertadas por um ATAQUE seu nesse turno.\nEspecial: você termina esse estado de fluidez se \nvocê não se movimentou pelo menos 3 m (2 q) \naté o final do seu turno.\nTreinamento Secreto\nVocê pode ativar “T écnicas Secretas”, habilidades \nartístico-marciais da guarda de Sodori. Habilidades com esse descritor só podem ser ativadas enquanto você estiver com “Estado de Fluidez” ativo, \ne características com o nome “T écnica Secreta” só \nconcedem seus bônus enquanto você estiver com \n“Estado de Fluidez” ativo. \nVocê começa com duas técnicas secretas e \naprende uma técnica adicional \nsempre que você aumentar seu \nbônus de proficiência.\nSantori e a dança da \ncarpa flutante.\n\nTécnicas Secretas\nT écnica Secreta: Borrifar do Peixe Sagrado: \nseus ATAQUES com ARMA rec"
+  },
+  {
+    "nome": "Invocação Carpal",
+    "custo_enfase": 3,
+    "execucao": "reação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Guerreiro Koi",
+    "descricao": "GUERREIRO \nKOI\nAlcance: pessoal.\nAlvo: você.\nDuração: instantânea.\nGatilho: quando for \nalvo de um ATAQUE.\nEfeito: você aumenta a Proteção escolhida \nde acordo com seu bônus de proficiência. \nCaso o atacante erre o ataque, você se move \nrapidamente para um espaço desocupado \nadjacente ao seu, sem provocar “Ataques de \nOportunidade”.  No seu lugar, fica uma grande \ncarpa esculpida em madeira, evitando um ataque \nque você sofreria.  \nEspecial: você só pode utilizar essa habilidade \numa vez por cena.\nTalentos de Guerreiro Koi"
+  },
+  {
+    "nome": "Dividir Herança",
+    "custo_enfase": 2,
+    "execucao": "reação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Herdeiro Ancestral",
+    "descricao": "HERDEIRO \nANCESTRAL\nAlcance: 9 m (6 q).\nAlvo: um aliado.\nDuração: instantânea.\nGatilho: um aliado \nrealiza um teste ou \nataque.\nEfeito: você soma o seu atributo-chave de \nconjuração no resultado do teste ou ATAQUE.\nEspecial: você só pode usar essa habilidade \nenquanto estiver sob efeito do “Empoderamento \nAncestral”.\nImitação Ancestral: você pode usar a habilidade \n“Copiar Ancestral:"
+  },
+  {
+    "nome": "Copiar Ancestral",
+    "custo_enfase": 1,
+    "execucao": "reação",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Herdeiro Ancestral",
+    "descricao": "HERDEIRO \nANCESTRAL\nAlcance: pessoal.\nAlvo: você.\nDuração: instantânea\nGatilho: você é alvo \nde um ataque de uma \ncriatura de sua linhagem \nancestral.\nEfeito: a criatura realiza o ataque com \ndesvantagem.\nEspecial: Se o ataque falhar, você recupera o uso \nde sua R reação."
+  },
+  {
+    "nome": "Finta Maliciosa",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Malandro",
+    "descricao": "MALANDRO\nAlcance:  9 m (6 q).\nAlvo: uma criatura.\nDuração: até o início do \nseu próximo turno.\nAtaque: CAR \n(Malandragem) vs \nSAB.\nAcerto: o alvo fica Desprotegido (físico).\nEspecial: o alvo só recebe essa condição contra \nseus ATAQUES.\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo \né +5.\nMalandro do Bom: você sabe enganar para \nmachucar onde dói. O dano da habilidade \n“Atacante Malicioso” aumenta em +1d6 e a \nhabilidade “Finta Maliciosa” recebe a seguinte \nmodificação::\nM +0 PE [REMOVE]\nEspecial: o alvo só recebe essa condição contra \nseus ATAQUES.\n\nTalentos de \nMalandro\nArroz de Festa: sempre que estiver em um evento \nsocial, como festa ou baile, você pode usar 2 \npontos de ênfase no início da cena para utilizar a perícia Malandragem como se estivesse \nutilizando Cultura, Diplomacia, Intuição ou \nManipulação em testes"
+  },
+  {
+    "nome": "Reanimar Corpos",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Necromante",
+    "descricao": "NECROMANTE MÁGICO CRIAÇÃO\nAlcance: 6 m (4 q).\nAlvo: um espaço desocupado no alcance.\nDuração: até ser destruído.\nEfeito: você invoca uma criatura morta-viva \nchamada reanimado e ela recebe a condição \nMarcado.  \nEspecial: Se tiver a “Tradição da Invocação”, \npode considerá-lo como sua Invocação \nSintonizada.\nM+1 PE [ADICIONA]\nEfeito: É possível gastar uma marca de uma \ncriatura Marcada dentro do alcance para invocar \num reanimado adicional dentro do alcance. Você \npode controlar um máximo de reanimados igual \nao seu bônus de proficiência.\nM +2 PE [ADICIONA]\nEfeito: você usa a habilidade \"Comandar Corpos\" \ncomo L ação livre para comandar um reanimado \ndentro do alcance (podendo ser inclusive um \nrecém invocado)."
+  },
+  {
+    "nome": "Comandar Corpos",
+    "custo_enfase": 0,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Necromante",
+    "descricao": "NECROMANTE MÁGICO\nAlcance: 9 m (6 q).\nAlvo: um reanimado controlado por você.\nDuração: uma cena.\nAtaque: mágico vs CON.\nAcerto: 1d8 pontos de dano NECRÓTICO. \nEfeito: o reanimado realiza um ataque contra \numa criatura adjacente. \nM +1 PE [ADICIONA]:\nAlvo: você afeta mais um reanimado controlado \npor você. É possível aplicar essa modificação mais \nde uma vez.\nB Necromancia \nAprimorada 2 pe\nNECROMANTE MÁGICO\nAlcance: 9 m (6 q).\nAlvo: um reanimado controlado por você.\nEfeito: você pode consumir qualquer número de \nmarcas de criaturas em até 18 m (12 q) de você \npara aprimorar qualquer número de reanimados \nque você controle. Você escolhe como distribuir \nas melhorias por marca. Veja a tabela “Reanimado \nAprimorado” para mais informações.\nEnergia Negativa\nT odos os seus ATAQUES com ARMA ou que causem dano NECRÓTICO causam +2 pontos de dano \nNECRÓTICO. Além disso, sempre que você ou uma \nde"
+  },
+  {
+    "nome": "Alvo Do Pacto",
+    "custo_enfase": 3,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Pactuado",
+    "descricao": "PACTUADO MÁGICO\nAlcance: 9 m (6 q).\nAlvo: uma criatura. Duração: uma cena.\nEfeito: o alvo fica Marcado.\nEfeito: seus ataques contra alvos Marcados \nrecebem alguns benefícios: \n• você soma seu bônus de proficiência \nao dano de ATAQUES com ARMA que tenham \nele como alvo;  \n• qualquer ATAQUE que fizer contra ele \nconsidera um resultado de 19 ou 20 no dado \ncomo crítico;\nEspecial: Se usar essa habilidade novamente, o \nalvo do uso anterior deixa de estar Marcado.\nTruque de Pacto: ao conjurar um truque cuja \nexecução é uma ação, você pode dever um favor \nmenor e usar sua ação bônus para conjurá-lo \nnovamente. Pré-requisito: Ocultista.\nEspecialização Máxima: sempre que você ou um \naliado usar seu dado de \"Ataque Especializado\", \nvocê pode dever um favor menor para fazer com \nque o dado tenha seu valor máximo, sem precisar ser jogado. Pré-requisito: Especialista.\nInvocação Adicional: você receb"
+  },
+  {
+    "nome": "Forma Híbrida",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Protetor dos Ermos",
+    "descricao": "PROTETOR \nDOS ERMOS ASPECTO\nAlcance: pessoal.\nAlvo: você. Duração: uma cena.\nEfeito:  você transforma seu corpo em uma \nforma híbrida. Enquanto está nessa forma, \nvocê recebe uma quantidade das seguintes \ncaracterísticas animalescas igual ao seu bônus de \nproficiência:\n•  +2 em testes de ATAQUE;\n• Você manifesta armas naturais. Elas causam \n1d8 pontos de dano PERFURANTE e têm os \ndescritores LEVE e SUPERIOR.\n• +10 pontos de vida temporários;\n• Vantagem em testes de SAB para rastrear;\n• Vantagem em testes de DES para esgueirar-se \nfurtivamente;\n• Seu deslocamento aumenta em +3 m (2 q);\n• Sua área de ameaça e alcance de magias de \ntoque aumenta em +1,5 m (1 q).\nCaminho Natural: você aumenta seu deslocamento em +3 m (2 q). Além disso, escolha dois \ntipos de terreno dentre: aquático, ártico, colina, \ndeserto, floresta, montanha, pântano, planície \nou subterrâneo. Enquanto estiver nos terrenos \nescolhidos, você pode fazer uma ação bônus \nadicional no primeiro turno de uma Cena de \nCombate e pode realizar duas ações por rodada \nem Cenas de Exploração.\nCaracterísticas \navançadas\nHerói Avançado: você aumenta um de seus atributos em +1. O valor máximo de um atributo é \n+5.\nConexão Intrínsec"
+  },
+  {
+    "nome": "Marca De Caça",
+    "custo_enfase": 2,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Protetor dos Ermos",
+    "descricao": "PROTETOR \nDOS ERMOS\nAlcance: 9 m (6 q).\nAlvo: uma criatura. Duração: uma cena.\nEfeito: você deixa o alvo Marcado.\nEspecial: se o alvo Marcado dessa maneira for \neliminado, você pode usar uma L ação livre para \ndeixar outra criatura em até 9 m (6 q) Marcada.\nM  +2 PE [ADICIONAL]:\nEspecial: Os dados de danos mudam para 1d8 \n(1d10 se estiver em um terreno escolhido).\nM +3 PE [ADICIONA]:\nEspecial: você dobra os dados de dano \nadicionados por essa habilidade caso o alvo esteja \nMachucado."
+  },
+  {
+    "nome": "Manipular Treco",
+    "custo_enfase": 1,
+    "execucao": "ação bônus",
+    "fonte_tipo": "trilha",
+    "fonte_nome": "Vendedor Ambulante",
+    "descricao": "VENDEDOR \nAMBULANTE\nAlcance: toque.\nAlvo: um treco. Duração: instantânea.\nEfeito: você saca e usa um treco. A não ser que \nesteja especificado o contrário, o efeito do treco \ndura até o final da cena e qualquer ATAQUE feito \ncom ele é um ATAQUE MÁGICO.\nEspecial: você é proficiente nesses ataques.\nLista de Trecos\nChave-Mestra: uma chave capaz de destrancar \nqualquer porta ou fechadura. Após destrancá-la, \no treco quebra.\nÓculos de Disfarce: esses óculos quadrados de \narmadura grossa já foram estilosos um dia. \nComo parte da ação para usar a habilidade \n“Manipular Treco”, você veste os óculos, assumindo a aparência de uma criatura que conheça, independentemente de seu legado. Essa \ntransformação dura até seu próximo descanso \ne concede vantagem em testes de Manipulação para fingir ser essa outra pessoa. Porém, os \nóculos não se transformam junto com o restante \nde sua aparência e vestimen"
+  }
+]

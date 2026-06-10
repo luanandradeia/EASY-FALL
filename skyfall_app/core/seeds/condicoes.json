@@ -1,0 +1,23 @@
+[
+  {"nome": "Agarrado", "descricao": "A criatura está Contida. Termina se quem agarra ficar Incapacitado ou se um efeito remover a criatura do alcance. Pode usar uma ação para teste oposto de FOR contra quem agarra; se vencer, encerra a condição."},
+  {"nome": "Agarrando", "descricao": "Está ativamente agarrando outra criatura. Pode mover-se junto da criatura Agarrada com movimento reduzido pela metade. No final do turno escolhe o espaço da criatura Agarrada. Ocupa uma das mãos. Pode encerrar com ação livre."},
+  {"nome": "Amedrontado", "descricao": "Desvantagem em testes de atributo e ataque. Não pode se mover por vontade própria para perto da fonte do medo; se não a estiver vendo, fica parada."},
+  {"nome": "Atordoado", "descricao": "Está Incapacitada, não pode se mover e só balbucia. Falha automaticamente em testes de FOR e DES. Está Desprotegida (todas)."},
+  {"nome": "Caído", "descricao": "Única opção de movimento é rastejar, a não ser que se levante. Desvantagem em jogadas de ataque. Ataques contra a criatura têm vantagem se o atacante estiver a até 1,5m; de outra forma, desvantagem."},
+  {"nome": "Contido", "descricao": "Deslocamento 0 e sem bônus de deslocamento. Testes de ataque com desvantagem. Não pode realizar componentes somáticos de magias. Está Desprotegida (físicos)."},
+  {"nome": "Desprotegido", "descricao": "Ataques contra a proteção descrita são feitos com vantagem. A proteção vem em parênteses (atributo específico, físicos ou mentais); sem especificação, vale para qualquer Proteção. Protegido anula essa condição."},
+  {"nome": "Desorientado", "descricao": "Está Desprotegida. Testes que envolvam sentidos com desvantagem. Todos os ataques realizados com desvantagem."},
+  {"nome": "Em Chamas", "descricao": "Acompanhada de contador iniciando em 1. Sofre 1d6 de dano ÍGNEO no começo do turno por contador. Ao final do turno o contador aumenta +1. Uma ação apaga as chamas (zera o contador)."},
+  {"nome": "Encantado", "descricao": "Não pode atacar quem a encantou com ataques ou efeitos mágicos. Quem encantou tem vantagem em testes de interação social com a criatura."},
+  {"nome": "Envenenado", "descricao": "A criatura tem desvantagem em testes."},
+  {"nome": "Incapacitado", "descricao": "Não pode realizar ações ou reações."},
+  {"nome": "Inconsciente", "descricao": "Está Incapacitada, não pode se mover ou falar, não está ciente dos arredores. Larga o que segura e fica Caída. Está Desprotegida. Ataques em área contra proteções físicas têm sucesso automático. Ataques bem-sucedidos a até 1,5m são acertos críticos."},
+  {"nome": "Inspirado", "descricao": "Sob efeito de habilidade com o descritor INSPIRAÇÃO. Só pode estar inspirada com um efeito por vez. Duração determinada pela habilidade; caso contrário, até o final da cena."},
+  {"nome": "Invisível", "descricao": "Não pode ser vista sem magia ou sentido especial; considera-se em área totalmente obscurecida para se esconder. Ataques contra ela têm desvantagem e os dela têm vantagem."},
+  {"nome": "Marcado", "descricao": "Sob efeito de habilidade ou magia que aplicou a condição. Contador começa em +1 e aumenta a cada aplicação na cena. Desaparece no final da cena."},
+  {"nome": "Machucada", "descricao": "Toda criatura com PV igual ou menor que metade dos seus pontos de vida totais está machucada. Habilidades podem fazer referência a essa condição."},
+  {"nome": "Paralisado", "descricao": "Está Incapacitada, não pode se mover ou falar. Está Desprotegida. Ataques bem-sucedidos a até 1,5m são acertos críticos."},
+  {"nome": "Petrificado", "descricao": "Transformada em substância sólida com seus pertences não mágicos. Peso x10, para de envelhecer. Incapacitada, sem movimento/fala, inconsciente dos arredores. Desprotegida. Resistência a todos os danos. Imune a veneno e doenças (suspensos)."},
+  {"nome": "Protegido", "descricao": "Ataques contra a proteção descrita são feitos com desvantagem. A proteção vem em parênteses; sem especificação, vale para qualquer proteção. Desprotegido anula essa condição."},
+  {"nome": "Provocado", "descricao": "Relacionada a quem a provocou. Desvantagem em ataques contra todas as criaturas exceto quem provocou. Se atacar outra criatura com a provocadora no alcance, quem provocou recebe 2 pontos de ênfase temporários ou recupera uma habilidade de Recarga."}
+]

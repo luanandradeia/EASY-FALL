@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ titulo }} — Skyfall RPG{% endblock %}
+{% block header_title %}{{ titulo }}{% endblock %}
+{% block content %}
+<form method="post" class="panel">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.GET.next }}">
+  {{ form.non_field_errors }}
+  {% for field in form %}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field.errors }}{{ field }}
+    {% if field.help_text %}<div class="muted" style="margin-top:3px;">{{ field.help_text }}</div>{% endif %}
+  {% endfor %}
+  <button class="btn mt" style="width:100%;">CRIAR</button>
+</form>
+<p class="muted mt">Conteúdo customizado aparece apenas para você, marcado como <span class="chip custom">CUSTOM</span>, lado a lado com o catálogo oficial do livro.</p>
+{% endblock %}

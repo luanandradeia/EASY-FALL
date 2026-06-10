@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    container_name: skyfall_web
+    volumes:
+      - .:/app
+      - ./db_data:/app/db_data   # garante que o SQLite não resete
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:-troque-esta-chave}
+      - DEBUG=1
+      - LLM_API_KEY=${LLM_API_KEY:-}

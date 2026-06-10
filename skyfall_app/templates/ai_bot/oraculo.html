@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Oráculo de Opath{% endblock %}
+{% block header_title %}🔮 Oráculo de Opath{% endblock %}
+{% block content %}
+
+<p class="muted mb">Pergunte sobre as regras de Skyfall RPG — o Oráculo consulta o livro oficial e devolve os trechos relevantes com página.</p>
+
+<div class="chat" id="chat">
+  {% for c in historico %}
+    <div class="msg user">{{ c.pergunta }}</div>
+    <div class="msg bot">{{ c.resposta }}</div>
+  {% empty %}
+    <div class="msg bot">Saudações, viajante de Opath. Sobre qual regra deseja consultar o Arcanum? Experimente: "como funciona a fragmentação arcana?" ou "o que é catarse?"</div>
+  {% endfor %}
+</div>
+
+<form id="form-oraculo" class="flexrow mt" style="position:sticky;bottom:74px;">
+  <input type="text" id="pergunta" class="field" placeholder="Pergunte ao Oráculo…" style="flex:1;" autocomplete="off">
+  <button class="btn">➤</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const chat = document.getElementById('chat');
+chat.scrollTop = chat.scrollHeight;
+window.scrollTo(0, document.body.scrollHeight);
+
+document.getElementById('form-oraculo').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const inp = document.getElementById('pergunta');
+  const pergunta = inp.value.trim();
+  if (!pergunta) return;
+  inp.value = '';
+  chat.insertAdjacentHTML('beforeend', `<div class="msg user"></div>`);
+  chat.lastElementChild.textContent = pergunta;
+  chat.insertAdjacentHTML('beforeend', `<div class="msg bot">Consultando o Arcanum…</div>`);
+  const pensando = chat.lastElementChild;
+  window.scrollTo(0, document.body.scrollHeight);
+  const body = new URLSearchParams({pergunta});
+  const r = await fetch("{% url 'oraculo_perguntar' %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  pensando.textContent = r.ok ? (await r.json()).resposta : 'O Arcanum está instável. Tente novamente.';
+  window.scrollTo(0, document.body.scrollHeight);
+});
+</script>
+{% endblock %}

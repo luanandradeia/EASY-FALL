@@ -1,0 +1,21 @@
+[
+  {"nome": "Ácido", "preco": 150, "volume": 1, "descricao": "Use uma ação para espalhar em criatura adjacente ou jogar o frasco em criatura a até 6m. Faça um Ataque à Distância; em um acerto, o alvo sofre 2d6 de dano de ÁCIDO."},
+  {"nome": "Antitoxina", "preco": 150, "volume": 1, "descricao": "Após beber, você fica Protegido contra qualquer efeito com o descritor VENENOSO ou que cause a condição Envenenado até o final do próximo descanso."},
+  {"nome": "Antídoto", "preco": 50, "volume": 1, "descricao": "Conjunto de remédios refinados que remove uma doença. Deve ser consumido durante um descanso."},
+  {"nome": "Fogo Kishi", "preco": 100, "volume": 1, "descricao": "Fogo que queima até na água. Ação para arremessar o frasco em criatura a até 6m. Ataque à Distância de DES contra DES; em um acerto, 1d4 de dano ÍGNEO e o alvo fica Em Chamas."},
+  {"nome": "Poção de Cura", "preco": 250, "volume": 1, "descricao": "Recupera 2d4+2 pontos de vida ao ser bebida. O líquido dourado queima ao ser ingerido."},
+  {"nome": "Poção de Cura Maior", "preco": 500, "volume": 1, "descricao": "Recupera 4d4+4 pontos de vida ao ser bebida."},
+  {"nome": "Poção de Cura Superior", "preco": 1000, "volume": 1, "descricao": "Recupera 8d4+8 pontos de vida ao ser bebida."},
+  {"nome": "Poção de Cura Suprema", "preco": 2500, "volume": 1, "descricao": "Recupera 10d4+20 pontos de vida ao ser bebida."},
+  {"nome": "Poção de Escalada", "preco": 50, "volume": 1, "descricao": "Ao beber, você ganha deslocamento de escalada igual ao seu deslocamento terrestre até o final da cena."},
+  {"nome": "Poção de Força", "preco": 900, "volume": 1, "descricao": "Poção de Força de Gigante: seu valor de FOR muda para +5 até o final da cena."},
+  {"nome": "Poção de Invisibilidade", "preco": 250, "volume": 1, "descricao": "Você fica Invisível até o final da cena, junto com tudo que estiver usando ou carregando. O efeito termina se você atacar ou conjurar uma magia."},
+  {"nome": "Poção de Resistência a Dano", "preco": 250, "volume": 1, "descricao": "Concede resistência a um tipo de dano até o final da cena (1 ÁCIDO, 2 GÉLIDO, 3 ÍGNEO, 4 ENERGÉTICO, 5 ELÉTRICO, 6 NECRÓTICO, 7 VENENOSO, 8 PSÍQUICO, 9 RADIANTE, 10 TROVEJANTE)."},
+  {"nome": "Poção de Respirar na Água", "preco": 50, "volume": 1, "descricao": "Você pode respirar debaixo d'água até o final do próximo descanso longo."},
+  {"nome": "Poção de Simpatia Animal", "preco": 50, "volume": 1, "descricao": "Você pode conjurar a magia Simpatia Animal sem custo em pontos de ênfase até o final do seu próximo descanso longo."},
+  {"nome": "Poção de Velocidade", "preco": 900, "volume": 1, "descricao": "Você ganha uma ação bônus adicional até o final da cena. Não acumula com a magia Velocidade de Enoch."},
+  {"nome": "Veneno Básico", "preco": 100, "volume": 1, "descricao": "Ação para aplicar em uma arma ou três munições. O ataque recebe o descritor POTENTE e causa 1d4 de dano VENENOSO. Dura até o final da cena ou até acertar um ataque."},
+  {"nome": "Veneno de Serpente", "preco": 2000, "volume": 1, "descricao": "Extraído da boca de serpentes ofídicas. Mesmas regras do veneno básico, mas causa 3d6 de dano VENENOSO em um acerto. (K$2)"},
+  {"nome": "Veneno de Serpe Silvestre", "preco": 12000, "volume": 1, "descricao": "Extraído das entranhas de serpes silvestres. Mesmas regras do veneno básico, mas causa 7d6 de dano VENENOSO em um acerto. (K$12)"},
+  {"nome": "Veneno de Lótus Selvagem", "preco": 20000, "volume": 1, "descricao": "Extraído de rara flor da Segunda Queda. Mesmas regras do veneno simples, mas causa 12d6 de dano VENENOSO em um acerto. (K$20)"}
+]

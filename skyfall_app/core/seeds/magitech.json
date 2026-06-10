@@ -1,0 +1,10 @@
+[
+  {"nome": "Águalin", "nome_registrado": "Filtro de Água de Purificação Elemental", "preco": 100, "volume": 3, "descricao": "Dispositivo portátil capaz de transformar 2 litros de água em água potável. Recarrega mergulhado em água salgada. Filtra 10 litros antes de descarregar."},
+  {"nome": "Bolsão", "nome_registrado": "Dimensão para Armazenamento Variável", "preco": 200, "volume": 2, "descricao": "Bolsa com dimensão de bolso. Tem 20 de limite de volume e pode guardar itens de até 5 de volume. Não descarrega."},
+  {"nome": "Carteira", "nome_registrado": "Dimensão para Armazenamento de Riquezas", "preco": 150, "volume": 1, "descricao": "Bolsinha de couro que armazena moedas e gemas em dimensão de bolso. Guarda até K$10 (T$100.000). Não descarrega."},
+  {"nome": "Lampadinha", "nome_registrado": "Lanterna de Cristais Reluzentes", "preco": 100, "volume": 2, "descricao": "Lâmpada de cristais mágicos com intensidade automática. Precisa ser fixada. Recarrega com um cristal de T$5 ou mais e dura 6h."},
+  {"nome": "Lunax", "nome_registrado": "Marcador de Tempo Lunar", "preco": 150, "volume": 1, "descricao": "Relógio de pulso que usa luz solar e o reflexo das luas Varmah e Lapis para determinar hora e dia. Funciona no subterrâneo. Recarrega com 1h de luz solar direta e dura um dia."},
+  {"nome": "Precision T", "nome_registrado": "Termômetro de Cristal Volátil", "preco": 50, "volume": 1, "descricao": "Termômetro de vidro mágico com aetherium líquido que mostra a temperatura exata. Recarrega submerso em água gelada; realiza 3 medições antes de descarregar."},
+  {"nome": "Salva-Sono", "nome_registrado": "Despertador de Sono Profundo Desagradável", "preco": 50, "volume": 2, "descricao": "Capacete que protege de sonhos indesejados, acordando o usuário se necessário. Recarrega após um sonho extremamente agradável."},
+  {"nome": "Tá-ali!", "nome_registrado": "Bússola de Rastreamento Único", "preco": 300, "volume": 1, "descricao": "Bússola que aponta sempre para um marco (pequena pirâmide de metal que a acompanha). Recarrega quando bússola e pirâmide se encontram; dura 10 dias."}
+]

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}{{ p.nome }} — Modo Cena{% endblock %}
+{% block header_title %}Modo Cena · {{ p.nome }}{% endblock %}
+{% block content %}
+
+<div class="panel mb" style="text-align:center;">
+  <div id="resultado" class="roll-result">—</div>
+  <div id="detalhe" class="micro mt">toque em um botão para rolar</div>
+</div>
+
+<div class="panel mb">
+  <div class="flexrow">
+    <span class="micro">Modo:</span>
+    <button class="btn ghost mini" id="modo-normal" onclick="setModo('normal')" style="border-color:var(--arc)">NORMAL</button>
+    <button class="btn ghost mini" id="modo-vant" onclick="setModo('vant')">VANTAGEM</button>
+    <button class="btn ghost mini" id="modo-desv" onclick="setModo('desv')">DESVANT.</button>
+    <span class="spacer"></span>
+    <span class="counter enfase" style="padding:5px 9px;">
+      <span class="lbl">PE</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',-1)">−</button>
+      <span class="num" id="v-enfase_atual">{{ p.enfase_atual }}</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',1)">+</button>
+    </span>
+  </div>
+</div>
+
+<div class="seclabel"><span class="idx">01</span><span class="name">Testes Rápidos</span><span class="rule"></span></div>
+<div class="attr-grid">
+  {% for sigla, valor in p.atributos.items %}
+  <button class="attr tap" onclick="rolar('{{ sigla }}', {{ valor }})">
+    <div class="sig">{{ sigla }}</div>
+    <div class="val">{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
+    <div class="prot">1d20{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
+  </button>
+  {% endfor %}
+</div>
+<button class="btn ghost mt" style="width:100%;" onclick="rolar('INICIATIVA', {{ p.iniciativa_bonus }})">⚡ INICIATIVA (1d20{% if p.iniciativa_bonus >= 0 %}+{% endif %}{{ p.iniciativa_bonus }})</button>
+
+<div class="seclabel"><span class="idx">02</span><span class="name">Perícias</span><span class="rule"></span></div>
+<div class="panel" style="padding:6px 13px;">
+  {% for pp in pericias %}
+  <div class="pericia-row tap" style="cursor:pointer;" onclick="rolar('{{ pp.pericia.nome|escapejs }}', {{ pp.bonus }})">
+    <span class="prof-dot {% if pp.expert %}e{% elif pp.proficiente %}p{% endif %}">{% if pp.expert %}E{% elif pp.proficiente %}P{% else %}·{% endif %}</span>
+    <span class="nome">{{ pp.pericia.nome }}</span>
+    <span class="micro">{{ pp.atributo }}</span>
+    <span class="bonus">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</span>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="seclabel"><span class="idx">03</span><span class="name">Ataques</span><span class="rule"></span></div>
+{% for e in armas %}
+{% with item=e.item %}
+<div class="card equipado">
+  <div class="head">
+    <span class="nome">{{ e.nome_completo }}</span>
+    <span class="spacer"></span>
+    <span class="meta">{{ item.dano }}</span>
+  </div>
+  <div style="margin-top:5px;">{% for d in item.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}</div>
+  <div class="flexrow mt">
+    <button class="btn mini" onclick="rolarAtaque('{{ item.nome|escapejs }}')">🎯 ATACAR (1d20+ATR+PROF)</button>
+    {% if item.dano %}<button class="btn ghost mini" onclick="rolarDano('{{ item.nome|escapejs }}', '{{ item.dano }}')">💥 DANO {{ item.dano }}</button>{% endif %}
+  </div>
+</div>
+{% endwith %}
+{% empty %}<p class="muted">Nenhuma arma equipada. Equipe armas no <a href="{% url 'inventario' p.pk %}">inventário</a>.</p>{% endfor %}
+
+<div class="seclabel"><span class="idx">04</span><span class="name">Habilidades & Magias</span><span class="rule"></span></div>
+{% for h in habilidades %}
+<div class="card">
+  <div class="head">
+    <span class="nome">{{ h.nome }}</span>
+    <span class="chip" style="color:var(--enfase)">{{ h.custo_enfase }} PE</span>
+    <span class="meta">{{ h.execucao }}</span>
+    <span class="spacer"></span><span class="meta">{{ h.fonte_nome }}</span>
+  </div>
+  <details><summary>efeito</summary><div class="desc">{{ h.descricao }}</div></details>
+  {% if h.custo_enfase %}
+  <button class="btn ghost mini mt" onclick="usarPE({{ h.custo_enfase }}, '{{ h.nome|escapejs }}')">USAR (−{{ h.custo_enfase }} PE)</button>
+  {% endif %}
+</div>
+{% endfor %}
+{% for m in magias %}
+<div class="card">
+  <div class="head">
+    <span class="nome">{{ m.nome }}</span>
+    <span class="chip" style="color:var(--sombra)">{{ m.get_camada_display|upper }}</span>
+    <span class="chip" style="color:var(--enfase)">{{ m.custo_enfase }} PE</span>
+    <span class="spacer"></span><span class="meta">{{ m.get_tipo_display }}</span>
+  </div>
+  <details><summary>descrição</summary><div class="desc">{{ m.descricao }}</div></details>
+  <div class="flexrow mt">
+    <button class="btn ghost mini" onclick="usarPE({{ m.custo_enfase }}, '{{ m.nome|escapejs }}')">CONJURAR (−{{ m.custo_enfase }} PE)</button>
+    <button class="btn ghost mini" onclick="rolarAtaque('{{ m.nome|escapejs }} (mágico)')">ATQ MÁGICO</button>
+  </div>
+</div>
+{% endfor %}
+{% if not magias and not habilidades %}
+<p class="muted">Nenhuma magia/habilidade selecionada. Visite o <a href="{% url 'grimorio' p.pk %}">Grimório</a>.</p>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+let modo = 'normal';
+const PROF = {{ p.proficiencia }};
+function setModo(m) {
+  modo = m;
+  for (const id of ['normal','vant','desv']) {
+    document.getElementById('modo-' + id).style.borderColor = (id === m) ? 'var(--arc)' : 'var(--line-2)';
+  }
+}
+function d(n) { return 1 + Math.floor(Math.random() * n); }
+function d20() {
+  const a = d(20), b = d(20);
+  if (modo === 'vant') return {v: Math.max(a,b), det: `2d20 [${a},${b}] ↑`};
+  if (modo === 'desv') return {v: Math.min(a,b), det: `2d20 [${a},${b}] ↓`};
+  return {v: a, det: `1d20 [${a}]`};
+}
+function mostra(total, detalhe, critico) {
+  const r = document.getElementById('resultado');
+  r.textContent = total;
+  r.style.color = critico === 20 ? 'var(--catarse)' : critico === 1 ? 'var(--blood)' : 'var(--arc-soft)';
+  r.style.animation = 'none'; void r.offsetWidth; r.style.animation = '';
+  document.getElementById('detalhe').textContent = detalhe;
+}
+function rolar(nome, bonus) {
+  const r = d20();
+  mostra(r.v + bonus, `${nome}: ${r.det} ${bonus >= 0 ? '+' : ''}${bonus} = ${r.v + bonus}`, r.v);
+}
+function rolarAtaque(nome) {
+  const r = d20();
+  mostra(r.v + PROF, `${nome}: ${r.det} + prof ${PROF} (+ atributo) `, r.v);
+}
+function rolarDano(nome, formula) {
+  const m = formula.match(/(\d+)d(\d+)([+-]\d+)?/i);
+  if (!m) return;
+  const qtd = +m[1], faces = +m[2], mod = +(m[3] || 0);
+  let soma = mod; const dados = [];
+  for (let i = 0; i < qtd; i++) { const x = d(faces); dados.push(x); soma += x; }
+  mostra(soma, `${nome} — dano ${formula}: [${dados.join(',')}]${mod ? (mod > 0 ? '+' + mod : mod) : ''}`);
+}
+function usarPE(custo, nome) {
+  ajuste("{% url 'ajuste_rapido' p.pk %}", 'enfase_atual', -custo);
+  document.getElementById('detalhe').textContent = `${nome}: −${custo} PE`;
+}
+</script>
+{% endblock %}

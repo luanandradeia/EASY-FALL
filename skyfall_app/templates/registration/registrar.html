@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Registrar — Skyfall RPG{% endblock %}
+{% block content %}
+<div style="min-height:70vh;display:flex;flex-direction:column;justify-content:center;">
+  <div style="text-align:center;margin-bottom:22px;">
+    <div class="eyebrow" style="font-size:13px;">SKYFALL</div>
+    <h1 style="font-weight:600;margin-top:6px;">Criar Conta</h1>
+  </div>
+  <form method="post" class="panel">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field.errors }}
+      <input type="{% if 'password' in field.name %}password{% else %}text{% endif %}"
+             name="{{ field.html_name }}" id="{{ field.id_for_label }}" class="field">
+    {% endfor %}
+    <button class="btn mt" style="width:100%;">REGISTRAR</button>
+    <p class="muted mt" style="text-align:center;">Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+  </form>
+</div>
+{% endblock %}

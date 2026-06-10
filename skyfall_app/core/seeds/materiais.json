@@ -1,0 +1,8 @@
+[
+  {"nome": "Aço Índigo", "efeito_resumo": "Amplia efeitos mágicos", "aumento_preco": 300, "descricao": "Liga metálica à base de aetherium. Qualquer sigilo aplicado ao item recebe 2 cargas adicionais."},
+  {"nome": "Bronze Celestial", "efeito_resumo": "Torna o item mais leve, como uma pena", "aumento_preco": 300, "descricao": "Encontrado na lua Lapis e nos corpos de seraphs. Armas, armaduras e escudos feitos desse material têm volume reduzido a 0."},
+  {"nome": "Ferro Varmaniano", "efeito_resumo": "Cria vínculo de sangue", "aumento_preco": 300, "descricao": "Metal avermelhado extraído pelos demônios de Varmah. Enquanto Machucado, armas recebem +1 em jogadas de ataque; armaduras e escudos concedem resistência a dano NECRÓTICO."},
+  {"nome": "Nácar", "efeito_resumo": "Estabiliza efeitos mágicos", "aumento_preco": 300, "descricao": "Madrepérola de raros moluscos e dos Profundos. Armas causam dano como MÁGICAS (ignorando resistência de monstros). Armaduras e escudos de nácar não impõem penalidades para conjurar magias."},
+  {"nome": "Obsidiana Caliginosa", "efeito_resumo": "Potencializado pela falta de sombra", "aumento_preco": 300, "descricao": "Encontrado nas entranhas do vulcão Tief. Sem pontos de sombra, armas ignoram a redução do alvo, e armaduras/escudos concedem resistência a dano ÍGNEO e RADIANTE."},
+  {"nome": "Ossada de Sauros", "efeito_resumo": "Aumenta densidade", "aumento_preco": 300, "descricao": "Ossos dos sauros da Segunda Grande Queda. Armas têm o dano aumentado em uma categoria; armaduras e escudos têm redução +1. Volume aumentado em +4 (ou +2 para itens LEVES e armaduras leves)."}
+]
