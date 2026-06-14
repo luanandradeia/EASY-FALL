@@ -1,149 +1,389 @@
 {% extends "base.html" %}
-{% block title %}{{ p.nome }} — Modo Cena{% endblock %}
-{% block header_title %}Modo Cena · {{ p.nome }}{% endblock %}
+{% block title %}{{ p.nome }} — Cenas{% endblock %}
+
+{% block header_extra %}
+<div class="flexrow" style="gap: 12px; align-items: center; margin-right: 10px;">
+  <div class="flexrow" style="gap: 4px; align-items: center;">
+    <span class="micro" style="color:var(--arc)">INI</span>
+    <input type="number" id="in-iniciativa_atual" value="{{ p.iniciativa_atual }}" class="field" style="width: 45px; padding: 2px 4px; font-size: 13px; text-align: center;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'iniciativa_atual', this)">
+  </div>
+  <select id="seletor-cena" class="field" style="width: 120px; padding: 4px; font-size: 10px; font-family: var(--mono);" onchange="trocarCena(this.value)">
+    <option value="combate">⚔️ COMBATE</option>
+    <option value="exploracao">🗺️ EXPLORAÇÃO</option>
+    <option value="interacao">🗣️ INTERAÇÃO</option>
+    <option value="descanso">🏕️ DESCANSO</option>
+  </select>
+</div>
+{% endblock %}
+
 {% block content %}
-
-<div class="panel mb" style="text-align:center;">
-  <div id="resultado" class="roll-result">—</div>
-  <div id="detalhe" class="micro mt">toque em um botão para rolar</div>
-</div>
-
-<div class="panel mb">
-  <div class="flexrow">
-    <span class="micro">Modo:</span>
-    <button class="btn ghost mini" id="modo-normal" onclick="setModo('normal')" style="border-color:var(--arc)">NORMAL</button>
-    <button class="btn ghost mini" id="modo-vant" onclick="setModo('vant')">VANTAGEM</button>
-    <button class="btn ghost mini" id="modo-desv" onclick="setModo('desv')">DESVANT.</button>
-    <span class="spacer"></span>
-    <span class="counter enfase" style="padding:5px 9px;">
-      <span class="lbl">PE</span>
-      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',-1)">−</button>
-      <span class="num" id="v-enfase_atual">{{ p.enfase_atual }}</span>
-      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','enfase_atual',1)">+</button>
-    </span>
+<!-- HUD GLOBAL FIXO -->
+<div class="panel mb" style="position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 2px solid var(--line-2); margin-top: -10px; padding: 8px 12px;">
+  <div class="flexrow mb" style="justify-content: space-between; align-items: center;">
+    <div class="flexrow" style="gap: 6px; align-items: center;">
+      <span class="micro" style="color:var(--blood)">PV</span>
+      <button class="mini-btn" onclick="addValor('pv_atual', -1)">−</button>
+      <input type="number" id="in-pv_atual" value="{{ p.pv_atual }}" class="field mono" style="width: 45px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--blood); font-size: 18px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'pv_atual', this)">
+      <button class="mini-btn" onclick="addValor('pv_atual', 1)">+</button>
+      <span class="muted" style="font-size: 10px; margin-left: -4px;">/{{ p.pv_maximo }}</span>
+    </div>
+    <div class="flexrow" style="gap: 6px; align-items: center;">
+      <span class="micro" style="color:var(--enfase)">PE</span>
+      <button class="mini-btn" onclick="addValor('enfase_atual', -1)">−</button>
+      <input type="number" id="in-enfase_atual" value="{{ p.enfase_atual }}" class="field mono" style="width: 35px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--enfase); font-size: 18px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'enfase_atual', this)">
+      <button class="mini-btn" onclick="addValor('enfase_atual', 1)">+</button>
+    </div>
+  </div>
+  <div class="bar red" id="bar-pv_atual" data-max="{{ p.pv_maximo }}" style="height: 4px;">
+    <span style="width:{% widthratio p.pv_atual p.pv_maximo 100 %}%"></span>
   </div>
 </div>
 
-<div class="seclabel"><span class="idx">01</span><span class="name">Testes Rápidos</span><span class="rule"></span></div>
-<div class="attr-grid">
-  {% for sigla, valor in p.atributos.items %}
-  <button class="attr tap" onclick="rolar('{{ sigla }}', {{ valor }})">
-    <div class="sig">{{ sigla }}</div>
-    <div class="val">{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
-    <div class="prot">1d20{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
-  </button>
-  {% endfor %}
-</div>
-<button class="btn ghost mt" style="width:100%;" onclick="rolar('INICIATIVA', {{ p.iniciativa_bonus }})">⚡ INICIATIVA (1d20{% if p.iniciativa_bonus >= 0 %}+{% endif %}{{ p.iniciativa_bonus }})</button>
+<!-- ========================================================================= -->
+<!-- 1. CENA DE COMBATE -->
+<!-- ========================================================================= -->
+<div id="cena-combate" class="sub-cena">
+  <div class="flexrow mb" style="justify-content: space-between; gap: 8px;">
+    <div class="counter flex-1" style="padding: 6px 8px;">
+      <span class="micro" style="color:var(--catarse)">CAT</span>
+      <button class="mini-btn" onclick="addValor('catarse', -1)">−</button>
+      <span class="num mono" id="v-catarse">{{ p.catarse }}</span>
+      <button class="mini-btn" onclick="addValor('catarse', 1)">+</button>
+    </div>
+    <div class="counter flex-1" style="padding: 6px 8px;">
+      <span class="micro" style="color:var(--sombra)">SOM</span>
+      <button class="mini-btn" onclick="addValor('sombra', -1)">−</button>
+      <span class="num mono" id="v-sombra">{{ p.sombra }}</span>
+      <button class="mini-btn" onclick="addValor('sombra', 1)">+</button>
+    </div>
+  </div>
 
-<div class="seclabel"><span class="idx">02</span><span class="name">Perícias</span><span class="rule"></span></div>
-<div class="panel" style="padding:6px 13px;">
-  {% for pp in pericias %}
-  <div class="pericia-row tap" style="cursor:pointer;" onclick="rolar('{{ pp.pericia.nome|escapejs }}', {{ pp.bonus }})">
-    <span class="prof-dot {% if pp.expert %}e{% elif pp.proficiente %}p{% endif %}">{% if pp.expert %}E{% elif pp.proficiente %}P{% else %}·{% endif %}</span>
-    <span class="nome">{{ pp.pericia.nome }}</span>
-    <span class="micro">{{ pp.atributo }}</span>
-    <span class="bonus">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</span>
+  <div class="flexrow mb" style="justify-content: space-between; align-items: center; background: var(--panel-2); padding: 8px 12px; border-radius: 8px;">
+     <label style="display: flex; align-items: center; gap: 8px; margin: 0; cursor: pointer;">
+        <input type="checkbox" class="check" id="check-inspiracao" {% if p.inspiracao %}checked{% endif %} onclick="setCheck('inspiracao', this.checked)">
+        <span class="micro">INSPIRADO</span>
+     </label>
+     <div class="flexrow" style="gap: 8px; align-items: center;">
+        <span class="micro">RD</span>
+        <button class="mini-btn" onclick="addValor('reducao_dano', -1)">−</button>
+        <span class="num mono" id="v-reducao_dano" style="font-weight: 700;">{{ p.reducao_dano }}</span>
+        <button class="mini-btn" onclick="addValor('reducao_dano', 1)">+</button>
+     </div>
   </div>
-  {% endfor %}
+
+  <div class="seclabel"><span class="idx">⚔️</span><span class="name">Ações de Ataque</span><span class="rule"></span></div>
+  <div class="carousel mb">
+    {% for arma in armas %}
+    <div class="card equipped carousel-item">
+      <div class="head">
+        <span class="nome">{{ arma.item.nome }}</span>
+        <label class="micro" style="margin: 0; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+           <input type="checkbox" class="check" style="width: 12px; height: 12px;" {% if arma.proficiente %}checked{% endif %} 
+                  onchange="updateArma({{ arma.pk }}, 'proficiente', this.checked)"> PROF.
+        </label>
+      </div>
+      <div class="flexrow mt" style="gap: 6px; align-items: center;">
+        <span class="micro">ATR:</span>
+        <select class="field" style="font-size: 10px; padding: 2px; width: 60px;" onchange="updateArma({{ arma.pk }}, 'atributo', this.value)">
+          {% for code, name in atributo_choices %}
+            <option value="{{ code }}" {% if arma.atributo_ataque == code %}selected{% endif %}>{{ code }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mt flexrow" style="gap: 8px;">
+        <div class="panel-2 flex-1" style="padding: 6px; text-align: center; border-radius: 4px;">
+          <span class="micro" style="font-size: 8px;">ACERTO</span><br>
+          <span class="mono" style="font-size: 13px; color: var(--arc);">1d20+<span id="acerto-{{ arma.pk }}">?</span></span>
+        </div>
+        <div class="panel-2 flex-1" style="padding: 6px; text-align: center; border-radius: 4px;">
+          <span class="micro" style="font-size: 8px;">DANO</span><br>
+          <span class="mono" style="font-size: 13px; color: var(--blood);">{{ arma.item.dano|default:"1d4" }}+<span id="dano-{{ arma.pk }}">?</span></span>
+        </div>
+      </div>
+    </div>
+    {% empty %}<p class="muted">Equipe armas no inventário.</p>{% endfor %}
+  </div>
+
+  <div class="seclabel"><span class="idx">✦</span><span class="name">Magias (A, B, R)</span><span class="rule"></span></div>
+  <div class="flexrow mb" style="gap: 4px;">
+    <button class="btn mini ghost sub-tab-btn on" onclick="verSubTab(this, 'magia-a')">A</button>
+    <button class="btn mini ghost sub-tab-btn" onclick="verSubTab(this, 'magia-b')">B</button>
+    <button class="btn mini ghost sub-tab-btn" onclick="verSubTab(this, 'magia-r')">R</button>
+  </div>
+
+  <div id="magia-a" class="sub-tab-content carousel">
+    {% for m in magias_padrao %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ m.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ m.custo_enfase }}, '{{ m.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem magias A.</p>{% endfor %}
+  </div>
+  <div id="magia-b" class="sub-tab-content carousel" style="display: none;">
+    {% for m in magias_bonus %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ m.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ m.custo_enfase }}, '{{ m.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem magias B.</p>{% endfor %}
+  </div>
+  <div id="magia-r" class="sub-tab-content carousel" style="display: none;">
+    {% for m in magias_reacao %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ m.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ m.custo_enfase }}, '{{ m.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem magias R.</p>{% endfor %}
+  </div>
+
+  <div class="seclabel"><span class="idx">⚠️</span><span class="name">Condições</span><span class="rule"></span></div>
+  <div class="panel flexrow" style="gap: 6px; flex-wrap: wrap; padding: 10px;">
+    {% for cond in condicoes_lista %}
+      <button class="chip tap cond-btn {% if cond.nome in condicoes_ativas_lista %}danger{% endif %}" 
+              data-desc="{{ cond.descricao }}"
+              onclick="toggleCondicao('{{ cond.nome }}', this)">{{ cond.nome }}</button>
+    {% endfor %}
+  </div>
+  <div id="cond-desc" class="panel muted" style="font-size: 11px; min-height: 30px; border: 1px dashed var(--line-2); display: none;"></div>
 </div>
 
-<div class="seclabel"><span class="idx">03</span><span class="name">Ataques</span><span class="rule"></span></div>
-{% for e in armas %}
-{% with item=e.item %}
-<div class="card equipado">
-  <div class="head">
-    <span class="nome">{{ e.nome_completo }}</span>
-    <span class="spacer"></span>
-    <span class="meta">{{ item.dano }}</span>
+<!-- ========================================================================= -->
+<!-- 2. CENA DE EXPLORAÇÃO -->
+<!-- ========================================================================= -->
+<div id="cena-exploracao" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🧭</span><span class="name">Função na Viagem</span><span class="rule"></span></div>
+  <div class="flexrow mb" style="gap: 5px; flex-wrap: wrap;">
+    <button class="btn mini ghost role-btn" onclick="setRole('Caçador', '<b>Caçador/Coletor:</b> Sobrevivência (SAB). Role para encontrar rações ou água.')">Caçador</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Cartógrafo', '<b>Cartógrafo:</b> Investigação (INT) ou Percepção (SAB). Role para mapear o terreno.')">Cartógrafo</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Guarda', '<b>Guarda:</b> Percepção (SAB). Role para evitar emboscadas.')">Guarda</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Navegador', '<b>Navegador:</b> Navegação (SAB). Role para não se perder.')">Navegador</button>
   </div>
-  <div style="margin-top:5px;">{% for d in item.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}</div>
-  <div class="flexrow mt">
-    <button class="btn mini" onclick="rolarAtaque('{{ item.nome|escapejs }}')">🎯 ATACAR (1d20+ATR+PROF)</button>
-    {% if item.dano %}<button class="btn ghost mini" onclick="rolarDano('{{ item.nome|escapejs }}', '{{ item.dano }}')">💥 DANO {{ item.dano }}</button>{% endif %}
-  </div>
-</div>
-{% endwith %}
-{% empty %}<p class="muted">Nenhuma arma equipada. Equipe armas no <a href="{% url 'inventario' p.pk %}">inventário</a>.</p>{% endfor %}
+  <div id="role-desc" class="panel mb muted" style="font-size: 12px; min-height: 40px; border: 1px dashed var(--line-2);">Selecione uma função para ver as regras.</div>
 
-<div class="seclabel"><span class="idx">04</span><span class="name">Habilidades & Magias</span><span class="rule"></span></div>
-{% for h in habilidades %}
-<div class="card">
-  <div class="head">
-    <span class="nome">{{ h.nome }}</span>
-    <span class="chip" style="color:var(--enfase)">{{ h.custo_enfase }} PE</span>
-    <span class="meta">{{ h.execucao }}</span>
-    <span class="spacer"></span><span class="meta">{{ h.fonte_nome }}</span>
+  <div class="seclabel"><span class="idx">📦</span><span class="name">Suprimentos</span><span class="rule"></span></div>
+  <div class="grid-2">
+    <div class="counter"><span class="lbl">🥛 Água</span><button onclick="addValor('agua',-1)">−</button><span class="num" id="v-agua">{{p.agua}}</span><button onclick="addValor('agua',1)">+</button></div>
+    <div class="counter"><span class="lbl">🍞 Ração</span><button onclick="addValor('racoes',-1)">−</button><span class="num" id="v-racoes">{{p.racoes}}</span><button onclick="addValor('racoes',1)">+</button></div>
   </div>
-  <details><summary>efeito</summary><div class="desc">{{ h.descricao }}</div></details>
-  {% if h.custo_enfase %}
-  <button class="btn ghost mini mt" onclick="usarPE({{ h.custo_enfase }}, '{{ h.nome|escapejs }}')">USAR (−{{ h.custo_enfase }} PE)</button>
-  {% endif %}
-</div>
-{% endfor %}
-{% for m in magias %}
-<div class="card">
-  <div class="head">
-    <span class="nome">{{ m.nome }}</span>
-    <span class="chip" style="color:var(--sombra)">{{ m.get_camada_display|upper }}</span>
-    <span class="chip" style="color:var(--enfase)">{{ m.custo_enfase }} PE</span>
-    <span class="spacer"></span><span class="meta">{{ m.get_tipo_display }}</span>
-  </div>
-  <details><summary>descrição</summary><div class="desc">{{ m.descricao }}</div></details>
-  <div class="flexrow mt">
-    <button class="btn ghost mini" onclick="usarPE({{ m.custo_enfase }}, '{{ m.nome|escapejs }}')">CONJURAR (−{{ m.custo_enfase }} PE)</button>
-    <button class="btn ghost mini" onclick="rolarAtaque('{{ m.nome|escapejs }} (mágico)')">ATQ MÁGICO</button>
+  <button class="btn mt danger" style="width: 100%;" onclick="consumirDiaria()">CONSUMIR DIÁRIA (-1 Água, -1 Ração)</button>
+
+  <div class="seclabel mt"><span class="idx">🧪</span><span class="name">Consumíveis em Mãos</span><span class="rule"></span></div>
+  <div class="carousel">
+    {% for c in consumiveis %}
+    <div id="cons-{{ c.pk }}" class="card carousel-item" style="flex: 0 0 70%; min-width: 200px;">
+       <div class="head"><span class="nome">{{ c.item.nome }}</span><span class="spacer"></span><span class="chip">x<span class="qtd">{{ c.quantidade }}</span></span></div>
+       <button class="btn ghost mini full mt" onclick="usarConsumivel({{ c.pk }}, '{{ c.item.nome }}')">CONSUMIR</button>
+    </div>
+    {% empty %}<p class="muted">Nenhum consumível (poções, kits, etc) no inventário.</p>{% endfor %}
   </div>
 </div>
-{% endfor %}
-{% if not magias and not habilidades %}
-<p class="muted">Nenhuma magia/habilidade selecionada. Visite o <a href="{% url 'grimorio' p.pk %}">Grimório</a>.</p>
-{% endif %}
+
+<!-- ========================================================================= -->
+<!-- 3. CENA DE INTERAÇÃO -->
+<!-- ========================================================================= -->
+<div id="cena-interacao" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🗣️</span><span class="name">Perícias Sociais</span><span class="rule"></span></div>
+  <div class="grid-2">
+    {% for pp in pericias_sociais %}
+    <div class="panel-2" style="padding: 10px; border-radius: 8px; text-align: center;">
+      <span class="micro">{{ pp.pericia.nome }}</span><br>
+      <b style="font-size: 24px; color: var(--arc);">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</b>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="seclabel mt"><span class="idx">📖</span><span class="name">Lembretes de História</span><span class="rule"></span></div>
+  <div class="panel">
+    <div class="mb"><span class="micro">Antecedente:</span> <span style="font-size: 13px;">{{ p.antecedente.nome }}</span></div>
+    <div class="mb"><span class="micro">Melancolia:</span> <p class="muted" style="font-size: 12px; margin-top: 4px;">{{ p.melancolia|default:"Não definida." }}</p></div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 4. CENA DE DESCANSO -->
+<!-- ========================================================================= -->
+<div id="cena-descanso" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🏕️</span><span class="name">Descanso Curto</span><span class="rule"></span></div>
+  <div class="panel">
+    <div class="flexrow mb" style="justify-content: space-between;"><span class="micro">DADOS DE VIDA ({{ p.dado_vida_tipo }})</span><span class="mono">Disponíveis: {{ p.dados_vida_total|add:p.dados_vida_usados_neg }}</span></div>
+    <div class="flexrow" style="gap: 10px; align-items: flex-end;">
+      <div style="flex: 1;"><span class="micro">ROLADO (+{{p.atributos.CON}} CON)</span><input type="number" id="roll-descanso" class="field" placeholder="Ex: 8"></div>
+      <button class="btn ghost" onclick="aplicarDescansoCurto()">CURAR</button>
+    </div>
+  </div>
+
+  <div class="seclabel mt"><span class="idx">🛌</span><span class="name">Hospedagem</span><span class="rule"></span></div>
+  <div class="panel">
+    <select id="sel-hospedagem" class="field mb">
+       <option value="0">Ao Ar Livre / Comum</option>
+       <option value="modesta">Modesta (T$ 25) - +2 PV p/ Dado Gasto</option>
+       <option value="luxuosa">Luxuosa (T$ 100) - +2 PV p/ Dado + 1 Catarse</option>
+    </select>
+  </div>
+
+  <div class="seclabel mt"><span class="idx">💤</span><span class="name">Descanso Longo</span><span class="rule"></span></div>
+  <form method="post" action="{% url 'descanso_longo' p.pk %}">{% csrf_token %}
+    <button class="btn danger full" onclick="return confirm('Resetar PV, PE e metade dos DVs?')">FINALIZAR DESCANSO LONGO</button>
+  </form>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
-let modo = 'normal';
-const PROF = {{ p.proficiencia }};
-function setModo(m) {
-  modo = m;
-  for (const id of ['normal','vant','desv']) {
-    document.getElementById('modo-' + id).style.borderColor = (id === m) ? 'var(--arc)' : 'var(--line-2)';
-  }
+const prof = {{ p.proficiencia }};
+const attrs = { FOR: {{ p.atributos.FOR }}, DES: {{ p.atributos.DES }}, CON: {{ p.atributos.CON }}, INT: {{ p.atributos.INT }}, SAB: {{ p.atributos.SAB }}, CAR: {{ p.atributos.CAR }} };
+const armas_data = [ {% for a in armas %} {pk: {{ a.pk }}, proficiente: {{ a.proficiente|yesno:"true,false" }}, atr: "{{ a.atributo_ataque }}"}, {% endfor %} ];
+
+function recalculateArmas() {
+    armas_data.forEach(a => {
+        const bonus_atr = attrs[a.atr] || 0;
+        const total_acerto = bonus_atr + (a.proficiente ? prof : 0);
+        const acEl = document.getElementById('acerto-' + a.pk);
+        const dnEl = document.getElementById('dano-' + a.pk);
+        if (acEl) acEl.textContent = (total_acerto >= 0 ? '+' : '') + total_acerto;
+        if (dnEl) dnEl.textContent = (bonus_atr >= 0 ? '+' : '') + bonus_atr;
+    });
 }
-function d(n) { return 1 + Math.floor(Math.random() * n); }
-function d20() {
-  const a = d(20), b = d(20);
-  if (modo === 'vant') return {v: Math.max(a,b), det: `2d20 [${a},${b}] ↑`};
-  if (modo === 'desv') return {v: Math.min(a,b), det: `2d20 [${a},${b}] ↓`};
-  return {v: a, det: `1d20 [${a}]`};
+
+async function updateArma(pk, campo, valor) {
+    const body = new URLSearchParams({id: pk, [campo]: valor});
+    await fetch("{% url 'arma_update' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+    const a = armas_data.find(x => x.pk == pk);
+    if (a) {
+        if (campo === 'proficiente') a.proficiente = valor;
+        if (campo === 'atributo') a.atr = valor;
+        recalculateArmas();
+    }
 }
-function mostra(total, detalhe, critico) {
-  const r = document.getElementById('resultado');
-  r.textContent = total;
-  r.style.color = critico === 20 ? 'var(--catarse)' : critico === 1 ? 'var(--blood)' : 'var(--arc-soft)';
-  r.style.animation = 'none'; void r.offsetWidth; r.style.animation = '';
-  document.getElementById('detalhe').textContent = detalhe;
+
+async function setValor(url, campo, input) {
+    const valor = input.value;
+    const body = new URLSearchParams({campo: campo, valor: valor});
+    const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+    if (r.ok) {
+        if (campo === 'pv_atual') {
+            const bar = document.getElementById('bar-pv_atual');
+            bar.firstElementChild.style.width = (100 * valor / bar.dataset.max) + '%';
+        }
+        input.style.borderColor = 'var(--arc)';
+        setTimeout(() => { input.style.borderColor = ''; }, 600);
+    }
 }
-function rolar(nome, bonus) {
-  const r = d20();
-  mostra(r.v + bonus, `${nome}: ${r.det} ${bonus >= 0 ? '+' : ''}${bonus} = ${r.v + bonus}`, r.v);
+
+async function addValor(campo, delta) {
+    const elIn = document.getElementById('in-' + campo);
+    const elV = document.getElementById('v-' + campo);
+    const atual = parseInt((elIn ? elIn.value : elV.textContent));
+    const novo = atual + delta;
+    
+    const body = new URLSearchParams({campo: campo, valor: novo});
+    const r = await fetch("{% url 'ajuste_rapido' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+    if (r.ok) {
+        if (elIn) { 
+            elIn.value = novo; 
+            if (campo === 'pv_atual') {
+                const bar = document.getElementById('bar-pv_atual');
+                bar.firstElementChild.style.width = (100 * novo / bar.dataset.max) + '%';
+            }
+        }
+        else { elV.textContent = novo; }
+    }
 }
-function rolarAtaque(nome) {
-  const r = d20();
-  mostra(r.v + PROF, `${nome}: ${r.det} + prof ${PROF} (+ atributo) `, r.v);
+
+async function setCheck(campo, estado) {
+    const body = new URLSearchParams({campo: campo, estado: estado});
+    await fetch("{% url 'ajuste_rapido' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
 }
-function rolarDano(nome, formula) {
-  const m = formula.match(/(\d+)d(\d+)([+-]\d+)?/i);
-  if (!m) return;
-  const qtd = +m[1], faces = +m[2], mod = +(m[3] || 0);
-  let soma = mod; const dados = [];
-  for (let i = 0; i < qtd; i++) { const x = d(faces); dados.push(x); soma += x; }
-  mostra(soma, `${nome} — dano ${formula}: [${dados.join(',')}]${mod ? (mod > 0 ? '+' + mod : mod) : ''}`);
+
+function trocarCena(val) {
+    document.querySelectorAll('.sub-cena').forEach(s => s.style.display = 'none');
+    document.getElementById('cena-' + val).style.display = 'block';
+    localStorage.setItem('cena_ativa', val);
 }
-function usarPE(custo, nome) {
-  ajuste("{% url 'ajuste_rapido' p.pk %}", 'enfase_atual', -custo);
-  document.getElementById('detalhe').textContent = `${nome}: −${custo} PE`;
+
+function verSubTab(btn, id) {
+    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('on'));
+    document.querySelectorAll('.sub-tab-content').forEach(c => c.style.display = 'none');
+    btn.classList.add('on');
+    document.getElementById(id).style.display = 'flex';
+}
+
+function setRole(name, desc) {
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('on'));
+    event.target.classList.add('on');
+    document.getElementById('role-desc').innerHTML = desc;
+}
+
+async function toggleCondicao(nome, btn) {
+    const r = await fetch("{% url 'ajuste_rapido' p.pk %}", {
+        method: 'POST', headers: {'X-CSRFToken': CSRF}, body: new URLSearchParams({campo: 'condicoes_ativas', valor: nome})
+    });
+    if (r.ok) {
+        btn.classList.toggle('danger');
+        const descBox = document.getElementById('cond-desc');
+        descBox.style.display = 'block';
+        descBox.innerHTML = '<b>' + nome + ':</b> ' + btn.dataset.desc;
+    }
+}
+
+async function usarMagia(custo, nome) {
+    const el = document.getElementById('in-enfase_atual');
+    const atual = parseInt(el.value);
+    if (atual < custo) return alert('PE insuficiente!');
+    if (!confirm('Usar ' + nome + '?')) return;
+    addValor('enfase_atual', -custo);
+}
+
+async function usarConsumivel(pk, nome) {
+    if (!confirm('Consumir ' + nome + '?')) return;
+    const r = await fetch("/personagem/{{p.pk}}/consumir-item/" + pk + "/", {method: 'POST', headers: {'X-CSRFToken': CSRF}});
+    if (r.ok) {
+        const d = await r.json();
+        if (d.nova_qtd <= 0) document.getElementById('cons-' + pk).remove();
+        else document.querySelector('#cons-' + pk + ' .qtd').textContent = d.nova_qtd;
+    }
+}
+
+async function aplicarDescansoCurto() {
+    const val = parseInt(document.getElementById('roll-descanso').value);
+    if (isNaN(val)) return;
+    const hosp = document.getElementById('sel-hospedagem').value;
+    let extra = 0; if (hosp !== '0') extra = 2;
+    await addValor('pv_atual', val + attrs.CON + extra);
+    await addValor('dados_vida_usados', 1);
+    window.location.reload();
+}
+
+async function consumirDiaria() {
+    await addValor('agua', -1);
+    await addValor('racoes', -1);
+}
+
+async function salvarNotas() {
+    const val = document.getElementById('notas-terreno').value;
+    await fetch("{% url 'ajuste_rapido' p.pk %}", {
+        method: 'POST', headers: {'X-CSRFToken': CSRF}, body: new URLSearchParams({campo: 'notas_terreno', valor: val})
+    });
+}
+
+window.onload = () => {
+    const salva = localStorage.getItem('cena_ativa') || 'combate';
+    document.getElementById('seletor-cena').value = salva;
+    trocarCena(salva);
+    recalculateArmas();
 }
 </script>
+<style>
+.carousel { display: flex; overflow-x: auto; gap: 10px; padding: 5px 2px 15px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.carousel-item { flex: 0 0 85%; scroll-snap-align: start; min-width: 260px; margin: 0; }
+.mini-btn { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--line-2); background: var(--panel-2); color: var(--arc); cursor: pointer; font-family: var(--mono); font-weight: 700; }
+.sub-tab-btn.on { background: var(--arc); color: var(--void); }
+.cond-btn.danger { background: var(--blood) !important; color: white !important; border-color: var(--blood); }
+.full { width: 100%; }
+.counter { display: flex; align-items: center; justify-content: space-between; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 8px; }
+.num { font-family: var(--mono); font-weight: 700; }
+</style>
 {% endblock %}

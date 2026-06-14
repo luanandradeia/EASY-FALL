@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ p.nome }} — Gerenciar Aptidões{% endblock %}
+{% block header_title %}Aptidões · {{ p.nome }}{% endblock %}
+{% block content %}
+
+<form method="get" class="flexrow mb">
+  <input type="text" name="q" value="{{ q }}" placeholder="Buscar perícia ou aptidão…" class="field" style="flex:1;">
+  <button class="btn mini">BUSCAR</button>
+</form>
+
+<div class="seclabel"><span class="idx">01</span><span class="name">Lista de Aptidões ({{ catalogo|length }})</span><span class="rule"></span></div>
+<p class="muted mb" style="font-size: 12px; line-height: 1.4;">
+  Selecione as perícias e aptidões que sua personagem possui. As perícias padrão de Skyfall já vêm selecionadas por padrão.
+</p>
+
+{% for per in catalogo %}
+<div class="card {% if per.pk in minhas_pericias %}equipado{% endif %}">
+  <div class="head">
+    <span class="nome">{{ per.nome }}</span>
+    <span class="chip">{{ per.get_atributo_padrao_display }}</span>
+    {% if not per.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
+  </div>
+  {% if per.descricao %}
+  <details><summary>ver detalhes</summary><div class="desc">{{ per.descricao }}</div></details>
+  {% endif %}
+  <form method="post" class="mt">{% csrf_token %}
+    <input type="hidden" name="id" value="{{ per.pk }}">
+    <button class="btn {% if per.pk in minhas_pericias %}danger{% else %}ghost{% endif %} mini">
+      {% if per.pk in minhas_pericias %}REMOVER DA FICHA{% else %}+ ADICIONAR À FICHA{% endif %}
+    </button>
+  </form>
+</div>
+{% empty %}<p class="muted">Nenhuma aptidão encontrada.</p>{% endfor %}
+
+<div class="seclabel"><span class="idx">02</span><span class="name">Nova Aptidão Customizada</span><span class="rule"></span></div>
+<div class="panel">
+  <p class="muted mb" style="font-size: 12px;">Não encontrou a aptidão que queria? Crie uma nova agora mesmo:</p>
+  <a href="{% url 'pericia_nova' %}?next={% url 'pericias_gerenciar' p.pk %}" class="btn ghost full">+ CRIAR NOVA APTIDÃO</a>
+</div>
+
+<div class="mt flexrow">
+  <a href="{% url 'ficha' p.pk %}" class="btn" style="flex: 1;">VOLTAR PARA A FICHA</a>
+</div>
+
+{% endblock %}

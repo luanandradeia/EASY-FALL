@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+{% block title %}{{ p.nome }} — Cenas 2{% endblock %}
+
+{% block header_extra %}
+<div class="flexrow" style="gap: 15px; align-items: center; margin-right: 10px;">
+  <div class="flexrow" style="gap: 5px; align-items: center;">
+    <span class="micro" style="color:var(--blood)">PV</span>
+    <input type="number" value="{{ p.pv_atual }}" class="field" style="width: 55px; padding: 2px 4px; font-size: 14px; text-align: center;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'pv_atual', this)">
+  </div>
+  <select id="seletor-cena" class="field" style="width: 130px; padding: 4px; font-size: 11px; font-family: var(--mono);" onchange="trocarCena(this.value)">
+    <option value="combate">⚔️ COMBATE</option>
+    <option value="desafio">🧩 DESAFIO</option>
+    <option value="exploracao">🗺️ EXPLORAÇÃO</option>
+    <option value="interacao">🗣️ INTERAÇÃO</option>
+    <option value="descanso">🏕️ DESCANSO</option>
+  </select>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- HUD GLOBAL FIXO (Recursos Rápidos) -->
+<div class="panel mb" style="position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 2px solid var(--line-2); margin-top: -10px; padding: 8px 12px;">
+  <div class="flexrow" style="justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    <div class="flexrow" style="gap: 8px;">
+      <span class="micro">Ênfase</span>
+      <div id="v-enfase_bolinhas" class="flexrow" style="gap: 4px;">
+        {% for i in "12345"|make_list %}
+          <div class="prof-dot {% if p.enfase_atual >= forloop.counter %}p{% endif %}" style="width: 14px; height: 14px; cursor: pointer;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'enfase_atual', {{ p.enfase_atual|add:forloop.counter|add:p.enfase_atual|add:"-1" }} )"></div>
+        {% endfor %}
+        <!-- Simplificado: apenas número para enfase infinita suporte -->
+        <span class="num mono" id="v-enfase_atual" style="color:var(--enfase); font-weight: 700; margin-left: 5px;">{{ p.enfase_atual }}</span>
+        <button class="btn ghost mini" style="padding: 0 6px; height: 20px;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'enfase_atual', 1)">+</button>
+      </div>
+    </div>
+    <div class="flexrow" style="gap: 12px;">
+      <div class="flexrow" style="gap: 4px; align-items: center;">
+        <span class="micro" style="color:var(--catarse)">CAT</span>
+        <span class="num mono" id="v-catarse" style="color:var(--catarse); font-weight: 700;">{{ p.catarse }}</span>
+        <button class="btn ghost mini" style="padding: 0 4px; height: 18px;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'catarse', 1)">+</button>
+      </div>
+      <div class="flexrow" style="gap: 4px; align-items: center;">
+        <span class="micro" style="color:var(--sombra)">SOM</span>
+        <span class="num mono" id="v-sombra" style="color:var(--sombra); font-weight: 700;">{{ p.sombra }}</span>
+        <button class="btn ghost mini" style="padding: 0 4px; height: 18px;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'sombra', 1)">+</button>
+      </div>
+    </div>
+  </div>
+  <div class="bar red" id="bar-pv_atual" data-max="{{ p.pv_maximo }}" style="height: 6px;">
+    <span style="width:{% widthratio p.pv_atual p.pv_maximo 100 %}%"></span>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 1. CENA DE COMBATE -->
+<!-- ========================================================================= -->
+<div id="cena-combate" class="sub-cena">
+  <div class="seclabel"><span class="idx">⚔️</span><span class="name">Ações de Ataque</span><span class="rule"></span></div>
+  {% for arma in armas %}
+  <div class="card equipped">
+    <div class="head">
+      <span class="nome">{{ arma.nome_completo }}</span>
+      <span class="spacer"></span>
+      <span class="chip">RD {{ arma.item.reducao_dano }}</span>
+    </div>
+    <div class="mt flexrow" style="gap: 10px; flex-wrap: wrap;">
+      <div class="panel-2" style="padding: 8px; border-radius: 6px; flex: 1; text-align: center;">
+        <span class="micro">ACERTO</span><br>
+        <b style="font-size: 14px; color: var(--arc);">1d20 + {{ p.proficiencia|add:p.atributos.FOR }}</b>
+      </div>
+      <div class="panel-2" style="padding: 8px; border-radius: 6px; flex: 1; text-align: center;">
+        <span class="micro">DANO</span><br>
+        <b style="font-size: 14px; color: var(--blood);">{{ arma.item.dano }} + {{ p.atributos.FOR }}</b>
+      </div>
+    </div>
+  </div>
+  {% empty %}<p class="muted">Nenhuma arma equipada no inventário.</p>{% endfor %}
+
+  <div class="seclabel"><span class="idx">✦</span><span class="name">Magias & Habilidades</span><span class="rule"></span></div>
+  <div class="flexrow mb" style="gap: 4px;">
+    <button class="btn mini ghost sub-tab-btn on" onclick="verSubTab(this, 'magia-a')">A</button>
+    <button class="btn mini ghost sub-tab-btn" onclick="verSubTab(this, 'magia-b')">B</button>
+    <button class="btn mini ghost sub-tab-btn" onclick="verSubTab(this, 'magia-r')">R</button>
+  </div>
+
+  <div id="magia-a" class="sub-tab-content">
+    {% for m in magias_padrao %}
+      <div class="card">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px;"><b>Alcance:</b> {{ m.alcance|default:"Curto" }} | <b>Alvo:</b> {{ m.alvo|default:"1 criatura" }}</div>
+        <details><summary class="micro">Efeito</summary><div class="desc">{{ m.descricao }}</div></details>
+      </div>
+    {% empty %}<p class="muted">Sem magias de Ação Padrão.</p>{% endfor %}
+  </div>
+  <div id="magia-b" class="sub-tab-content" style="display: none;">
+    {% for m in magias_bonus %}
+      <div class="card">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px;"><b>Execução:</b> Bônus</div>
+        <details><summary class="micro">Efeito</summary><div class="desc">{{ m.descricao }}</div></details>
+      </div>
+    {% empty %}<p class="muted">Sem magias de Ação Bônus.</p>{% endfor %}
+  </div>
+  <div id="magia-r" class="sub-tab-content" style="display: none;">
+    {% for m in magias_reacao %}
+      <div class="card">
+        <div class="head"><span class="nome">{{ m.nome }}</span><span class="spacer"></span><span class="chip">{{ m.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px;"><b>Execução:</b> Reação</div>
+        <details><summary class="micro">Efeito</summary><div class="desc">{{ m.descricao }}</div></details>
+      </div>
+    {% empty %}<p class="muted">Sem magias de Reação.</p>{% endfor %}
+  </div>
+
+  <div class="seclabel"><span class="idx">⚠️</span><span class="name">Condições Ativas</span><span class="rule"></span></div>
+  <div class="panel flexrow" style="gap: 5px; flex-wrap: wrap;">
+    {% for cond in condicoes_lista %}
+      <button class="chip tap {% if cond in condicoes_ativas_lista %}danger{% endif %}" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'condicoes_ativas', 0, '{{ cond }}')">{{ cond }}</button>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 2. CENA DE DESAFIO -->
+<!-- ========================================================================= -->
+<div id="cena-desafio" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🧩</span><span class="name">Progresso do Desafio</span><span class="rule"></span></div>
+  <div class="panel flexrow" style="justify-content: space-around; text-align: center;">
+    <div>
+      <span class="micro" style="color:var(--arc)">SUCESSOS</span><br>
+      <div class="flexrow mt" style="gap: 4px;">
+        {% for i in "123456"|make_list %}
+          <div class="prof-dot {% if p.desafio_sucessos >= forloop.counter %}p{% endif %}" style="width: 22px; height: 22px; cursor: pointer;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'desafio_sucessos', 0, {{ forloop.counter }})"></div>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <span class="micro" style="color:var(--blood)">FALHAS</span><br>
+      <div class="flexrow mt" style="gap: 4px;">
+        {% for i in "123"|make_list %}
+          <div class="prof-dot {% if p.desafio_falhas >= forloop.counter %}danger{% endif %}" style="width: 22px; height: 22px; border-color: var(--blood); cursor: pointer;" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'desafio_falhas', 0, {{ forloop.counter }})"></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="seclabel"><span class="idx">🔎</span><span class="name">Perícias em Destaque</span><span class="rule"></span></div>
+  <div class="grid-2">
+    {% for pp in pericias %}
+    <div class="attr" style="padding: 8px 4px; display: flex; flex-direction: column; justify-content: center;">
+      <span class="micro" style="font-size: 8px;">{{ pp.pericia.nome }}</span>
+      <b style="font-size: 20px; color: var(--arc-soft);">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</b>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="panel mt" style="background: rgba(52,227,224,0.05); border: 1px dashed var(--arc-soft);">
+    <span class="micro">AJUDA / SUPORTE</span>
+    <p class="muted" style="font-size: 11px;">Ao gastar sua ação para ajudar um aliado, você concede <b>Vantagem</b> no próximo teste dele se você possuir a perícia ou ferramenta adequada.</p>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 3. CENA DE EXPLORAÇÃO -->
+<!-- ========================================================================= -->
+<div id="cena-exploracao" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🧭</span><span class="name">Função na Viagem</span><span class="rule"></span></div>
+  <div class="flexrow mb" style="gap: 4px; flex-wrap: wrap;">
+    <button class="btn mini ghost role-btn" onclick="setRole('Caçador', 'Sobrevivência (SAB). Role para encontrar rações ou água.')">Caçador</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Cartógrafo', 'Investigação (INT). Role para mapear o terreno.')">Cartógrafo</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Guarda', 'Percepção (SAB). Role para evitar emboscadas.')">Guarda</button>
+    <button class="btn mini ghost role-btn" onclick="setRole('Navegador', 'Navegação (SAB). Role para não se perder.')">Navegador</button>
+  </div>
+  <div id="role-desc" class="panel mb muted" style="font-size: 12px; min-height: 40px;">Selecione uma função para ver as regras.</div>
+
+  <div class="seclabel"><span class="idx">📦</span><span class="name">Suprimentos</span><span class="rule"></span></div>
+  <div class="grid-2">
+    <div class="counter">
+      <span class="lbl">🥛 Água</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','agua',-1)">−</button>
+      <span class="num" id="v-agua">{{ p.agua }}</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','agua',1)">+</button>
+    </div>
+    <div class="counter">
+      <span class="lbl">🍞 Rações</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','racoes',-1)">−</button>
+      <span class="num" id="v-racoes">{{ p.racoes }}</span>
+      <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','racoes',1)">+</button>
+    </div>
+  </div>
+  <button class="btn mt danger" style="width: 100%;" onclick="consumirDiaria()">CONSUMIR DIÁRIA (-1 Água, -1 Ração)</button>
+
+  <div class="seclabel mt"><span class="idx">📝</span><span class="name">Anotações de Terreno</span><span class="rule"></span></div>
+  <textarea id="notas-terreno" class="field" style="height: 80px;" placeholder="Terreno acidentado, clima, magia caótica..." onchange="salvarNotas()">{{ p.notas_terreno }}</textarea>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 4. CENA DE INTERAÇÃO -->
+<!-- ========================================================================= -->
+<div id="cena-interacao" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🗣️</span><span class="name">Perícias Sociais</span><span class="rule"></span></div>
+  <div class="grid-2">
+    {% for pp in pericias_sociais %}
+    <div class="panel-2" style="padding: 10px; border-radius: 8px; text-align: center;">
+      <span class="micro">{{ pp.pericia.nome }}</span><br>
+      <b style="font-size: 24px; color: var(--arc);">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</b>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="seclabel mt"><span class="idx">📖</span><span class="name">Perfil & Lembretes</span><span class="rule"></span></div>
+  <div class="panel">
+    <div class="mb"><span class="micro">Legado:</span> <span style="font-size: 13px;">{{ p.legado.nome }}</span></div>
+    <div class="mb"><span class="micro">Antecedente:</span> <span style="font-size: 13px;">{{ p.antecedente.nome }}</span></div>
+    <div class="mb"><span class="micro">Melancolia:</span> <p class="muted" style="font-size: 12px; margin-top: 4px;">{{ p.melancolia }}</p></div>
+  </div>
+
+  <div class="seclabel mt"><span class="idx">🌡️</span><span class="name">Atitude do NPC</span><span class="rule"></span></div>
+  <div class="panel">
+    <div class="flexrow" style="justify-content: space-between;"><span class="micro">Hostil</span><span class="micro">Amigável</span></div>
+    <input type="range" min="1" max="100" value="50" class="field" style="width: 100%; padding: 0; margin-top: 10px; accent-color: var(--arc);">
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 5. CENA DE DESCANSO -->
+<!-- ========================================================================= -->
+<div id="cena-descanso" class="sub-cena" style="display: none;">
+  <div class="seclabel"><span class="idx">🏕️</span><span class="name">Descanso Curto</span><span class="rule"></span></div>
+  <div class="panel">
+    <p class="muted" style="font-size: 12px;">Gaste seus Dados de Vida para recuperar PV.</p>
+    <div class="flexrow mb" style="align-items: center; gap: 15px;">
+      <span class="mono">Dados: <b>{{ p.dado_vida_tipo }}</b></span>
+      <span class="mono">Disponíveis: <b>{{ p.dados_vida_total|add:p.dados_vida_usados_neg }}</b></span>
+    </div>
+    <div class="flexrow" style="gap: 10px; align-items: flex-end;">
+      <div style="flex: 1;">
+        <span class="micro">Valor Rolado</span>
+        <input type="number" id="roll-descanso" class="field" placeholder="Ex: 8">
+      </div>
+      <button class="btn ghost" onclick="aplicarDescansoCurto()">RECUPERAR PV</button>
+    </div>
+  </div>
+
+  <div class="seclabel mt"><span class="idx">💤</span><span class="name">Descanso Longo</span><span class="rule"></span></div>
+  <form method="post" action="{% url 'descanso_longo' p.pk %}">
+    {% csrf_token %}
+    <button class="btn danger" style="width: 100%;" onclick="return confirm('Recuperar todos os recursos?')">RECURSO TOTAL (PV, Ênfase, 50% DV)</button>
+  </form>
+
+  <div class="seclabel mt"><span class="idx">🛠️</span><span class="name">Atividades de Acampamento</span><span class="rule"></span></div>
+  <a href="{% url 'inventario' p.pk %}" class="btn ghost full">ABRIR OFICINA (INVENTÁRIO)</a>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function trocarCena(cena) {
+  document.querySelectorAll('.sub-cena').forEach(el => el.style.display = 'none');
+  document.getElementById('cena-' + cena).style.display = 'block';
+  localStorage.setItem('cena_ativa', cena);
+}
+
+function verSubTab(btn, tabId) {
+  document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.sub-tab-content').forEach(c => c.style.display = 'none');
+  btn.classList.add('on');
+  document.getElementById(tabId).style.display = 'block';
+}
+
+function setRole(name, desc) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('on'));
+  event.target.classList.add('on');
+  document.getElementById('role-desc').innerHTML = '<b>' + name + ':</b> ' + desc;
+}
+
+async function consumirDiaria() {
+  await ajuste('{% url 'ajuste_rapido' p.pk %}', 'agua', -1);
+  await ajuste('{% url 'ajuste_rapido' p.pk %}', 'racoes', -1);
+  window.location.reload();
+}
+
+async function salvarNotas() {
+  const notas = document.getElementById('notas-terreno').value;
+  const body = new URLSearchParams({campo: 'notas_terreno', valor: notas});
+  const r = await fetch("{% url 'ajuste_rapido' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (r.ok) {
+    document.getElementById('notas-terreno').style.borderColor = 'var(--arc)';
+    setTimeout(() => { document.getElementById('notas-terreno').style.borderColor = ''; }, 600);
+  }
+}
+
+async function aplicarDescansoCurto() {
+  const val = parseInt(document.getElementById('roll-descanso').value);
+  if (isNaN(val)) return alert('Digite o valor rolado');
+  await ajuste('{% url 'ajuste_rapido' p.pk %}', 'pv_atual', val);
+  await ajuste('{% url 'ajuste_rapido' p.pk %}', 'dados_vida_usados', 1);
+  window.location.reload();
+}
+
+async function setValor(url, campo, input) {
+  const valor = input.value;
+  const body = new URLSearchParams({campo: campo, valor: valor});
+  const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (r.ok) {
+    if (campo === 'pv_atual') {
+       const bar = document.getElementById('bar-pv_atual');
+       bar.firstElementChild.style.width = (100 * valor / bar.dataset.max) + '%';
+    }
+    input.style.borderColor = 'var(--arc)';
+    setTimeout(() => { input.style.borderColor = ''; }, 600);
+  }
+}
+
+// Inicializar cena salva
+window.onload = () => {
+  const salva = localStorage.getItem('cena_ativa');
+  if (salva) {
+    document.getElementById('seletor-cena').value = salva;
+    trocarCena(salva);
+  }
+}
+</script>
+<style>
+.sub-tab-btn.on { background: var(--arc); color: var(--void); }
+.role-btn.on { border-color: var(--arc); color: var(--arc); }
+.danger { border-color: var(--blood) !important; color: var(--blood) !important; background: transparent; }
+</style>
+{% endblock %}

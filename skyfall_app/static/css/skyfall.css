@@ -87,7 +87,7 @@ a { color: var(--arc-soft); text-decoration: none; }
 textarea.field { min-height: 90px; resize: vertical; }
 label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
   text-transform: uppercase; color: var(--ink-3); margin: 11px 0 5px; }
-.check { width: 18px; height: 18px; accent-color: var(--arc); }
+.check, .prot-check input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--arc); cursor: pointer; margin: 0; vertical-align: middle; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
 .form-grid .full { grid-column: 1 / -1; }
 .errorlist { color: var(--blood); font-size: 12px; list-style: none; margin: 4px 0; }
@@ -95,7 +95,8 @@ label { display: block; font-family: var(--mono); font-size: 10px; letter-spacin
 /* atributos */
 .attr-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
 .attr { text-align: center; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 11px 6px 9px; }
-.attr .sig { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--ink-3); }
+.attr .sig { font-family: var(--mono); font-size: 12px; letter-spacing: .2em; color: #d6ecea; font-weight: 700; text-align: center; }
+.prot-check { margin: 0 !important; line-height: 1; display: flex; align-items: center; width: 20px; justify-content: flex-end; }
 .attr .val { font-family: var(--mono); font-size: 23px; font-weight: 700; color: var(--arc-soft); margin: 2px 0; }
 .attr .prot { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
 .attr .prot b { color: var(--ink-2); }

@@ -15,14 +15,14 @@
     <span class="mono" style="font-weight:700;color:var(--sombra)">{{ p.fragmentacao_atual }}/{{ p.limite_fragmentacao }}</span></div>
   <div class="bar roxo mt"><span style="width:{% widthratio p.fragmentacao_atual p.limite_fragmentacao 100 %}%;max-width:100%;"></span></div>
 
-  <div class="flexrow mt">
+  <div class="flexrow mt" style="gap: 12px; align-items: center;">
     <span class="micro">Riquezas</span><span class="spacer"></span>
-    <span class="chip" style="color:var(--catarse)">T$ <span id="v-trocados">{{ p.trocados }}</span></span>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','trocados',-1)">−</button>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','trocados',1)">+</button>
-    <span class="chip" style="color:var(--catarse)">P$ <span id="v-pecas">{{ p.pecas }}</span></span>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','pecas',-1)">−</button>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','pecas',1)">+</button>
+    
+    <div class="flexrow" style="gap: 4px; align-items: center;">
+      <span class="mono" style="font-size: 11px; color:var(--catarse)">T$</span>
+      <input type="number" value="{{ p.trocados }}" class="field" style="width: 100px; padding: 4px 6px; font-family: var(--mono); font-weight: 700; color: var(--catarse);" 
+             onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'trocados', this)">
+    </div>
   </div>
 </div>
 
@@ -122,4 +122,20 @@
   <p class="muted">Não achou no livro? Crie sua própria arma, armadura ou equipamento — ele aparece só para você, junto do catálogo oficial.</p>
   <a href="{% url 'item_novo' %}?next={% url 'inventario' p.pk %}" class="btn mt" style="width:100%;">+ CRIAR ITEM NOVO</a>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function setValor(url, campo, input) {
+  const valor = input.value;
+  const body = new URLSearchParams({campo: campo, valor: valor});
+  const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (r.ok) {
+    input.style.borderColor = 'var(--arc)';
+    setTimeout(() => { input.style.borderColor = ''; }, 600);
+  } else {
+    input.style.borderColor = 'var(--blood)';
+  }
+}
+</script>
 {% endblock %}

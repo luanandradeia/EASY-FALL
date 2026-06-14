@@ -26,13 +26,13 @@
   </div>
 
   <div class="seclabel"><span class="idx">03</span><span class="name">Atributos</span><span class="rule"></span></div>
-  <div class="panel attr-grid">
-    <div>{{ form.f_for.label_tag }}{{ form.f_for }}</div>
-    <div>{{ form.f_des.label_tag }}{{ form.f_des }}</div>
-    <div>{{ form.f_con.label_tag }}{{ form.f_con }}</div>
-    <div>{{ form.f_int.label_tag }}{{ form.f_int }}</div>
-    <div>{{ form.f_sab.label_tag }}{{ form.f_sab }}</div>
-    <div>{{ form.f_car.label_tag }}{{ form.f_car }}</div>
+  <div class="panel attr-grid" style="grid-template-columns: repeat(2, 1fr); gap: 16px;">
+    <div>{{ form.f_for.label_tag }}{{ form.f_for }}<br>{{ form.p_for.label_tag }}{{ form.p_for }}</div>
+    <div>{{ form.f_des.label_tag }}{{ form.f_des }}<br>{{ form.p_des.label_tag }}{{ form.p_des }}</div>
+    <div>{{ form.f_con.label_tag }}{{ form.f_con }}<br>{{ form.p_con.label_tag }}{{ form.p_con }}</div>
+    <div>{{ form.f_int.label_tag }}{{ form.f_int }}<br>{{ form.p_int.label_tag }}{{ form.p_int }}</div>
+    <div>{{ form.f_sab.label_tag }}{{ form.f_sab }}<br>{{ form.p_sab.label_tag }}{{ form.p_sab }}</div>
+    <div>{{ form.f_car.label_tag }}{{ form.f_car }}<br>{{ form.p_car.label_tag }}{{ form.p_car }}</div>
   </div>
 
   <div class="seclabel"><span class="idx">04</span><span class="name">Recursos & Vida</span><span class="rule"></span></div>
@@ -40,14 +40,13 @@
     <div>{{ form.pv_maximo.label_tag }}{{ form.pv_maximo }}</div>
     <div>{{ form.pv_atual.label_tag }}{{ form.pv_atual }}</div>
     <div>{{ form.pv_temporario.label_tag }}{{ form.pv_temporario }}</div>
-    <div>{{ form.dados_vida_total.label_tag }}{{ form.dados_vida_total }}</div>
     <div>{{ form.dados_vida_usados.label_tag }}{{ form.dados_vida_usados }}</div>
     <div>{{ form.catarse.label_tag }}{{ form.catarse }}</div>
     <div>{{ form.enfase_total.label_tag }}{{ form.enfase_total }}</div>
     <div>{{ form.enfase_atual.label_tag }}{{ form.enfase_atual }}</div>
     <div>{{ form.sombra.label_tag }}{{ form.sombra }}</div>
-    <div>{{ form.morte_sucessos.label_tag }}{{ form.morte_sucessos }}</div>
     <div>{{ form.morte_falhas.label_tag }}{{ form.morte_falhas }}</div>
+    <div>{{ form.inspiracao.label_tag }}{{ form.inspiracao }}</div>
   </div>
 
   <div class="seclabel"><span class="idx">05</span><span class="name">Combate & Riquezas</span><span class="rule"></span></div>
@@ -56,8 +55,7 @@
     <div>{{ form.iniciativa_bonus.label_tag }}{{ form.iniciativa_bonus }}</div>
     <div>{{ form.tamanho.label_tag }}{{ form.tamanho }}</div>
     <div>{{ form.deslocamento.label_tag }}{{ form.deslocamento }}</div>
-    <div>{{ form.trocados.label_tag }}{{ form.trocados }}</div>
-    <div>{{ form.pecas.label_tag }}{{ form.pecas }}</div>
+    <div class="full">{{ form.trocados.label_tag }}{{ form.trocados }}</div>
   </div>
 
   <button class="btn mt" style="width:100%;">SALVAR</button>

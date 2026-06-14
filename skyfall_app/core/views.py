@@ -81,7 +81,10 @@ def personagem_excluir(request, pk):
 @login_required
 def ficha(request, pk):
     p = _meu(request, pk)
-    atributos = [(s, v, 10 + v + p.proficiencia) for s, v in p.atributos.items()]
+    atributos = [
+        (s, p.atributo_valor(s), p.atributo(s), p.protecoes[s], getattr(p, f"p_{s.lower()}"))
+        for s in ["FOR", "DES", "CON", "INT", "SAB", "CAR"]
+    ]
     return render(request, "core/ficha.html", {
         "p": p, "tela": "ficha", "atributos": atributos,
         "pericias": p.pericias.select_related("pericia").order_by("pericia__nome"),
@@ -90,10 +93,13 @@ def ficha(request, pk):
 
 CAMPOS_AJUSTE = {
     "pv_atual", "pv_temporario", "catarse", "enfase_atual", "sombra",
-    "dados_vida_usados", "morte_sucessos", "morte_falhas", "trocados", "pecas",
+    "dados_vida_usados", "morte_falhas", "trocados",
+    "inspiracao", "p_for", "p_des", "p_con", "p_int", "p_sab", "p_car",
+    "agua", "racoes", "desafio_sucessos", "desafio_falhas", "condicoes_ativas",
+    "notas_terreno", "iniciativa_atual", "reducao_dano",
 }
 
-LIMITES = {"catarse": (0, 5), "morte_sucessos": (0, 3), "morte_falhas": (0, 3)}
+LIMITES = {"catarse": (0, 99), "morte_falhas": (0, 3), "desafio_sucessos": (0, 10), "desafio_falhas": (0, 10), "catarse": (0, 99), "sombra": (0, 99)}
 
 
 @login_required
@@ -104,18 +110,47 @@ def ajuste_rapido(request, pk):
     campo = request.POST.get("campo")
     if campo not in CAMPOS_AJUSTE:
         return JsonResponse({"erro": "campo inválido"}, status=400)
+    
+    if campo in ("inspiracao", "p_for", "p_des", "p_con", "p_int", "p_sab", "p_car"):
+        valor_str = request.POST.get("estado", "").lower()
+        valor = valor_str in ("true", "1")
+        setattr(p, campo, valor)
+        p.save(update_fields=[campo])
+        return JsonResponse({"campo": campo, "valor": valor})
+
+    if campo == "condicoes_ativas":
+        condicao = request.POST.get("valor", "").strip()
+        lista = [c.strip() for c in p.condicoes_ativas.split(",") if c.strip()]
+        if condicao in lista:
+            lista.remove(condicao)
+        else:
+            lista.append(condicao)
+        p.condicoes_ativas = ",".join(lista)
+        p.save(update_fields=["condicoes_ativas"])
+        return JsonResponse({"campo": campo, "valor": p.condicoes_ativas})
+
+    if campo == "notas_terreno":
+        p.notas_terreno = request.POST.get("valor", "")
+        p.save(update_fields=["notas_terreno"])
+        return JsonResponse({"campo": campo, "valor": p.notas_terreno})
+
     try:
         delta = int(request.POST.get("delta", 0))
-        valor = getattr(p, campo) + delta
+        if "valor" in request.POST:
+            valor = int(request.POST["valor"])
+        else:
+            valor = getattr(p, campo) + delta
     except (TypeError, ValueError):
-        return JsonResponse({"erro": "delta inválido"}, status=400)
+        return JsonResponse({"erro": "delta ou valor inválido"}, status=400)
+    
     minimo, maximo = LIMITES.get(campo, (0, 9999))
     if campo == "pv_atual":
         maximo = p.pv_maximo
-    if campo == "enfase_atual":
-        maximo = p.enfase_total
     if campo == "dados_vida_usados":
         maximo = p.dados_vida_total
+    if campo in ("enfase_atual", "trocados", "agua", "racoes", "pv_atual", "pv_temporario", "sombra", "catarse"):
+        minimo = 0
+    
     valor = max(minimo, min(maximo, valor))
     setattr(p, campo, valor)
     p.save(update_fields=[campo])
@@ -124,12 +159,34 @@ def ajuste_rapido(request, pk):
 
 @login_required
 @require_POST
+def arma_update(request, pk):
+    p = _meu(request, pk)
+    entrada_id = request.POST.get("id")
+    e = get_object_or_404(models.InventarioEntrada, pk=entrada_id, personagem=p)
+    
+    atributo = request.POST.get("atributo")
+    if atributo in dict(models.Pericia.ATRIBUTOS):
+        e.atributo_attack = atributo # Wait, typo in model? checking... 
+        # Checking model... it is atributo_ataque.
+        e.atributo_ataque = atributo
+    
+    prof = request.POST.get("proficiente")
+    if prof is not None:
+        e.proficiente = prof.lower() in ("true", "1")
+        
+    e.save()
+    return JsonResponse({"ok": True})
+
+
+@login_required
+@require_POST
 def pericia_toggle(request, pk):
     p = _meu(request, pk)
     pp = get_object_or_404(models.PericiaPersonagem, pk=request.POST.get("id"), personagem=p)
     estado = request.POST.get("estado")  # nenhum -> prof -> expert -> nenhum
-    pp.proficiente = estado in ("prof", "expert")
-    pp.expert = estado == "expert"
+    if estado:
+        pp.proficiente = estado in ("prof", "expert")
+        pp.expert = estado == "expert"
     if request.POST.get("atributo") in dict(models.Pericia.ATRIBUTOS):
         pp.atributo = request.POST["atributo"]
     pp.save()
@@ -168,7 +225,15 @@ def inventario_add(request, pk):
     if not criada:
         entrada.quantidade += 1
         entrada.save(update_fields=["quantidade"])
-    messages.success(request, f"{item.nome} adicionado ao inventário.")
+    
+    # Dedução automática de moedas
+    if item.preco:
+        from django.db.models import F
+        models.Personagem.objects.filter(pk=p.pk).update(trocados=F('trocados') - item.preco)
+        messages.success(request, f"{item.nome} adicionado. T${item.preco} descontados.")
+    else:
+        messages.success(request, f"{item.nome} adicionado ao inventário.")
+        
     return redirect("inventario", pk=p.pk)
 
 
@@ -208,13 +273,55 @@ def cena(request, pk):
     p = _meu(request, pk)
     armas = (p.inventario.filter(equipado=True, item__tipo="arma")
              .select_related("item", "material", "sigilo_prefixo", "sigilo_sufixo"))
+    magias = p.magias.all().order_by("camada", "nome")
+    
+    # Categorizar magias por execução para facilitar abas (A, B, R)
+    magias_padrao = [m for m in magias if "ação" in m.execucao.lower() and "bônus" not in m.execucao.lower()]
+    magias_bonus = [m for m in magias if "bônus" in m.execucao.lower()]
+    magias_reacao = [m for m in magias if "reação" in m.execucao.lower()]
+    
+    # Perícias ordenadas
+    pericias = p.pericias.select_related("pericia").order_by("pericia__nome")
+    pericias_sociais = pericias.filter(pericia__nome__in=["Cultura", "Diplomacia", "Intimidação", "Intuição", "Manipulação"])
+    
+    # Condições globais
+    condicoes_lista = models.Condicao.objects.all()
+    
+    # Consumíveis de cura/recuperação
+    consumiveis = (p.inventario.filter(item__tipo__in=["consumivel", "equipamento", "outro"])
+                   .select_related("item").filter(
+                       Q(item__nome__icontains="Poção") | 
+                       Q(item__nome__icontains="Antídoto") | 
+                       Q(item__nome__icontains="Kit de curandeiro") |
+                       Q(item__nome__icontains="Ambrosia")
+                   ))
+
     return render(request, "core/cena.html", {
         "p": p, "tela": "cena",
         "armas": armas,
-        "magias": p.magias.all().order_by("camada", "nome"),
-        "habilidades": p.habilidades.all(),
-        "pericias": p.pericias.select_related("pericia").order_by("pericia__nome"),
+        "magias_padrao": magias_padrao,
+        "magias_bonus": magias_bonus,
+        "magias_reacao": magias_reacao,
+        "pericias": pericias,
+        "pericias_sociais": pericias_sociais,
+        "condicoes_lista": condicoes_lista,
+        "condicoes_ativas_lista": [c.strip() for c in p.condicoes_ativas.split(",") if c.strip()],
+        "consumiveis": consumiveis,
+        "atributo_choices": models.Pericia.ATRIBUTOS,
     })
+
+
+@login_required
+@require_POST
+def consumir_item(request, pk, entrada_id):
+    p = _meu(request, pk)
+    e = get_object_or_404(models.InventarioEntrada, pk=entrada_id, personagem=p)
+    if e.quantidade > 1:
+        e.quantidade -= 1
+        e.save(update_fields=["quantidade"])
+    else:
+        e.delete()
+    return JsonResponse({"ok": True, "nova_qtd": e.quantidade if e.pk else 0})
 
 
 @login_required
@@ -256,6 +363,19 @@ def grimorio(request, pk):
         "form_magia": forms.MagiaCustomForm(),
         "form_habilidade": forms.HabilidadeCustomForm(),
     })
+
+
+@login_required
+@require_POST
+def descanso_longo(request, pk):
+    p = _meu(request, pk)
+    p.pv_atual = p.pv_maximo
+    p.enfase_atual = p.enfase_total
+    p.dados_vida_usados = max(0, p.dados_vida_usados - p.dados_vida_total // 2)
+    p.morte_falhas = 0
+    p.save()
+    messages.success(request, "Descanso Longo finalizado!")
+    return redirect("cena", pk=p.pk)
 
 
 @login_required
@@ -332,3 +452,37 @@ def magia_nova(request):
 @login_required
 def habilidade_nova(request):
     return _criar_custom(request, forms.HabilidadeCustomForm, "Criar Habilidade Customizada", "/catalogo/?secao=habilidades")
+
+
+@login_required
+def pericia_nova(request):
+    return _criar_custom(request, forms.PericiaCustomForm, "Criar Aptidão Customizada", "/catalogo/?secao=pericias")
+
+
+@login_required
+def pericias_gerenciar(request, pk):
+    """Seleciona perícias e aptidões do catálogo para a personagem."""
+    p = _meu(request, pk)
+    if request.method == "POST":
+        obj_id = request.POST.get("id")
+        per = get_object_or_404(_visiveis(models.Pericia, request.user), pk=obj_id)
+        pp = p.pericias.filter(pericia=per).first()
+        if pp:
+            pp.delete()
+        else:
+            models.PericiaPersonagem.objects.create(
+                personagem=p, pericia=per, atributo=per.atributo_padrao)
+        return redirect(f"{request.path}?{request.GET.urlencode()}")
+
+    q = request.GET.get("q", "").strip()
+    pericias_catalogo = _visiveis(models.Pericia, request.user)
+    if q:
+        pericias_catalogo = pericias_catalogo.filter(nome__icontains=q)
+    
+    return render(request, "core/pericias_gerenciar.html", {
+        "p": p, "tela": "ficha",
+        "catalogo": pericias_catalogo,
+        "minhas_pericias": set(p.pericias.values_list("pericia_id", flat=True)),
+        "q": q,
+        "form_pericia": forms.PericiaCustomForm(),
+    })

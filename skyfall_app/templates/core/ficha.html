@@ -32,11 +32,15 @@
 
 <div class="seclabel"><span class="idx">02</span><span class="name">Atributos & Proteções</span><span class="rule"></span></div>
 <div class="attr-grid">
-  {% for sigla, valor, prot in atributos %}
+  {% for sigla, dado, bonus, prot, prof in atributos %}
   <div class="attr">
-    <div class="sig">{{ sigla }}</div>
-    <div class="val">{% if valor >= 0 %}+{% endif %}{{ valor }}</div>
-    <div class="prot">PROT <b>{{ prot }}</b></div>
+    <div class="flexrow" style="justify-content: space-between; align-items: center;">
+      <div style="width: 20px;"></div>
+      <div class="sig">{{ sigla }}</div>
+      <label class="prot-check"><input type="checkbox" {% if prof %}checked{% endif %} onclick="ajuste('{% url 'ajuste_rapido' p.pk %}', 'p_{{ sigla|lower }}', 0, this.checked)"></label>
+    </div>
+    <div class="val">{{ dado }} <span class="muted" style="font-size: 14px;">({% if bonus >= 0 %}+{% endif %}{{ bonus }})</span></div>
+    <div class="prot">PROT <b><span id="v-prot-{{ sigla }}">{{ prot }}</span></b></div>
   </div>
   {% endfor %}
 </div>
@@ -77,32 +81,41 @@
       <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','sombra',1)">+</button>
     </div>
     <div class="counter">
-      <span class="lbl">Dados de Vida</span>
+      <span class="lbl">Dados de Vida ({{ p.dado_vida_tipo }})</span>
       <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','dados_vida_usados',-1)">−</button>
       <span class="num"><span id="v-dados_vida_usados">{{ p.dados_vida_usados }}</span><span class="muted" style="font-size:12px;">/{{ p.dados_vida_total }}</span></span>
       <button onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','dados_vida_usados',1)">+</button>
     </div>
   </div>
 
-  <div class="flexrow mt">
-    <span class="micro">Testes de Morte</span>
-    <span class="spacer"></span>
-    <span class="micro" style="color:var(--arc)">✓ <span id="v-morte_sucessos">{{ p.morte_sucessos }}</span>/3</span>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','morte_sucessos',1)">+✓</button>
-    <span class="micro" style="color:var(--blood)">✗ <span id="v-morte_falhas">{{ p.morte_falhas }}</span>/3</span>
-    <button class="btn ghost mini" onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','morte_falhas',1)">+✗</button>
+  <div class="flexrow mt" style="justify-content: space-between; align-items: center;">
+    <div>
+      <label style="display: flex; align-items: center; gap: 8px;">
+        <input type="checkbox" class="check" {% if p.inspiracao %}checked{% endif %} onclick="ajuste('{% url 'ajuste_rapido' p.pk %}','inspiracao',0,this.checked)">
+        <span class="micro">INSPIRAÇÃO</span>
+      </label>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="micro" style="color:var(--blood)">Falhas de Morte</span>
+      <input type="checkbox" class="check" {% if p.morte_falhas >= 1 %}checked{% endif %} onclick="setMorte('{% url 'ajuste_rapido' p.pk %}', 1)">
+      <input type="checkbox" class="check" {% if p.morte_falhas >= 2 %}checked{% endif %} onclick="setMorte('{% url 'ajuste_rapido' p.pk %}', 2)">
+      <input type="checkbox" class="check" {% if p.morte_falhas >= 3 %}checked{% endif %} onclick="setMorte('{% url 'ajuste_rapido' p.pk %}', 3)">
+    </div>
   </div>
 </div>
 
 <div class="seclabel"><span class="idx">04</span><span class="name">Combate</span><span class="rule"></span></div>
 <div class="panel flexrow">
-  <span class="chip">REDUÇÃO {{ p.reducao_dano }}</span>
-  <span class="chip">INICIATIVA {% if p.iniciativa_bonus >= 0 %}+{% endif %}{{ p.iniciativa_bonus }}</span>
-  <span class="chip">{{ p.tamanho|upper }}</span>
-  <span class="chip">DESLOC {{ p.deslocamento }}</span>
+  <span class="chip" style="font-size: 1.15em;">REDUÇÃO {{ p.reducao_dano }}</span>
+  <span class="chip" style="font-size: 1.15em;">INICIATIVA {% if p.iniciativa_bonus >= 0 %}+{% endif %}{{ p.iniciativa_bonus }}</span>
+  <span class="chip" style="font-size: 1.15em;">{{ p.tamanho|upper }}</span>
+  <span class="chip" style="font-size: 1.15em;">DESLOC {{ p.deslocamento }}</span>
 </div>
 
-<div class="seclabel"><span class="idx">05</span><span class="name">Perícias</span><span class="rule"></span></div>
+<div class="seclabel">
+  <span class="idx">05</span><span class="name">Perícias</span><span class="rule"></span>
+  <a href="{% url 'pericias_gerenciar' p.pk %}" class="btn ghost mini" style="margin-left: 10px; padding: 2px 8px; font-size: 9px; box-shadow: none; border-color: rgba(52,227,224,.2);">+ APTIDÃO</a>
+</div>
 <div class="panel" style="padding-top:4px;">
   {% for pp in pericias %}
   <div class="pericia-row">
@@ -110,7 +123,7 @@
             data-id="{{ pp.pk }}" data-estado="{% if pp.expert %}expert{% elif pp.proficiente %}prof{% else %}nenhum{% endif %}"
             onclick="ciclaPericia(this)">{% if pp.expert %}E{% elif pp.proficiente %}P{% else %}·{% endif %}</button>
     <span class="nome">{{ pp.pericia.nome }}</span>
-    <span class="micro">{{ pp.atributo }}</span>
+    <button class="micro tap" style="background:none;border:none;padding:2px;cursor:pointer;" onclick="ciclaAtributo(this, {{ pp.pk }})">{{ pp.atributo }}</button>
     <span class="bonus" id="bonus-{{ pp.pk }}">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</span>
   </div>
   {% endfor %}
@@ -131,6 +144,29 @@ async function ciclaPericia(btn) {
   btn.textContent = novo === 'expert' ? 'E' : novo === 'prof' ? 'P' : '·';
   const b = document.getElementById('bonus-' + btn.dataset.id);
   b.textContent = (d.bonus >= 0 ? '+' : '') + d.bonus;
+}
+
+async function ciclaAtributo(btn, pk) {
+  const attrs = ['FOR', 'DES', 'CON', 'INT', 'SAB', 'CAR'];
+  const current = btn.textContent.trim();
+  const next = attrs[(attrs.indexOf(current) + 1) % attrs.length];
+  
+  const body = new URLSearchParams({id: pk, atributo: next});
+  const r = await fetch("{% url 'pericia_toggle' p.pk %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (!r.ok) return;
+  const d = await r.json();
+  btn.textContent = next;
+  const b = document.getElementById('bonus-' + pk);
+  b.textContent = (d.bonus >= 0 ? '+' : '') + d.bonus;
+}
+
+async function setMorte(url, clickedVal) {
+    const body = new URLSearchParams({campo: 'morte_falhas', valor: clickedVal});
+    // This allows clicking the last checked box to uncheck it, simulating a toggle
+    const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+    if (r.ok) {
+        window.location.reload();
+    }
 }
 </script>
 {% endblock %}

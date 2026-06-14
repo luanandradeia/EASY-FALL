@@ -38,3 +38,9 @@ class HabilidadeCustomForm(FormBase):
     class Meta:
         model = models.Habilidade
         fields = ["nome", "custo_enfase", "execucao", "fonte_tipo", "fonte_nome", "descricao"]
+
+
+class PericiaCustomForm(FormBase):
+    class Meta:
+        model = models.Pericia
+        fields = ["nome", "atributo_padrao", "descricao"]

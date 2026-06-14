@@ -210,21 +210,27 @@ class Personagem(models.Model):
     maldicao = models.ForeignKey(Maldicao, null=True, blank=True, on_delete=models.SET_NULL)
     melancolia = models.CharField(max_length=200, blank=True, default="")
 
-    f_for = models.IntegerField("FOR", default=0)
-    f_des = models.IntegerField("DES", default=0)
-    f_con = models.IntegerField("CON", default=0)
-    f_int = models.IntegerField("INT", default=0)
-    f_sab = models.IntegerField("SAB", default=0)
-    f_car = models.IntegerField("CAR", default=0)
+    f_for = models.IntegerField("FOR", default=10)
+    f_des = models.IntegerField("DES", default=10)
+    f_con = models.IntegerField("CON", default=10)
+    f_int = models.IntegerField("INT", default=10)
+    f_sab = models.IntegerField("SAB", default=10)
+    f_car = models.IntegerField("CAR", default=10)
+
+    p_for = models.BooleanField("Proficiência FOR", default=False)
+    p_des = models.BooleanField("Proficiência DES", default=False)
+    p_con = models.BooleanField("Proficiência CON", default=False)
+    p_int = models.BooleanField("Proficiência INT", default=False)
+    p_sab = models.BooleanField("Proficiência SAB", default=False)
+    p_car = models.BooleanField("Proficiência CAR", default=False)
 
     pv_maximo = models.IntegerField(default=10)
     pv_atual = models.IntegerField(default=10)
     pv_temporario = models.IntegerField(default=0)
-    dados_vida_total = models.IntegerField(default=1)
     dados_vida_usados = models.IntegerField(default=0)
-    morte_sucessos = models.IntegerField(default=0)
     morte_falhas = models.IntegerField(default=0)
 
+    inspiracao = models.BooleanField("Inspiração", default=False)
     catarse = models.IntegerField(default=0)        # máx 5
     enfase_total = models.IntegerField(default=2)
     enfase_atual = models.IntegerField(default=2)
@@ -232,11 +238,17 @@ class Personagem(models.Model):
 
     reducao_dano = models.IntegerField(default=0)
     iniciativa_bonus = models.IntegerField(default=0)
+    iniciativa_atual = models.IntegerField(default=0, blank=True)
     tamanho = models.CharField(max_length=12, choices=TAMANHOS, default="Médio")
     deslocamento = models.CharField(max_length=20, default="9 m / 6 q")
 
     trocados = models.IntegerField(default=0)
-    pecas = models.IntegerField(default=0)
+    agua = models.IntegerField(default=5, blank=True)
+    racoes = models.IntegerField(default=5, blank=True)
+    notas_terreno = models.TextField(blank=True, default="")
+    condicoes_ativas = models.CharField(max_length=255, blank=True, default="")
+    desafio_sucessos = models.IntegerField(default=0, blank=True)
+    desafio_falhas = models.IntegerField(default=0, blank=True)
 
     magias = models.ManyToManyField(Magia, blank=True, related_name="personagens")
     habilidades = models.ManyToManyField(Habilidade, blank=True, related_name="personagens")
@@ -258,7 +270,11 @@ class Personagem(models.Model):
         return 2 + (self.nivel - 1) // 4
 
     def atributo(self, sigla):
-        return getattr(self, f"f_{sigla.lower()}", 0)
+        val = getattr(self, f"f_{sigla.lower()}", 10)
+        return (val - 10) // 2
+
+    def atributo_valor(self, sigla):
+        return getattr(self, f"f_{sigla.lower()}", 10)
 
     @property
     def atributos(self):
@@ -266,17 +282,39 @@ class Personagem(models.Model):
 
     @property
     def protecoes(self):
-        return {s: 10 + v + self.proficiencia for s, v in self.atributos.items()}
+        return {
+            s: 10 + self.atributo(s) + (self.proficiencia if getattr(self, f"p_{s.lower()}") else 0)
+            for s in ["FOR", "DES", "CON", "INT", "SAB", "CAR"]
+        }
+
+    @property
+    def dados_vida_total(self):
+        return self.nivel
+
+    @property
+    def dado_vida_tipo(self):
+        if not self.classe:
+            return "d8"
+        nome = self.classe.nome.lower()
+        if "combatente" in nome:
+            return "d10"
+        elif "ocultista" in nome:
+            return "d6"
+        return "d8"
+
+    @property
+    def dados_vida_usados_neg(self):
+        return -self.dados_vida_usados
 
     @property
     def limite_volume(self):
-        f = self.f_for
+        f = self.atributo("FOR")
         tabela = {-3: 10, -2: 12, -1: 14, 0: 16, 1: 19, 2: 22, 3: 25}
         if f in tabela:
             return tabela[f]
         if f < -3:
             return 10
-        return 25 + 3 * (f - 3)
+        return max(10, 25 + 3 * (f - 3))
 
     @property
     def volume_atual(self):
@@ -303,6 +341,10 @@ class InventarioEntrada(models.Model):
     material = models.ForeignKey(MaterialEspecial, null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
     fragmentos = models.IntegerField(default=0, help_text="Fragmentos arcanos ocupados pelo item")
     notas = models.CharField(max_length=255, blank=True, default="")
+    
+    # Novos campos para combate dinâmico
+    proficiente = models.BooleanField(default=False)
+    atributo_ataque = models.CharField(max_length=3, choices=Pericia.ATRIBUTOS, default="FOR")
 
     class Meta:
         verbose_name = "Entrada de Inventário"

@@ -33,7 +33,7 @@
   <nav class="bottom-nav">
     <a href="{% url 'ficha' p.pk %}" class="{% if tela == 'ficha' %}on{% endif %}"><span class="ico">⛨</span>Ficha</a>
     <a href="{% url 'inventario' p.pk %}" class="{% if tela == 'inventario' %}on{% endif %}"><span class="ico">🎒</span>Inv.</a>
-    <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico">⚔</span>Cena</a>
+    <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico">🎬</span>Cenas</a>
     <a href="{% url 'grimorio' p.pk %}" class="{% if tela == 'grimorio' %}on{% endif %}"><span class="ico">✦</span>Grim.</a>
     <a href="{% url 'catalogo' %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catál.</a>
     <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Orác.</a>
@@ -52,15 +52,25 @@
     return v ? v.pop() : '';
   }
   const CSRF = getCookie('csrftoken');
-  async function ajuste(url, campo, delta, alvoId) {
-    const body = new URLSearchParams({campo, delta});
+  async function ajuste(url, campo, delta, estado_or_id) {
+    const body = new URLSearchParams({campo});
+    if (typeof estado_or_id === 'boolean') {
+      body.append('estado', estado_or_id);
+    } else {
+      body.append('delta', delta);
+    }
     const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
     if (r.ok) {
       const d = await r.json();
-      const el = document.getElementById(alvoId || ('v-' + campo));
+      const alvo = (typeof estado_or_id === 'string') ? estado_or_id : ('v-' + campo);
+      const el = document.getElementById(alvo);
       if (el) el.textContent = d.valor;
       const bar = document.getElementById('bar-' + campo);
       if (bar && bar.dataset.max) bar.firstElementChild.style.width = (100 * d.valor / bar.dataset.max) + '%';
+      if (typeof d.valor === 'boolean' && campo.startsWith('p_')) {
+          // Trigger a reload to update protections visually, or maybe we can just reload the page for now
+          window.location.reload();
+      }
     }
   }
 </script>
