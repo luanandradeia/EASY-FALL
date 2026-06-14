@@ -8,7 +8,7 @@ documentação técnica oficial: Python/Django, SQLite, monolito modular.
 ```bash
 pip install -r requirements.txt
 python manage.py migrate
-python manage.py seed_catalogo      # carrega o catálogo oficial do livro
+python manage.py seed_catalogo
 python manage.py runserver
 ```
 

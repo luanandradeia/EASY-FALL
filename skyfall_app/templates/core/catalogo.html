@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Catálogo — Skyfall RPG{% endblock %}
-{% block header_title %}Catálogo de Opath{% endblock %}
+{% block header_title %}Catálogo · {{ p.nome }}{% endblock %}
 {% block content %}
 
 <div class="tab-row mb">
@@ -15,20 +15,31 @@
   <button class="btn mini">BUSCAR</button>
 </form>
 
+<div class="panel mb">
+  <div class="flexrow" style="gap: 12px; align-items: center;">
+    <span class="micro">Riquezas</span><span class="spacer"></span>
+    <div class="flexrow" style="gap: 4px; align-items: center;">
+      <span class="mono" style="font-size: 11px; color:var(--catarse)">T$</span>
+      <input type="number" value="{{ p.trocados }}" class="field" style="width: 100px; padding: 4px 6px; font-family: var(--mono); font-weight: 700; color: var(--catarse);" 
+             onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'trocados', this)">
+    </div>
+  </div>
+</div>
+
 <div class="flexrow mb">
   {% if secao == 'armas' or secao == 'armaduras' or secao == 'equipamentos' or secao == 'consumiveis' or secao == 'magitech' %}
-    <a href="{% url 'item_novo' %}" class="btn ghost mini">+ CRIAR ITEM CUSTOM</a>
+    <a href="{% url 'item_novo' %}?next={% url 'catalogo' p.pk %}?secao={{ secao }}" class="btn ghost mini">+ CRIAR ITEM CUSTOM</a>
   {% elif secao == 'magias' %}
-    <a href="{% url 'magia_nova' %}" class="btn ghost mini">+ CRIAR MAGIA CUSTOM</a>
+    <a href="{% url 'magia_nova' %}?next={% url 'catalogo' p.pk %}?secao={{ secao }}" class="btn ghost mini">+ CRIAR MAGIA CUSTOM</a>
   {% elif secao == 'habilidades' %}
-    <a href="{% url 'habilidade_nova' %}" class="btn ghost mini">+ CRIAR HABILIDADE CUSTOM</a>
+    <a href="{% url 'habilidade_nova' %}?next={% url 'catalogo' p.pk %}?secao={{ secao }}" class="btn ghost mini">+ CRIAR HABILIDADE CUSTOM</a>
   {% endif %}
   <span class="spacer"></span>
   <span class="micro">{{ resultados|length }} registros</span>
 </div>
 
 {% for r in resultados %}
-<div class="card">
+<div class="card {% if secao == 'magias' and r.pk in minhas_magias %}equipado{% elif secao == 'habilidades' and r.pk in minhas_habilidades %}equipado{% endif %}">
   <div class="head">
     <span class="nome">{{ r.nome }}</span>
     {% if r.criado_por_id %}<span class="chip custom">CUSTOM</span>{% endif %}
@@ -57,6 +68,47 @@
     {% else %}<div class="desc">{{ r.descricao }}</div>{% endif %}
   {% endif %}
   {% if r.imbuindo %}<div class="desc" style="color:var(--sombra)">Imbuindo: {{ r.imbuindo }}</div>{% endif %}
+  
+  {% if secao == 'armas' or secao == 'armaduras' or secao == 'equipamentos' or secao == 'consumiveis' or secao == 'magitech' %}
+    <form method="post" class="mt">{% csrf_token %}
+      <input type="hidden" name="tipo" value="item">
+      <input type="hidden" name="id" value="{{ r.pk }}">
+      <input type="hidden" name="acao" value="add">
+      <button class="btn ghost mini">+ ADICIONAR AO INVENTÁRIO</button>
+    </form>
+  {% elif secao == 'magias' %}
+    <form method="post" class="mt">{% csrf_token %}
+      <input type="hidden" name="tipo" value="magia">
+      <input type="hidden" name="id" value="{{ r.pk }}">
+      <button class="btn {% if r.pk in minhas_magias %}danger{% else %}ghost{% endif %} mini">
+        {% if r.pk in minhas_magias %}REMOVER{% else %}+ APRENDER{% endif %}
+      </button>
+    </form>
+  {% elif secao == 'habilidades' %}
+    <form method="post" class="mt">{% csrf_token %}
+      <input type="hidden" name="tipo" value="habilidade">
+      <input type="hidden" name="id" value="{{ r.pk }}">
+      <button class="btn {% if r.pk in minhas_habilidades %}danger{% else %}ghost{% endif %} mini">
+        {% if r.pk in minhas_habilidades %}REMOVER{% else %}+ APRENDER{% endif %}
+      </button>
+    </form>
+  {% endif %}
 </div>
 {% empty %}<p class="muted">Nada encontrado nesta seção.</p>{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function setValor(url, campo, input) {
+  const valor = input.value;
+  const body = new URLSearchParams({campo: campo, valor: valor});
+  const r = await fetch(url, {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
+  if (r.ok) {
+    input.style.borderColor = 'var(--arc)';
+    setTimeout(() => { input.style.borderColor = ''; }, 600);
+  } else {
+    input.style.borderColor = 'var(--blood)';
+  }
+}
+</script>
 {% endblock %}

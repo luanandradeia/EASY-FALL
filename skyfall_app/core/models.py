@@ -246,6 +246,7 @@ class Personagem(models.Model):
     agua = models.IntegerField(default=5, blank=True)
     racoes = models.IntegerField(default=5, blank=True)
     notas_terreno = models.TextField(blank=True, default="")
+    diario = models.TextField(blank=True, default="")
     condicoes_ativas = models.CharField(max_length=255, blank=True, default="")
     desafio_sucessos = models.IntegerField(default=0, blank=True)
     desafio_falhas = models.IntegerField(default=0, blank=True)

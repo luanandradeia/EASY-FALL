@@ -26,102 +26,125 @@
   </div>
 </div>
 
-<div class="seclabel"><span class="idx">02</span><span class="name">Equipamento</span><span class="rule"></span></div>
-{% for e in entradas %}
-<div class="card {% if e.equipado %}equipado{% endif %}">
-  <div class="head">
-    <span class="nome">{{ e.nome_completo }}</span>
-    {% if e.quantidade > 1 %}<span class="meta">x{{ e.quantidade }}</span>{% endif %}
-    <span class="spacer"></span>
-    <span class="meta">VOL {{ e.item.volume }}</span>
-    {% if e.fragmentos %}<span class="meta" style="color:var(--sombra)">FRAG {{ e.fragmentos }}</span>{% endif %}
-  </div>
-  <div class="mt" style="margin-top:6px;">
-    {% if e.item.dano %}<span class="chip">DANO {{ e.item.dano }}</span>{% endif %}
-    {% if e.item.reducao_dano %}<span class="chip">RD {{ e.item.reducao_dano }}</span>{% endif %}
-    {% if e.item.alcance %}<span class="chip">{{ e.item.alcance }}</span>{% endif %}
-    {% for d in e.item.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}
-    {% if not e.item.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
-  </div>
-  {% if e.item.descricao %}<div class="desc">{{ e.item.descricao }}</div>{% endif %}
-  <div class="flexrow mt">
-    <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
-      <input type="hidden" name="acao" value="equipar">
-      <button class="btn ghost mini">{% if e.equipado %}DESEQUIPAR{% else %}EQUIPAR{% endif %}</button>
-    </form>
-    <form method="post" action="{% url 'inventario_update' p.pk e.pk %}" class="flexrow">{% csrf_token %}
-      <input type="hidden" name="acao" value="qtd">
-      <input type="number" name="quantidade" value="{{ e.quantidade }}" min="1" class="field" style="width:64px;padding:5px 8px;">
-      <button class="btn ghost mini">QTD</button>
-    </form>
-    <span class="spacer"></span>
-    <details>
-      <summary class="micro" style="cursor:pointer;color:var(--sombra)">✦ ENCANTAR</summary>
-      <form method="post" action="{% url 'inventario_update' p.pk e.pk %}" class="mt">{% csrf_token %}
-        <input type="hidden" name="acao" value="encantar">
-        <label>Material especial</label>
-        <select name="material" class="field">
-          <option value="">—</option>
-          {% for m in materiais %}<option value="{{ m.pk }}" {% if e.material_id == m.pk %}selected{% endif %}>{{ m.nome }} (+T${{ m.aumento_preco }})</option>{% endfor %}
-        </select>
-        <label>Sigilo (prefixo)</label>
-        <select name="sigilo_prefixo" class="field">
-          <option value="">—</option>
-          {% for s in sigilos %}{% if s.tipo == 'prefixo' %}<option value="{{ s.pk }}" {% if e.sigilo_prefixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
-        </select>
-        <label>Sigilo (sufixo)</label>
-        <select name="sigilo_sufixo" class="field">
-          <option value="">—</option>
-          {% for s in sigilos %}{% if s.tipo == 'sufixo' %}<option value="{{ s.pk }}" {% if e.sigilo_sufixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
-        </select>
-        <button class="btn mini mt">APLICAR</button>
-      </form>
-    </details>
-    <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
-      <input type="hidden" name="acao" value="remover">
-      <button class="btn danger mini" onclick="return confirm('Remover {{ e.item.nome }}?')">✕</button>
-    </form>
-  </div>
-</div>
-{% empty %}<p class="muted">Inventário vazio. Adicione itens do catálogo abaixo.</p>{% endfor %}
+<div class="seclabel"><span class="idx">02</span><span class="name">Inventário</span><span class="rule"></span></div>
 
-<div class="seclabel"><span class="idx">03</span><span class="name">Adicionar do Catálogo</span><span class="rule"></span></div>
+<div class="tab-row mb">
+  {% for s, nome in nomes_secoes %}
+  <a href="?secao={{ s }}" class="{% if secao == s %}on{% endif %}">{{ nome }}</a>
+  {% endfor %}
+</div>
+
 <form method="get" class="flexrow mb">
-  <input type="text" name="q" value="{{ filtro }}" placeholder="Buscar item…" class="field" style="flex:1;">
-  <select name="tipo" class="field" style="width:auto;">
-    <option value="">Todos</option>
-    {% for t, nome in tipos %}<option value="{{ t }}" {% if tipo == t %}selected{% endif %}>{{ nome }}</option>{% endfor %}
-  </select>
+  <input type="hidden" name="secao" value="{{ secao }}">
+  <input type="text" name="q" value="{{ q }}" placeholder="Buscar…" class="field" style="flex:1;">
   <button class="btn mini">BUSCAR</button>
 </form>
-{% for item in catalogo %}
-<div class="card">
-  <div class="head">
-    <span class="nome">{{ item.nome }}</span>
-    <span class="meta">{{ item.get_tipo_display }}</span>
-    {% if not item.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
-    <span class="spacer"></span>
-    {% if item.preco %}<span class="meta" style="color:var(--catarse)">T$ {{ item.preco }}</span>{% endif %}
-  </div>
-  <div style="margin-top:5px;">
-    {% if item.dano %}<span class="chip">DANO {{ item.dano }}</span>{% endif %}
-    {% if item.reducao_dano %}<span class="chip">RD {{ item.reducao_dano }}</span>{% endif %}
-    <span class="chip">VOL {{ item.volume }}</span>
-    {% for d in item.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}
-  </div>
-  {% if item.descricao %}<div class="desc">{{ item.descricao|truncatechars:160 }}</div>{% endif %}
-  <form method="post" action="{% url 'inventario_add' p.pk %}" class="mt">{% csrf_token %}
-    <input type="hidden" name="item" value="{{ item.pk }}">
-    <button class="btn ghost mini">+ ADICIONAR</button>
-  </form>
-</div>
-{% empty %}<p class="muted">Nada encontrado.</p>{% endfor %}
 
-<div class="seclabel"><span class="idx">04</span><span class="name">Criar Item Customizado</span><span class="rule"></span></div>
-<div class="panel">
-  <p class="muted">Não achou no livro? Crie sua própria arma, armadura ou equipamento — ele aparece só para você, junto do catálogo oficial.</p>
-  <a href="{% url 'item_novo' %}?next={% url 'inventario' p.pk %}" class="btn mt" style="width:100%;">+ CRIAR ITEM NOVO</a>
-</div>
+{% if secao == 'magias' %}
+  {% for m in resultados %}
+  <div class="card equipado">
+    <div class="head">
+      <span class="nome">{{ m.nome }}</span>
+      <span class="chip" style="color:var(--sombra)">{{ m.get_camada_display|upper }}</span>
+      <span class="chip">{{ m.custo_enfase }} PE</span>
+      <span class="meta">{{ m.get_tipo_display }} · {{ m.execucao }}</span>
+      {% if not m.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
+    </div>
+    <details><summary>descrição completa</summary><div class="desc">{{ m.descricao }}</div></details>
+    <form method="post" action="{% url 'inventario' p.pk %}" class="mt">{% csrf_token %}
+      <input type="hidden" name="tipo" value="magia">
+      <input type="hidden" name="id" value="{{ m.pk }}">
+      <button class="btn danger mini">REMOVER</button>
+    </form>
+  </div>
+  {% empty %}<p class="muted">Nenhuma magia encontrada no inventário.</p>{% endfor %}
+
+{% elif secao == 'habilidades' %}
+  {% for h in resultados %}
+  <div class="card equipado">
+    <div class="head">
+      <span class="nome">{{ h.nome }}</span>
+      <span class="chip">{{ h.custo_enfase }} PE</span>
+      <span class="meta">{{ h.get_fonte_tipo_display }}{% if h.fonte_nome %} · {{ h.fonte_nome }}{% endif %} · {{ h.execucao }}</span>
+      {% if not h.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
+    </div>
+    <details><summary>efeito</summary><div class="desc">{{ h.descricao }}</div></details>
+    <form method="post" action="{% url 'inventario' p.pk %}" class="mt">{% csrf_token %}
+      <input type="hidden" name="tipo" value="habilidade">
+      <input type="hidden" name="id" value="{{ h.pk }}">
+      <button class="btn danger mini">REMOVER</button>
+    </form>
+  </div>
+  {% empty %}<p class="muted">Nenhuma habilidade encontrada no inventário.</p>{% endfor %}
+
+{% else %}
+  {% for e in resultados %}
+  <div class="card {% if e.equipado %}equipado{% endif %}">
+    <div class="head">
+      <span class="nome">{{ e.nome_completo }}</span>
+      {% if e.quantidade > 1 %}<span class="meta">x{{ e.quantidade }}</span>{% endif %}
+      <span class="spacer"></span>
+      <span class="meta">VOL {{ e.item.volume }}</span>
+      {% if e.fragmentos %}<span class="meta" style="color:var(--sombra)">FRAG {{ e.fragmentos }}</span>{% endif %}
+    </div>
+    <div class="mt" style="margin-top:6px;">
+      {% if e.item.dano %}<span class="chip">DANO {{ e.item.dano }}</span>{% endif %}
+      {% if e.item.reducao_dano %}<span class="chip">RD {{ e.item.reducao_dano }}</span>{% endif %}
+      {% if e.item.alcance %}<span class="chip">{{ e.item.alcance }}</span>{% endif %}
+      {% for d in e.item.lista_descritores %}<span class="chip">{{ d }}</span>{% endfor %}
+      {% if not e.item.oficial %}<span class="chip custom">CUSTOM</span>{% endif %}
+    </div>
+    {% if e.item.descricao %}<div class="desc">{{ e.item.descricao }}</div>{% endif %}
+    <div class="flexrow mt">
+      <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
+        <input type="hidden" name="acao" value="equipar">
+        <button class="btn ghost mini">{% if e.equipado %}DESEQUIPAR{% else %}EQUIPAR{% endif %}</button>
+      </form>
+      <form method="post" action="{% url 'inventario_update' p.pk e.pk %}" class="flexrow">{% csrf_token %}
+        <input type="hidden" name="acao" value="qtd">
+        <input type="number" name="quantidade" value="{{ e.quantidade }}" min="1" class="field" style="width:64px;padding:5px 8px;">
+        <button class="btn ghost mini">QTD</button>
+      </form>
+      {% if secao == 'consumiveis' %}
+      <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
+        <input type="hidden" name="acao" value="consumir">
+        <button class="btn ghost mini">CONSUMIR</button>
+      </form>
+      {% endif %}
+      <span class="spacer"></span>
+      {% if secao == 'armas' or secao == 'armaduras' %}
+      <details>
+        <summary class="micro" style="cursor:pointer;color:var(--sombra)">✦ ENCANTAR</summary>
+        <form method="post" action="{% url 'inventario_update' p.pk e.pk %}" class="mt">{% csrf_token %}
+          <input type="hidden" name="acao" value="encantar">
+          <label>Material especial</label>
+          <select name="material" class="field">
+            <option value="">—</option>
+            {% for m in materiais %}<option value="{{ m.pk }}" {% if e.material_id == m.pk %}selected{% endif %}>{{ m.nome }} (+T${{ m.aumento_preco }})</option>{% endfor %}
+          </select>
+          <label>Sigilo (prefixo)</label>
+          <select name="sigilo_prefixo" class="field">
+            <option value="">—</option>
+            {% for s in sigilos %}{% if s.tipo == 'prefixo' %}<option value="{{ s.pk }}" {% if e.sigilo_prefixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
+          </select>
+          <label>Sigilo (sufixo)</label>
+          <select name="sigilo_sufixo" class="field">
+            <option value="">—</option>
+            {% for s in sigilos %}{% if s.tipo == 'sufixo' %}<option value="{{ s.pk }}" {% if e.sigilo_sufixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
+          </select>
+          <button class="btn mini mt">APLICAR</button>
+        </form>
+      </details>
+      {% endif %}
+      <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
+        <input type="hidden" name="acao" value="remover">
+        <button class="btn danger mini" onclick="return confirm('Remover {{ e.item.nome }}?')">✕</button>
+      </form>
+    </div>
+  </div>
+  {% empty %}<p class="muted">Nenhum item encontrado nesta seção.</p>{% endfor %}
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}

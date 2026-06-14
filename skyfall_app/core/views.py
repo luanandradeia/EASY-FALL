@@ -96,7 +96,7 @@ CAMPOS_AJUSTE = {
     "dados_vida_usados", "morte_falhas", "trocados",
     "inspiracao", "p_for", "p_des", "p_con", "p_int", "p_sab", "p_car",
     "agua", "racoes", "desafio_sucessos", "desafio_falhas", "condicoes_ativas",
-    "notas_terreno", "iniciativa_atual", "reducao_dano",
+    "notas_terreno", "diario", "iniciativa_atual", "reducao_dano",
 }
 
 LIMITES = {"catarse": (0, 99), "morte_falhas": (0, 3), "desafio_sucessos": (0, 10), "desafio_falhas": (0, 10), "catarse": (0, 99), "sombra": (0, 99)}
@@ -133,6 +133,11 @@ def ajuste_rapido(request, pk):
         p.notas_terreno = request.POST.get("valor", "")
         p.save(update_fields=["notas_terreno"])
         return JsonResponse({"campo": campo, "valor": p.notas_terreno})
+
+    if campo == "diario":
+        p.diario = request.POST.get("valor", "")
+        p.save(update_fields=["diario"])
+        return JsonResponse({"campo": campo, "valor": p.diario})
 
     try:
         delta = int(request.POST.get("delta", 0))
@@ -196,23 +201,54 @@ def pericia_toggle(request, pk):
 @login_required
 def inventario(request, pk):
     p = _meu(request, pk)
-    itens_catalogo = _visiveis(models.Item, request.user)
-    filtro = request.GET.get("q", "").strip()
-    tipo = request.GET.get("tipo", "")
-    if filtro:
-        itens_catalogo = itens_catalogo.filter(nome__icontains=filtro)
-    if tipo:
-        itens_catalogo = itens_catalogo.filter(tipo=tipo)
-    return render(request, "core/inventario.html", {
-        "p": p, "tela": "inventario",
-        "entradas": p.inventario.select_related("item", "material", "sigilo_prefixo", "sigilo_sufixo"),
-        "catalogo": itens_catalogo[:80],
-        "filtro": filtro, "tipo": tipo,
-        "tipos": models.Item.TIPOS,
-        "materiais": models.MaterialEspecial.objects.filter(criado_por=None),
-        "sigilos": models.Sigilo.objects.filter(criado_por=None),
-        "form_item": forms.ItemCustomForm(),
-    })
+
+    if request.method == "POST":
+        tipo = request.POST.get("tipo")
+        obj_id = request.POST.get("id")
+        
+        if tipo == "magia":
+            m = get_object_or_404(_visiveis(models.Magia, request.user), pk=obj_id)
+            p.magias.remove(m)
+        elif tipo == "habilidade":
+            h = get_object_or_404(_visiveis(models.Habilidade, request.user), pk=obj_id)
+            p.habilidades.remove(h)
+        return redirect(f"{request.path}?{request.GET.urlencode()}")
+
+    secao = request.GET.get("secao", "armas")
+    q = request.GET.get("q", "").strip()
+
+    contexto = {"p": p, "tela": "inventario", "secao": secao, "q": q}
+    
+    entradas_base = p.inventario.select_related("item", "material", "sigilo_prefixo", "sigilo_sufixo")
+    magias_base = p.magias.all()
+    habilidades_base = p.habilidades.all()
+
+    if q:
+        entradas_base = entradas_base.filter(item__nome__icontains=q)
+        magias_base = magias_base.filter(nome__icontains=q)
+        habilidades_base = habilidades_base.filter(nome__icontains=q)
+
+    secoes = {
+        "armas": entradas_base.filter(item__tipo="arma"),
+        "armaduras": entradas_base.filter(item__tipo__in=["armadura", "escudo"]),
+        "equipamentos": entradas_base.filter(item__tipo__in=["equipamento", "municao", "servico", "transporte"]),
+        "consumiveis": entradas_base.filter(item__tipo="consumivel"),
+        "magitech": entradas_base.filter(item__tipo="magitech"),
+        "magias": magias_base,
+        "habilidades": habilidades_base,
+    }
+    
+    contexto["resultados"] = secoes.get(secao, secoes["armas"])
+    contexto["nomes_secoes"] = [
+        ("armas", "Armas"), ("armaduras", "Armaduras"), ("equipamentos", "Equipamentos"),
+        ("consumiveis", "Consumíveis"), ("magitech", "Magitech"), ("magias", "Magias"),
+        ("habilidades", "Habilidades"),
+    ]
+    
+    contexto["materiais"] = models.MaterialEspecial.objects.filter(criado_por=None)
+    contexto["sigilos"] = models.Sigilo.objects.filter(criado_por=None)
+    
+    return render(request, "core/inventario.html", contexto)
 
 
 @login_required
@@ -254,6 +290,12 @@ def inventario_update(request, pk, entrada):
         except (TypeError, ValueError):
             pass
         e.save(update_fields=["quantidade"])
+    elif acao == "consumir":
+        if e.quantidade > 1:
+            e.quantidade -= 1
+            e.save(update_fields=["quantidade"])
+        else:
+            e.delete()
     elif acao == "encantar":
         for campo, modelo in [("sigilo_prefixo", models.Sigilo), ("sigilo_sufixo", models.Sigilo),
                               ("material", models.MaterialEspecial)]:
@@ -266,6 +308,12 @@ def inventario_update(request, pk, entrada):
         e.fragmentos = frag
         e.save()
     return redirect("inventario", pk=p.pk)
+
+
+@login_required
+def notas(request, pk):
+    p = _meu(request, pk)
+    return render(request, "core/notas.html", {"p": p, "tela": "notas"})
 
 
 @login_required
@@ -295,6 +343,10 @@ def cena(request, pk):
                        Q(item__nome__icontains="Kit de curandeiro") |
                        Q(item__nome__icontains="Ambrosia")
                    ))
+                   
+    # Ações especiais de itens
+    kit_curandeiro = p.inventario.filter(item__nome__icontains="Kit de Curandeiro").first()
+    pocao_cura = p.inventario.filter(item__nome__icontains="Poção de Cura").first()
 
     return render(request, "core/cena.html", {
         "p": p, "tela": "cena",
@@ -307,6 +359,8 @@ def cena(request, pk):
         "condicoes_lista": condicoes_lista,
         "condicoes_ativas_lista": [c.strip() for c in p.condicoes_ativas.split(",") if c.strip()],
         "consumiveis": consumiveis,
+        "kit_curandeiro": kit_curandeiro,
+        "pocao_cura": pocao_cura,
         "atributo_choices": models.Pericia.ATRIBUTOS,
     })
 
@@ -325,47 +379,6 @@ def consumir_item(request, pk, entrada_id):
 
 
 @login_required
-def grimorio(request, pk):
-    """Seleciona magias e habilidades do catálogo para a personagem."""
-    p = _meu(request, pk)
-    if request.method == "POST":
-        tipo = request.POST.get("tipo")
-        obj_id = request.POST.get("id")
-        if tipo == "magia":
-            m = get_object_or_404(_visiveis(models.Magia, request.user), pk=obj_id)
-            if p.magias.filter(pk=m.pk).exists():
-                p.magias.remove(m)
-            else:
-                p.magias.add(m)
-        elif tipo == "habilidade":
-            h = get_object_or_404(_visiveis(models.Habilidade, request.user), pk=obj_id)
-            if p.habilidades.filter(pk=h.pk).exists():
-                p.habilidades.remove(h)
-            else:
-                p.habilidades.add(h)
-        return redirect(f"{request.path}?{request.GET.urlencode()}")
-
-    q = request.GET.get("q", "").strip()
-    camada = request.GET.get("camada", "")
-    magias = _visiveis(models.Magia, request.user)
-    habilidades = _visiveis(models.Habilidade, request.user)
-    if q:
-        magias = magias.filter(nome__icontains=q)
-        habilidades = habilidades.filter(nome__icontains=q)
-    if camada:
-        magias = magias.filter(camada=camada)
-    return render(request, "core/grimorio.html", {
-        "p": p, "tela": "grimorio",
-        "magias": magias, "habilidades": habilidades,
-        "minhas_magias": set(p.magias.values_list("pk", flat=True)),
-        "minhas_habilidades": set(p.habilidades.values_list("pk", flat=True)),
-        "q": q, "camada": camada, "camadas": models.Magia.CAMADAS,
-        "form_magia": forms.MagiaCustomForm(),
-        "form_habilidade": forms.HabilidadeCustomForm(),
-    })
-
-
-@login_required
 @require_POST
 def descanso_longo(request, pk):
     p = _meu(request, pk)
@@ -379,7 +392,41 @@ def descanso_longo(request, pk):
 
 
 @login_required
-def catalogo(request):
+def catalogo(request, pk):
+    p = _meu(request, pk)
+
+    if request.method == "POST":
+        tipo = request.POST.get("tipo")
+        obj_id = request.POST.get("id")
+        acao = request.POST.get("acao", "toggle")
+
+        if tipo == "item":
+            item = get_object_or_404(_visiveis(models.Item, request.user), pk=obj_id)
+            if acao == "add":
+                entrada, criada = p.inventario.get_or_create(item=item, defaults={"quantidade": 1})
+                if not criada:
+                    entrada.quantidade += 1
+                    entrada.save(update_fields=["quantidade"])
+                if item.preco:
+                    from django.db.models import F
+                    models.Personagem.objects.filter(pk=p.pk).update(trocados=F('trocados') - item.preco)
+                    messages.success(request, f"{item.nome} adicionado. T${item.preco} descontados.")
+                else:
+                    messages.success(request, f"{item.nome} adicionado ao inventário.")
+        elif tipo == "magia":
+            m = get_object_or_404(_visiveis(models.Magia, request.user), pk=obj_id)
+            if p.magias.filter(pk=m.pk).exists():
+                p.magias.remove(m)
+            else:
+                p.magias.add(m)
+        elif tipo == "habilidade":
+            h = get_object_or_404(_visiveis(models.Habilidade, request.user), pk=obj_id)
+            if p.habilidades.filter(pk=h.pk).exists():
+                p.habilidades.remove(h)
+            else:
+                p.habilidades.add(h)
+        return redirect(f"{request.path}?{request.GET.urlencode()}")
+
     secao = request.GET.get("secao", "armas")
     q = request.GET.get("q", "").strip()
     user = request.user
@@ -387,7 +434,9 @@ def catalogo(request):
     def filtra(qs):
         return qs.filter(nome__icontains=q) if q else qs
 
-    contexto = {"tela": "catalogo", "secao": secao, "q": q}
+    contexto = {"tela": "catalogo", "secao": secao, "q": q, "p": p}
+    contexto["minhas_magias"] = set(p.magias.values_list("pk", flat=True))
+    contexto["minhas_habilidades"] = set(p.habilidades.values_list("pk", flat=True))
     secoes = {
         "armas": filtra(_visiveis(models.Item, user).filter(tipo="arma")),
         "armaduras": filtra(_visiveis(models.Item, user).filter(tipo__in=["armadura", "escudo"])),

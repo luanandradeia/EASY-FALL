@@ -139,6 +139,35 @@
     {% empty %}<p class="muted">Sem magias R.</p>{% endfor %}
   </div>
 
+  <div class="seclabel"><span class="idx">⚕️</span><span class="name">Ações Especiais</span><span class="rule"></span></div>
+  <div class="mb">
+    {% if kit_curandeiro %}
+    <div class="card">
+      <div class="head">
+        <span class="nome">Estabilizar Aliado</span>
+        <span class="spacer"></span>
+        <span id="kit-qtd" class="meta">1 carga de {{ kit_curandeiro.quantidade }}</span>
+      </div>
+      <div class="desc">Gaste uma carga do seu Kit de Curandeiro para estabilizar um alvo adjacente.</div>
+      <button class="btn ghost mini full mt" onclick="usarConsumivel({{ kit_curandeiro.pk }}, 'Kit de Curandeiro', true)">USAR</button>
+    </div>
+    {% endif %}
+    {% if pocao_cura %}
+    <div class="card">
+      <div class="head">
+        <span class="nome">Beber Poção de Cura</span>
+        <span class="spacer"></span>
+        <span id="pocao-cura-qtd" class="meta">1 carga de {{ pocao_cura.quantidade }}</span>
+      </div>
+      <div class="desc">Beba uma Poção de Cura para recuperar 2d4+2 pontos de vida.</div>
+      <button class="btn ghost mini full mt" onclick="usarPocaoCura({{ pocao_cura.pk }})">USAR</button>
+    </div>
+    {% endif %}
+    {% if not kit_curandeiro and not pocao_cura %}
+    <p class="muted">Nenhuma ação especial de item disponível.</p>
+    {% endif %}
+  </div>
+
   <div class="seclabel"><span class="idx">⚠️</span><span class="name">Condições</span><span class="rule"></span></div>
   <div class="panel flexrow" style="gap: 6px; flex-wrap: wrap; padding: 10px;">
     {% for cond in condicoes_lista %}
@@ -337,13 +366,57 @@ async function usarMagia(custo, nome) {
     addValor('enfase_atual', -custo);
 }
 
-async function usarConsumivel(pk, nome) {
+async function usarPocaoCura(pk) {
+    const cura = Math.floor(Math.random() * 4) + 1 + Math.floor(Math.random() * 4) + 1 + 2;
+    if (!confirm('Beber Poção de Cura para recuperar ' + cura + ' PV?')) return;
+    
+    await addValor('pv_atual', cura);
+    
+    const r = await fetch("/personagem/{{p.pk}}/consumir-item/" + pk + "/", {method: 'POST', headers: {'X-CSRFToken': CSRF}});
+    if (r.ok) {
+        const d = await r.json();
+        const el = document.getElementById('pocao-cura-qtd');
+        if (el) {
+            if (d.nova_qtd <= 0) {
+                el.parentElement.parentElement.parentElement.remove();
+            } else {
+                el.textContent = '1 carga de ' + d.nova_qtd;
+            }
+        }
+        const consEl = document.getElementById('cons-' + pk);
+        if (consEl) {
+            if (d.nova_qtd <= 0) {
+                consEl.remove();
+            } else {
+                consEl.querySelector('.qtd').textContent = d.nova_qtd;
+            }
+        }
+    }
+}
+
+async function usarConsumivel(pk, nome, is_kit = false) {
     if (!confirm('Consumir ' + nome + '?')) return;
     const r = await fetch("/personagem/{{p.pk}}/consumir-item/" + pk + "/", {method: 'POST', headers: {'X-CSRFToken': CSRF}});
     if (r.ok) {
         const d = await r.json();
-        if (d.nova_qtd <= 0) document.getElementById('cons-' + pk).remove();
-        else document.querySelector('#cons-' + pk + ' .qtd').textContent = d.nova_qtd;
+        if (is_kit) {
+            const el = document.getElementById('kit-qtd');
+            if (el) {
+                if (d.nova_qtd <= 0) {
+                    el.parentElement.parentElement.parentElement.innerHTML = '<p class="muted">Nenhuma ação especial de item disponível.</p>';
+                } else {
+                    el.textContent = '1 carga de ' + d.nova_qtd;
+                }
+            }
+        }
+        const consEl = document.getElementById('cons-' + pk);
+        if (consEl) {
+            if (d.nova_qtd <= 0) {
+                consEl.remove();
+            } else {
+                consEl.querySelector('.qtd').textContent = d.nova_qtd;
+            }
+        }
     }
 }
 

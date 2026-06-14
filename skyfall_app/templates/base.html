@@ -34,14 +34,13 @@
     <a href="{% url 'ficha' p.pk %}" class="{% if tela == 'ficha' %}on{% endif %}"><span class="ico">⛨</span>Ficha</a>
     <a href="{% url 'inventario' p.pk %}" class="{% if tela == 'inventario' %}on{% endif %}"><span class="ico">🎒</span>Inv.</a>
     <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico">🎬</span>Cenas</a>
-    <a href="{% url 'grimorio' p.pk %}" class="{% if tela == 'grimorio' %}on{% endif %}"><span class="ico">✦</span>Grim.</a>
-    <a href="{% url 'catalogo' %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catál.</a>
+    <a href="{% url 'notas' p.pk %}" class="{% if tela == 'notas' %}on{% endif %}"><span class="ico">📝</span>Notas</a>
+    <a href="{% url 'catalogo' p.pk %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catál.</a>
     <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Orác.</a>
   </nav>
   {% elif user.is_authenticated %}
-  <nav class="bottom-nav" style="grid-template-columns: repeat(3,1fr);">
+  <nav class="bottom-nav" style="grid-template-columns: repeat(2,1fr);">
     <a href="{% url 'personagens' %}" class="{% if tela == 'personagens' %}on{% endif %}"><span class="ico">⛨</span>Personagens</a>
-    <a href="{% url 'catalogo' %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catálogo</a>
     <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Oráculo</a>
   </nav>
   {% endif %}

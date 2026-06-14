@@ -55,8 +55,8 @@ print("encantar:", r.status_code, "| nome completo:", e.nome_completo, "| frag:"
 # aprende magia e habilidade
 magia = models.Magia.objects.get(nome="Disparo Arcano")
 hab = models.Habilidade.objects.get(nome="Produzir Soro")
-c.post(f"/personagem/{p.pk}/grimorio/", {"tipo": "magia", "id": magia.pk})
-c.post(f"/personagem/{p.pk}/grimorio/", {"tipo": "habilidade", "id": hab.pk})
+c.post(f"/personagem/{p.pk}/catalogo/", {"tipo": "magia", "id": magia.pk})
+c.post(f"/personagem/{p.pk}/catalogo/", {"tipo": "habilidade", "id": hab.pk})
 print("magias:", list(p.magias.values_list("nome", flat=True)),
       "| habilidades:", list(p.habilidades.values_list("nome", flat=True)))
 
@@ -75,8 +75,9 @@ print("ajuste PV:", r.status_code, r.json())
 
 # todas as telas
 for url in ["/", f"/personagem/{p.pk}/", f"/personagem/{p.pk}/inventario/",
-            f"/personagem/{p.pk}/cena/", f"/personagem/{p.pk}/grimorio/",
-            "/catalogo/?secao=magias", "/catalogo/?secao=sigilos", "/oraculo/"]:
+            f"/personagem/{p.pk}/cena/", f"/personagem/{p.pk}/catalogo/",
+            f"/personagem/{p.pk}/notas/",
+            f"/personagem/{p.pk}/catalogo/?secao=magias", f"/personagem/{p.pk}/catalogo/?secao=sigilos", "/oraculo/"]:
     r = c.get(url)
     print(f"GET {url}: {r.status_code}")
 

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ p.nome }} — Notas{% endblock %}
+{% block header_title %}Notas & Diário · {{ p.nome }}{% endblock %}
+{% block content %}
+
+<div class="seclabel"><span class="idx">✍️</span><span class="name">Anotações Gerais</span><span class="rule"></span></div>
+<div class="panel" style="padding: 0; overflow: hidden;">
+  <textarea id="diario-editor" class="field" style="width: 100%; height: 60vh; border: none; padding: 15px; font-family: inherit; font-size: 14px; line-height: 1.6; resize: none; background: transparent; color: var(--text);" 
+            placeholder="Escreva aqui sua história, diário de viagem, NPCs importantes..."
+            oninput="salvarDiario(this)">{{ p.diario }}</textarea>
+</div>
+<div class="flexrow mt">
+  <span class="micro muted" id="status-salvamento">As notas são salvas automaticamente conforme você escreve.</span>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+let debounceTimer;
+function salvarDiario(textarea) {
+    const status = document.getElementById('status-salvamento');
+    status.textContent = 'Salvando...';
+    status.style.color = 'var(--arc)';
+
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(async () => {
+        const valor = textarea.value;
+        const body = new URLSearchParams({campo: 'diario', valor: valor});
+        const r = await fetch('{% url "ajuste_rapido" p.pk %}', {
+            method: 'POST', 
+            headers: {'X-CSRFToken': CSRF}, 
+            body: body
+        });
+        if (r.ok) {
+            status.textContent = 'Todas as alterações foram salvas.';
+            status.style.color = 'var(--arc)';
+            setTimeout(() => {
+                status.textContent = 'As notas são salvas automaticamente conforme você escreve.';
+                status.style.color = '';
+            }, 3000);
+        } else {
+            status.textContent = 'Erro ao salvar. Verifique sua conexão.';
+            status.style.color = 'var(--blood)';
+        }
+    }, 1000);
+}
+</script>
+{% endblock %}

@@ -21,12 +21,12 @@ urlpatterns = [
     path("personagem/<int:pk>/inventario/<int:entrada>/", views.inventario_update, name="inventario_update"),
 
     path("personagem/<int:pk>/cena/", views.cena, name="cena"),
-    path("personagem/<int:pk>/grimorio/", views.grimorio, name="grimorio"),
+    path("personagem/<int:pk>/catalogo/", views.catalogo, name="catalogo"),
+    path("personagem/<int:pk>/notas/", views.notas, name="notas"),
     path("personagem/<int:pk>/arma-update/", views.arma_update, name="arma_update"),
     path("personagem/<int:pk>/consumir-item/<int:entrada_id>/", views.consumir_item, name="consumir_item"),
     path("personagem/<int:pk>/descanso-longo/", views.descanso_longo, name="descanso_longo"),
 
-    path("catalogo/", views.catalogo, name="catalogo"),
     path("catalogo/item/novo/", views.item_novo, name="item_novo"),
     path("catalogo/magia/nova/", views.magia_nova, name="magia_nova"),
     path("catalogo/habilidade/nova/", views.habilidade_nova, name="habilidade_nova"),
