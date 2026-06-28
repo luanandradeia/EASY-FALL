@@ -1,0 +1,46 @@
+<div class="personagens-list">
+{% for pers in personagens %}
+  <a href="{% url 'ficha' pers.pk %}" style="position: relative; display: block;">
+    <div class="card tap {% if pers.pv_atual <= 0 %}morto{% endif %}" style="height: 100%; display: flex; flex-direction: column; {% if pers.oculto %}opacity: 0.5; filter: grayscale(50%);{% endif %}">
+      <div class="head">
+        <span class="nome">{% if pers.pv_atual <= 0 %}💀 {% endif %}{{ pers.nome }}</span>
+        <span class="meta">nível {{ pers.nivel }}</span>
+        <span class="spacer"></span>
+        <span class="meta" style="color:var(--arc); margin-right:8px;">Ênfase {{ pers.enfase_atual }}/{{ pers.enfase_total }}</span>
+        <span class="meta" style="color:var(--blood)">PV {{ pers.pv_atual }}/{{ pers.pv_maximo }}</span>
+      </div>
+      <div class="muted mt" style="margin-top:5px; flex: 1;">
+        {{ pers.legado.nome|default:"—" }} · {{ pers.classe.nome|default:"—" }}{% if pers.trilha %} · {{ pers.trilha.nome }}{% endif %}
+      </div>
+      {% if is_mestre %}
+      <div class="meta mt" style="margin-top:auto; padding-top:8px; border-top:1px solid #333; color:#aaa; font-size:0.85em; line-height:1.4;">
+        <strong style="color:#ddd;">Jogador:</strong> {{ pers.jogadore|default:pers.user.username }} &nbsp;
+        <strong style="color:#ddd;">Conta:</strong> {{ pers.user.username }}<br>
+        <strong style="color:#ddd;">Catarse:</strong> {{ pers.catarse }} &nbsp;
+        <strong style="color:#ddd;">Sombra:</strong> {{ pers.sombra }} &nbsp;
+        <strong style="color:#ddd;">Trocados:</strong> T$ {{ pers.trocados }}
+      </div>
+      <button onclick="event.preventDefault(); toggleOculto({{ pers.pk }}, {% if pers.oculto %}false{% else %}true{% endif %})" class="btn" style="position:absolute; right:10px; bottom:10px; padding:4px 8px; font-size:11px; z-index:10;">
+        {% if pers.oculto %}👁️ Mostrar{% else %}🙈 Ocultar{% endif %}
+      </button>
+      {% endif %}
+    </div>
+  </a>
+{% empty %}
+  <p class="muted">Nenhuma personagem ainda. Crie a primeira!</p>
+{% endfor %}
+</div>
+
+{% if is_mestre %}
+  <div class="log-panel">
+    <div class="seclabel" style="margin-top:0;"><span class="idx">📜</span><span class="name">Log Geral do Servidor</span><span class="rule"></span></div>
+    {% for log in logs_gerais %}
+      <div class="log-item">
+        <div class="log-time">{{ log.criado_em|date:"d/m/Y H:i" }}</div>
+        <span class="log-char">{{ log.personagem.nome }}:</span> <span style="color:#ddd;">{{ log.mensagem }}</span>
+      </div>
+    {% empty %}
+      <p class="muted">Nenhum evento registrado ainda.</p>
+    {% endfor %}
+  </div>
+{% endif %}

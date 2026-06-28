@@ -34,14 +34,15 @@
   {% endfor %}
 </div>
 
-<form method="get" class="flexrow mb">
-  <input type="hidden" name="secao" value="{{ secao }}">
-  <input type="text" name="q" value="{{ q }}" placeholder="Buscar…" class="field" style="flex:1;">
-  <button class="btn mini">BUSCAR</button>
-</form>
+<div class="flexrow mb">
+  <input type="text" placeholder="Buscar…" class="field" style="flex:1;" oninput="filtraCards(this.value)">
+</div>
 
-{% if secao == 'magias' %}
-  {% for m in resultados %}
+{% for r in resultados %}
+  {% with s=r.inventario_secao|default:secao %}
+  
+  {% if s == 'magias' %}
+  {% with m=r %}
   <div class="card equipado">
     <div class="head">
       <span class="nome">{{ m.nome }}</span>
@@ -57,10 +58,10 @@
       <button class="btn danger mini">REMOVER</button>
     </form>
   </div>
-  {% empty %}<p class="muted">Nenhuma magia encontrada no inventário.</p>{% endfor %}
+  {% endwith %}
 
-{% elif secao == 'habilidades' %}
-  {% for h in resultados %}
+  {% elif s == 'habilidades' %}
+  {% with h=r %}
   <div class="card equipado">
     <div class="head">
       <span class="nome">{{ h.nome }}</span>
@@ -75,10 +76,10 @@
       <button class="btn danger mini">REMOVER</button>
     </form>
   </div>
-  {% empty %}<p class="muted">Nenhuma habilidade encontrada no inventário.</p>{% endfor %}
+  {% endwith %}
 
-{% else %}
-  {% for e in resultados %}
+  {% else %}
+  {% with e=r %}
   <div class="card {% if e.equipado %}equipado{% endif %}">
     <div class="head">
       <span class="nome">{{ e.nome_completo }}</span>
@@ -105,14 +106,14 @@
         <input type="number" name="quantidade" value="{{ e.quantidade }}" min="1" class="field" style="width:64px;padding:5px 8px;">
         <button class="btn ghost mini">QTD</button>
       </form>
-      {% if secao == 'consumiveis' %}
+      {% if s == 'consumiveis' %}
       <form method="post" action="{% url 'inventario_update' p.pk e.pk %}">{% csrf_token %}
         <input type="hidden" name="acao" value="consumir">
         <button class="btn ghost mini">CONSUMIR</button>
       </form>
       {% endif %}
       <span class="spacer"></span>
-      {% if secao == 'armas' or secao == 'armaduras' %}
+      {% if s == 'armas' or s == 'armaduras' %}
       <details>
         <summary class="micro" style="cursor:pointer;color:var(--sombra)">✦ ENCANTAR</summary>
         <form method="post" action="{% url 'inventario_update' p.pk e.pk %}" class="mt">{% csrf_token %}
@@ -120,17 +121,17 @@
           <label>Material especial</label>
           <select name="material" class="field">
             <option value="">—</option>
-            {% for m in materiais %}<option value="{{ m.pk }}" {% if e.material_id == m.pk %}selected{% endif %}>{{ m.nome }} (+T${{ m.aumento_preco }})</option>{% endfor %}
+            {% for mat in materiais %}<option value="{{ mat.pk }}" {% if e.material_id == mat.pk %}selected{% endif %}>{{ mat.nome }} (+T${{ mat.aumento_preco }})</option>{% endfor %}
           </select>
           <label>Sigilo (prefixo)</label>
           <select name="sigilo_prefixo" class="field">
             <option value="">—</option>
-            {% for s in sigilos %}{% if s.tipo == 'prefixo' %}<option value="{{ s.pk }}" {% if e.sigilo_prefixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
+            {% for sig in sigilos %}{% if sig.tipo == 'prefixo' %}<option value="{{ sig.pk }}" {% if e.sigilo_prefixo_id == sig.pk %}selected{% endif %}>{{ sig.nome }} ({{ sig.grau }}º {{ sig.equipamento }})</option>{% endif %}{% endfor %}
           </select>
           <label>Sigilo (sufixo)</label>
           <select name="sigilo_sufixo" class="field">
             <option value="">—</option>
-            {% for s in sigilos %}{% if s.tipo == 'sufixo' %}<option value="{{ s.pk }}" {% if e.sigilo_sufixo_id == s.pk %}selected{% endif %}>{{ s.nome }} ({{ s.grau }}º {{ s.equipamento }})</option>{% endif %}{% endfor %}
+            {% for sig in sigilos %}{% if sig.tipo == 'sufixo' %}<option value="{{ sig.pk }}" {% if e.sigilo_sufixo_id == sig.pk %}selected{% endif %}>{{ sig.nome }} ({{ sig.grau }}º {{ sig.equipamento }})</option>{% endif %}{% endfor %}
           </select>
           <button class="btn mini mt">APLICAR</button>
         </form>
@@ -142,8 +143,11 @@
       </form>
     </div>
   </div>
-  {% empty %}<p class="muted">Nenhum item encontrado nesta seção.</p>{% endfor %}
-{% endif %}
+  {% endwith %}
+  
+  {% endif %}
+  {% endwith %}
+{% empty %}<p class="muted">Nenhum item encontrado nesta seção.</p>{% endfor %}
 
 {% endblock %}
 

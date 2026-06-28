@@ -23,7 +23,19 @@ def registrar(request):
 
 
 def _meu(request, pk):
-    return get_object_or_404(models.Personagem, pk=pk, user=request.user)
+    is_mestre = request.user.is_superuser or request.user.username.lower() == 'admin'
+    if is_mestre:
+        p = get_object_or_404(models.Personagem, pk=pk)
+    else:
+        p = get_object_or_404(models.Personagem, pk=pk, user=request.user)
+        
+    p.is_readonly = (p.user != request.user) and not is_mestre
+    if request.method == "POST" and p.is_readonly:
+        # Permite salvar apenas a tela de logs e ocultar personagem no modo visualização
+        if request.POST.get("campo") not in ["logs", "oculto"]:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied("Modo apenas visualização.")
+    return p
 
 
 def _visiveis(model, user):
@@ -33,8 +45,21 @@ def _visiveis(model, user):
 
 @login_required
 def personagens(request):
-    return render(request, "core/personagens.html",
-                  {"personagens": request.user.personagens.all()})
+    is_mestre = request.user.is_superuser or request.user.username.lower() == 'admin'
+    logs_gerais = []
+    
+    if is_mestre:
+        qs = models.Personagem.objects.all().select_related("user", "classe", "legado", "trilha").order_by("oculto", "nome")
+        logs_gerais = models.RegistroLog.objects.select_related("personagem").order_by("-criado_em")[:100]
+    else:
+        qs = request.user.personagens.filter(oculto=False).select_related("classe", "legado", "trilha").order_by("nome")
+        
+    template_name = "core/_personagens_conteudo.html" if request.GET.get("ajax") else "core/personagens.html"
+    return render(request, template_name, {
+        "personagens": qs,
+        "is_mestre": is_mestre,
+        "logs_gerais": logs_gerais
+    })
 
 
 @login_required
@@ -96,7 +121,8 @@ CAMPOS_AJUSTE = {
     "dados_vida_usados", "morte_falhas", "trocados",
     "inspiracao", "p_for", "p_des", "p_con", "p_int", "p_sab", "p_car",
     "agua", "racoes", "desafio_sucessos", "desafio_falhas", "condicoes_ativas",
-    "notas_terreno", "diario", "iniciativa_atual", "reducao_dano",
+    "notas_terreno", "diario", "logs", "iniciativa_atual", "reducao_dano",
+    "oculto",
 }
 
 LIMITES = {"catarse": (0, 99), "morte_falhas": (0, 3), "desafio_sucessos": (0, 10), "desafio_falhas": (0, 10), "catarse": (0, 99), "sombra": (0, 99)}
@@ -123,8 +149,10 @@ def ajuste_rapido(request, pk):
         lista = [c.strip() for c in p.condicoes_ativas.split(",") if c.strip()]
         if condicao in lista:
             lista.remove(condicao)
+            models.RegistroLog.objects.create(personagem=p, mensagem=f"Removeu a condição: {condicao}")
         else:
             lista.append(condicao)
+            models.RegistroLog.objects.create(personagem=p, mensagem=f"Adquiriu a condição: {condicao}")
         p.condicoes_ativas = ",".join(lista)
         p.save(update_fields=["condicoes_ativas"])
         return JsonResponse({"campo": campo, "valor": p.condicoes_ativas})
@@ -138,6 +166,18 @@ def ajuste_rapido(request, pk):
         p.diario = request.POST.get("valor", "")
         p.save(update_fields=["diario"])
         return JsonResponse({"campo": campo, "valor": p.diario})
+
+    if campo == "logs":
+        p.logs = request.POST.get("valor", "")
+        p.save(update_fields=["logs"])
+        return JsonResponse({"campo": campo, "valor": p.logs})
+
+    if campo == "oculto":
+        is_oculto = request.POST.get("valor", "false").lower() == "true"
+        p.oculto = is_oculto
+        models.RegistroLog.objects.create(personagem=p, mensagem="Personagem ocultado" if is_oculto else "Personagem revelado")
+        p.save(update_fields=["oculto"])
+        return JsonResponse({"campo": campo, "valor": is_oculto})
 
     try:
         delta = int(request.POST.get("delta", 0))
@@ -157,6 +197,22 @@ def ajuste_rapido(request, pk):
         minimo = 0
     
     valor = max(minimo, min(maximo, valor))
+    old_valor = getattr(p, campo)
+    
+    if old_valor != valor:
+        nomes = {
+            "pv_atual": "PV", "pv_temporario": "PV Temporário", "trocados": "Trocados (T$)", 
+            "enfase_atual": "Ênfase", "catarse": "Catarse", "sombra": "Sombra",
+            "dados_vida_usados": "Dados de Vida Usados"
+        }
+        nome_campo = nomes.get(campo, campo)
+        
+        # Só registra se for um dos campos importantes
+        if campo in nomes:
+            diff = valor - old_valor
+            acao = "Ganhou" if diff > 0 else "Perdeu"
+            models.RegistroLog.objects.create(personagem=p, mensagem=f"{acao} {abs(diff)} {nome_campo} (agora: {valor})")
+
     setattr(p, campo, valor)
     p.save(update_fields=[campo])
     return JsonResponse({"campo": campo, "valor": valor})
@@ -214,7 +270,7 @@ def inventario(request, pk):
             p.habilidades.remove(h)
         return redirect(f"{request.path}?{request.GET.urlencode()}")
 
-    secao = request.GET.get("secao", "armas")
+    secao = request.GET.get("secao", "todos")
     q = request.GET.get("q", "").strip()
 
     contexto = {"p": p, "tela": "inventario", "secao": secao, "q": q}
@@ -238,8 +294,21 @@ def inventario(request, pk):
         "habilidades": habilidades_base,
     }
     
-    contexto["resultados"] = secoes.get(secao, secoes["armas"])
+    if secao == "todos":
+        resultados_list = []
+        for k, qs in secoes.items():
+            lst = list(qs)
+            for obj in lst:
+                obj.inventario_secao = k
+            resultados_list.extend(lst)
+        # Para ordenação mista, os itens usam item.nome, e magias/habilidades usam nome
+        resultados_list.sort(key=lambda x: x.item.nome if hasattr(x, 'item') else x.nome)
+        contexto["resultados"] = resultados_list
+    else:
+        contexto["resultados"] = secoes.get(secao, secoes["armas"])
+        
     contexto["nomes_secoes"] = [
+        ("todos", "Todos"),
         ("armas", "Armas"), ("armaduras", "Armaduras"), ("equipamentos", "Equipamentos"),
         ("consumiveis", "Consumíveis"), ("magitech", "Magitech"), ("magias", "Magias"),
         ("habilidades", "Habilidades"),
@@ -266,8 +335,10 @@ def inventario_add(request, pk):
     if item.preco:
         from django.db.models import F
         models.Personagem.objects.filter(pk=p.pk).update(trocados=F('trocados') - item.preco)
+        models.RegistroLog.objects.create(personagem=p, mensagem=f"Adquiriu {item.nome} e gastou T$ {item.preco}")
         messages.success(request, f"{item.nome} adicionado. T${item.preco} descontados.")
     else:
+        models.RegistroLog.objects.create(personagem=p, mensagem=f"Adquiriu {item.nome}")
         messages.success(request, f"{item.nome} adicionado ao inventário.")
         
     return redirect("inventario", pk=p.pk)
@@ -280,9 +351,12 @@ def inventario_update(request, pk, entrada):
     e = get_object_or_404(models.InventarioEntrada, pk=entrada, personagem=p)
     acao = request.POST.get("acao")
     if acao == "remover":
+        models.RegistroLog.objects.create(personagem=p, mensagem=f"Removeu {e.item.nome} do inventário")
         e.delete()
     elif acao == "equipar":
         e.equipado = not e.equipado
+        estado = "Equipou" if e.equipado else "Desequipou"
+        models.RegistroLog.objects.create(personagem=p, mensagem=f"{estado} {e.item.nome}")
         e.save(update_fields=["equipado"])
     elif acao == "qtd":
         try:
@@ -291,6 +365,7 @@ def inventario_update(request, pk, entrada):
             pass
         e.save(update_fields=["quantidade"])
     elif acao == "consumir":
+        models.RegistroLog.objects.create(personagem=p, mensagem=f"Consumiu {e.item.nome}")
         if e.quantidade > 1:
             e.quantidade -= 1
             e.save(update_fields=["quantidade"])
@@ -317,6 +392,12 @@ def notas(request, pk):
 
 
 @login_required
+def logs(request, pk):
+    p = _meu(request, pk)
+    return render(request, "core/logs.html", {"p": p, "tela": "logs"})
+
+
+@login_required
 def cena(request, pk):
     p = _meu(request, pk)
     armas = (p.inventario.filter(equipado=True, item__tipo="arma")
@@ -327,6 +408,14 @@ def cena(request, pk):
     magias_padrao = [m for m in magias if "ação" in m.execucao.lower() and "bônus" not in m.execucao.lower()]
     magias_bonus = [m for m in magias if "bônus" in m.execucao.lower()]
     magias_reacao = [m for m in magias if "reação" in m.execucao.lower()]
+    
+    # Categorizar habilidades
+    habilidades = p.habilidades.all().order_by("nome")
+    habs_padrao = [h for h in habilidades if "ação padrão" in h.execucao.lower()]
+    habs_bonus = [h for h in habilidades if "ação bônus" in h.execucao.lower()]
+    habs_reacao = [h for h in habilidades if "reação" in h.execucao.lower()]
+    habs_livre = [h for h in habilidades if "ação livre" in h.execucao.lower()]
+    habs_passivas = [h for h in habilidades if h not in habs_padrao and h not in habs_bonus and h not in habs_reacao and h not in habs_livre]
     
     # Perícias ordenadas
     pericias = p.pericias.select_related("pericia").order_by("pericia__nome")
@@ -361,6 +450,11 @@ def cena(request, pk):
         "consumiveis": consumiveis,
         "kit_curandeiro": kit_curandeiro,
         "pocao_cura": pocao_cura,
+        "habs_padrao": habs_padrao,
+        "habs_bonus": habs_bonus,
+        "habs_reacao": habs_reacao,
+        "habs_livre": habs_livre,
+        "habs_passivas": habs_passivas,
         "atributo_choices": models.Pericia.ATRIBUTOS,
     })
 
@@ -370,6 +464,7 @@ def cena(request, pk):
 def consumir_item(request, pk, entrada_id):
     p = _meu(request, pk)
     e = get_object_or_404(models.InventarioEntrada, pk=entrada_id, personagem=p)
+    models.RegistroLog.objects.create(personagem=p, mensagem=f"Consumiu {e.item.nome}")
     if e.quantidade > 1:
         e.quantidade -= 1
         e.save(update_fields=["quantidade"])
@@ -387,6 +482,7 @@ def descanso_longo(request, pk):
     p.dados_vida_usados = max(0, p.dados_vida_usados - p.dados_vida_total // 2)
     p.morte_falhas = 0
     p.save()
+    models.RegistroLog.objects.create(personagem=p, mensagem="Realizou um Descanso Longo (recuperou tudo)")
     messages.success(request, "Descanso Longo finalizado!")
     return redirect("cena", pk=p.pk)
 
@@ -427,7 +523,7 @@ def catalogo(request, pk):
                 p.habilidades.add(h)
         return redirect(f"{request.path}?{request.GET.urlencode()}")
 
-    secao = request.GET.get("secao", "armas")
+    secao = request.GET.get("secao", "todos")
     q = request.GET.get("q", "").strip()
     user = request.user
 
@@ -459,8 +555,20 @@ def catalogo(request, pk):
         "antecedentes": filtra(models.Antecedente.objects.all()),
         "bencaos": filtra(models.Bencao.objects.all()),
     }
-    contexto["resultados"] = secoes.get(secao, secoes["armas"])
+    if secao == "todos":
+        resultados_list = []
+        for k, qs in secoes.items():
+            lst = list(qs)
+            for obj in lst:
+                obj.catalogo_secao = k
+            resultados_list.extend(lst)
+        resultados_list.sort(key=lambda x: x.nome)
+        contexto["resultados"] = resultados_list
+    else:
+        contexto["resultados"] = secoes.get(secao, secoes["armas"])
+
     contexto["nomes_secoes"] = [
+        ("todos", "Todos"),
         ("armas", "Armas"), ("armaduras", "Armaduras"), ("equipamentos", "Equipamentos"),
         ("consumiveis", "Consumíveis"), ("magitech", "Magitech"), ("magias", "Magias"),
         ("habilidades", "Habilidades"), ("sigilos", "Sigilos"), ("sinapses", "Sinapses"),

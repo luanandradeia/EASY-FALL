@@ -9,11 +9,9 @@
   {% endfor %}
 </div>
 
-<form method="get" class="flexrow mb">
-  <input type="hidden" name="secao" value="{{ secao }}">
-  <input type="text" name="q" value="{{ q }}" placeholder="Buscar…" class="field" style="flex:1;">
-  <button class="btn mini">BUSCAR</button>
-</form>
+<div class="flexrow mb">
+  <input type="text" placeholder="Buscar…" class="field" style="flex:1;" oninput="filtraCards(this.value)">
+</div>
 
 <div class="panel mb">
   <div class="flexrow" style="gap: 12px; align-items: center;">
@@ -39,7 +37,8 @@
 </div>
 
 {% for r in resultados %}
-<div class="card {% if secao == 'magias' and r.pk in minhas_magias %}equipado{% elif secao == 'habilidades' and r.pk in minhas_habilidades %}equipado{% endif %}">
+{% with s=r.catalogo_secao|default:secao %}
+<div class="card {% if s == 'magias' and r.pk in minhas_magias %}equipado{% elif s == 'habilidades' and r.pk in minhas_habilidades %}equipado{% endif %}">
   <div class="head">
     <span class="nome">{{ r.nome }}</span>
     {% if r.criado_por_id %}<span class="chip custom">CUSTOM</span>{% endif %}
@@ -69,14 +68,14 @@
   {% endif %}
   {% if r.imbuindo %}<div class="desc" style="color:var(--sombra)">Imbuindo: {{ r.imbuindo }}</div>{% endif %}
   
-  {% if secao == 'armas' or secao == 'armaduras' or secao == 'equipamentos' or secao == 'consumiveis' or secao == 'magitech' %}
+  {% if s == 'armas' or s == 'armaduras' or s == 'equipamentos' or s == 'consumiveis' or s == 'magitech' %}
     <form method="post" class="mt">{% csrf_token %}
       <input type="hidden" name="tipo" value="item">
       <input type="hidden" name="id" value="{{ r.pk }}">
       <input type="hidden" name="acao" value="add">
       <button class="btn ghost mini">+ ADICIONAR AO INVENTÁRIO</button>
     </form>
-  {% elif secao == 'magias' %}
+  {% elif s == 'magias' %}
     <form method="post" class="mt">{% csrf_token %}
       <input type="hidden" name="tipo" value="magia">
       <input type="hidden" name="id" value="{{ r.pk }}">
@@ -84,7 +83,7 @@
         {% if r.pk in minhas_magias %}REMOVER{% else %}+ APRENDER{% endif %}
       </button>
     </form>
-  {% elif secao == 'habilidades' %}
+  {% elif s == 'habilidades' %}
     <form method="post" class="mt">{% csrf_token %}
       <input type="hidden" name="tipo" value="habilidade">
       <input type="hidden" name="id" value="{{ r.pk }}">
@@ -94,6 +93,7 @@
     </form>
   {% endif %}
 </div>
+{% endwith %}
 {% empty %}<p class="muted">Nada encontrado nesta seção.</p>{% endfor %}
 {% endblock %}
 

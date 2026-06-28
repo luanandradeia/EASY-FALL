@@ -1,6 +1,16 @@
 from django.conf import settings
 from django.db import models
 
+class RegistroLog(models.Model):
+    personagem = models.ForeignKey("Personagem", on_delete=models.CASCADE, related_name="registros")
+    mensagem = models.CharField(max_length=255)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-criado_em"]
+
+    def __str__(self):
+        return f"[{self.criado_em.strftime('%d/%m %H:%M')}] {self.personagem.nome}: {self.mensagem}"
 
 class CatalogoBase(models.Model):
     """Base para todo conteúdo do livro. criado_por vazio = item oficial;
@@ -217,12 +227,12 @@ class Personagem(models.Model):
     f_sab = models.IntegerField("SAB", default=10)
     f_car = models.IntegerField("CAR", default=10)
 
-    p_for = models.BooleanField("Proficiência FOR", default=False)
-    p_des = models.BooleanField("Proficiência DES", default=False)
-    p_con = models.BooleanField("Proficiência CON", default=False)
-    p_int = models.BooleanField("Proficiência INT", default=False)
-    p_sab = models.BooleanField("Proficiência SAB", default=False)
-    p_car = models.BooleanField("Proficiência CAR", default=False)
+    p_for = models.BooleanField("Proficiência FOR", default=False, null=True, blank=True)
+    p_des = models.BooleanField("Proficiência DES", default=False, null=True, blank=True)
+    p_con = models.BooleanField("Proficiência CON", default=False, null=True, blank=True)
+    p_int = models.BooleanField("Proficiência INT", default=False, null=True, blank=True)
+    p_sab = models.BooleanField("Proficiência SAB", default=False, null=True, blank=True)
+    p_car = models.BooleanField("Proficiência CAR", default=False, null=True, blank=True)
 
     pv_maximo = models.IntegerField(default=10)
     pv_atual = models.IntegerField(default=10)
@@ -230,7 +240,7 @@ class Personagem(models.Model):
     dados_vida_usados = models.IntegerField(default=0)
     morte_falhas = models.IntegerField(default=0)
 
-    inspiracao = models.BooleanField("Inspiração", default=False)
+    inspiracao = models.BooleanField("Inspiração", default=False, null=True, blank=True)
     catarse = models.IntegerField(default=0)        # máx 5
     enfase_total = models.IntegerField(default=2)
     enfase_atual = models.IntegerField(default=2)
@@ -245,11 +255,13 @@ class Personagem(models.Model):
     trocados = models.IntegerField(default=0)
     agua = models.IntegerField(default=5, blank=True)
     racoes = models.IntegerField(default=5, blank=True)
-    notas_terreno = models.TextField(blank=True, default="")
-    diario = models.TextField(blank=True, default="")
+    notas_terreno = models.TextField("Notas de Terreno", blank=True, default="")
+    diario = models.TextField("Diário", blank=True, default="")
+    logs = models.TextField("Logs", blank=True, default="")
     condicoes_ativas = models.CharField(max_length=255, blank=True, default="")
     desafio_sucessos = models.IntegerField(default=0, blank=True)
     desafio_falhas = models.IntegerField(default=0, blank=True)
+    oculto = models.BooleanField("Oculto", default=False)
 
     magias = models.ManyToManyField(Magia, blank=True, related_name="personagens")
     habilidades = models.ManyToManyField(Habilidade, blank=True, related_name="personagens")

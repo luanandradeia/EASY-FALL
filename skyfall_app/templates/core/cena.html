@@ -20,17 +20,23 @@
 <!-- HUD GLOBAL FIXO -->
 <div class="panel mb" style="position: sticky; top: 0; z-index: 10; background: var(--panel); border-bottom: 2px solid var(--line-2); margin-top: -10px; padding: 8px 12px;">
   <div class="flexrow mb" style="justify-content: space-between; align-items: center;">
-    <div class="flexrow" style="gap: 6px; align-items: center;">
+    <div class="flexrow" style="gap: 4px; align-items: center;">
       <span class="micro" style="color:var(--blood)">PV</span>
       <button class="mini-btn" onclick="addValor('pv_atual', -1)">−</button>
-      <input type="number" id="in-pv_atual" value="{{ p.pv_atual }}" class="field mono" style="width: 45px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--blood); font-size: 18px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'pv_atual', this)">
+      <input type="number" id="in-pv_atual" value="{{ p.pv_atual }}" class="field mono" style="width: 35px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--blood); font-size: 16px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'pv_atual', this)">
       <button class="mini-btn" onclick="addValor('pv_atual', 1)">+</button>
       <span class="muted" style="font-size: 10px; margin-left: -4px;">/{{ p.pv_maximo }}</span>
     </div>
-    <div class="flexrow" style="gap: 6px; align-items: center;">
+    <div class="flexrow" style="gap: 4px; align-items: center; border-left: 1px solid var(--line-2); padding-left: 6px;">
+      <span class="micro" style="color:var(--catarse)">TEMP</span>
+      <button class="mini-btn" onclick="addValor('pv_temporario', -1)">−</button>
+      <input type="number" id="in-pv_temporario" value="{{ p.pv_temporario }}" class="field mono" style="width: 25px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--catarse); font-size: 14px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'pv_temporario', this)">
+      <button class="mini-btn" onclick="addValor('pv_temporario', 1)">+</button>
+    </div>
+    <div class="flexrow" style="gap: 4px; align-items: center; border-left: 1px solid var(--line-2); padding-left: 6px;">
       <span class="micro" style="color:var(--enfase)">PE</span>
       <button class="mini-btn" onclick="addValor('enfase_atual', -1)">−</button>
-      <input type="number" id="in-enfase_atual" value="{{ p.enfase_atual }}" class="field mono" style="width: 35px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--enfase); font-size: 18px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'enfase_atual', this)">
+      <input type="number" id="in-enfase_atual" value="{{ p.enfase_atual }}" class="field mono" style="width: 30px; border: none; background: transparent; text-align: center; font-weight: 700; color: var(--enfase); font-size: 16px; padding: 0;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'enfase_atual', this)">
       <button class="mini-btn" onclick="addValor('enfase_atual', 1)">+</button>
     </div>
   </div>
@@ -137,6 +143,60 @@
         <button class="btn ghost mini full" onclick="usarMagia({{ m.custo_enfase }}, '{{ m.nome }}')">USAR</button>
       </div>
     {% empty %}<p class="muted">Sem magias R.</p>{% endfor %}
+  </div>
+
+  <div class="seclabel"><span class="idx">✨</span><span class="name">Habilidades</span><span class="rule"></span></div>
+  <div class="flexrow mb" style="gap: 4px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;">
+    <button class="btn mini ghost sub-tab-btn-hab on" onclick="verSubTabHab(this, 'hab-p')">Ação</button>
+    <button class="btn mini ghost sub-tab-btn-hab" onclick="verSubTabHab(this, 'hab-b')">Bônus</button>
+    <button class="btn mini ghost sub-tab-btn-hab" onclick="verSubTabHab(this, 'hab-r')">Reação</button>
+    <button class="btn mini ghost sub-tab-btn-hab" onclick="verSubTabHab(this, 'hab-l')">Livre</button>
+    <button class="btn mini ghost sub-tab-btn-hab" onclick="verSubTabHab(this, 'hab-passiva')">Passivas</button>
+  </div>
+
+  <div id="hab-p" class="sub-tab-content-hab carousel">
+    {% for h in habs_padrao %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ h.nome }}</span><span class="spacer"></span><span class="chip">{{ h.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ h.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ h.custo_enfase }}, '{{ h.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
+  </div>
+  <div id="hab-b" class="sub-tab-content-hab carousel" style="display: none;">
+    {% for h in habs_bonus %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ h.nome }}</span><span class="spacer"></span><span class="chip">{{ h.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ h.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ h.custo_enfase }}, '{{ h.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
+  </div>
+  <div id="hab-r" class="sub-tab-content-hab carousel" style="display: none;">
+    {% for h in habs_reacao %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ h.nome }}</span><span class="spacer"></span><span class="chip">{{ h.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ h.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ h.custo_enfase }}, '{{ h.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
+  </div>
+  <div id="hab-l" class="sub-tab-content-hab carousel" style="display: none;">
+    {% for h in habs_livre %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ h.nome }}</span><span class="spacer"></span><span class="chip">{{ h.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ h.descricao|truncatechars:100 }}</div>
+        <button class="btn ghost mini full" onclick="usarMagia({{ h.custo_enfase }}, '{{ h.nome }}')">USAR</button>
+      </div>
+    {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
+  </div>
+  <div id="hab-passiva" class="sub-tab-content-hab carousel" style="display: none;">
+    {% for h in habs_passivas %}
+      <div class="card carousel-item">
+        <div class="head"><span class="nome">{{ h.nome }}</span><span class="spacer"></span><span class="chip">{{ h.custo_enfase }} PE</span></div>
+        <div class="desc" style="font-size: 11px; margin-bottom: 8px;">{{ h.descricao|truncatechars:100 }}</div>
+      </div>
+    {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
   </div>
 
   <div class="seclabel"><span class="idx">⚕️</span><span class="name">Ações Especiais</span><span class="rule"></span></div>
@@ -336,6 +396,13 @@ function trocarCena(val) {
 function verSubTab(btn, id) {
     document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('on'));
     document.querySelectorAll('.sub-tab-content').forEach(c => c.style.display = 'none');
+    btn.classList.add('on');
+    document.getElementById(id).style.display = 'flex';
+}
+
+function verSubTabHab(btn, id) {
+    document.querySelectorAll('.sub-tab-btn-hab').forEach(b => b.classList.remove('on'));
+    document.querySelectorAll('.sub-tab-content-hab').forEach(c => c.style.display = 'none');
     btn.classList.add('on');
     document.getElementById(id).style.display = 'flex';
 }

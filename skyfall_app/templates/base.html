@@ -18,9 +18,7 @@
     </div>
     <div class="spacer"></div>
     {% block header_extra %}{% endblock %}
-    <form method="post" action="{% url 'logout' %}">{% csrf_token %}
-      <button class="btn ghost mini" title="Sair">SAIR</button>
-    </form>
+    <a href="{% url 'personagens' %}" class="btn ghost mini" title="Voltar para o Início">VOLTAR</a>
   </header>
   {% endif %}
 
@@ -30,14 +28,23 @@
   </main>
 
   {% if user.is_authenticated and p %}
-  <nav class="bottom-nav">
+  <nav class="bottom-nav" style="grid-template-columns: repeat(7,1fr);">
     <a href="{% url 'ficha' p.pk %}" class="{% if tela == 'ficha' %}on{% endif %}"><span class="ico">⛨</span>Ficha</a>
     <a href="{% url 'inventario' p.pk %}" class="{% if tela == 'inventario' %}on{% endif %}"><span class="ico">🎒</span>Inv.</a>
     <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico">🎬</span>Cenas</a>
     <a href="{% url 'notas' p.pk %}" class="{% if tela == 'notas' %}on{% endif %}"><span class="ico">📝</span>Notas</a>
+    <a href="{% url 'logs' p.pk %}" class="{% if tela == 'logs' %}on{% endif %}"><span class="ico">📜</span>Logs</a>
     <a href="{% url 'catalogo' p.pk %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catál.</a>
     <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Orác.</a>
   </nav>
+  {% if p.is_readonly %}
+  <style>
+    /* Bloqueia interações em modo leitura para o Mestre */
+    button, input, select, textarea, .btn { pointer-events: none; opacity: 0.7; }
+    .bottom-nav a { pointer-events: auto; opacity: 1; }
+    #v-logs { pointer-events: auto; opacity: 1; } /* Permitir editar logs? Normalmente mestre anota no log */
+  </style>
+  {% endif %}
   {% elif user.is_authenticated %}
   <nav class="bottom-nav" style="grid-template-columns: repeat(2,1fr);">
     <a href="{% url 'personagens' %}" class="{% if tela == 'personagens' %}on{% endif %}"><span class="ico">⛨</span>Personagens</a>
@@ -73,6 +80,18 @@
     }
   }
 </script>
-{% block scripts %}{% endblock %}
+  {% block scripts %}{% endblock %}
+  <script>
+  function filtraCards(q) {
+    const query = q.toLowerCase();
+    document.querySelectorAll('.card').forEach(card => {
+      const nomeEl = card.querySelector('.nome');
+      if (nomeEl) {
+        const nome = nomeEl.textContent.toLowerCase();
+        card.style.display = nome.includes(query) ? '' : 'none';
+      }
+    });
+  }
+  </script>
 </body>
 </html>

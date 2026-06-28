@@ -2,25 +2,65 @@
 {% block title %}Personagens — Skyfall RPG{% endblock %}
 {% block header_title %}Personagens{% endblock %}
 {% block content %}
+{% if is_mestre %}
+<style>
+  .app-shell { max-width: 1200px !important; }
+  .personagens-list { display: flex; flex-direction: column; gap: 16px; margin-top: 15px; }
+  .mestre-layout { display: grid; grid-template-columns: 1fr 400px; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .mestre-layout { grid-template-columns: 1fr; } }
+  .log-panel { background: var(--panel-2); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 15px; height: 75vh; overflow-y: auto; position: sticky; top: 80px; }
+  .log-item { padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; line-height: 1.4; }
+  .log-item:last-child { border-bottom: none; }
+  .log-time { color: var(--ink-3); font-size: 11px; font-family: var(--mono); margin-bottom: 3px; }
+  .log-char { color: var(--arc-soft); font-weight: 600; }
+</style>
+{% endif %}
+
+<style>
+  @keyframes pulse-death {
+    0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  }
+  .card.morto {
+      animation: pulse-death 2s infinite;
+      border: 1px solid rgba(220, 38, 38, 0.5);
+      background: repeating-linear-gradient(45deg, var(--panel), var(--panel) 10px, rgba(220, 38, 38, 0.05) 10px, rgba(220, 38, 38, 0.05) 20px);
+  }
+</style>
+
 <div class="seclabel"><span class="idx">01</span><span class="name">Suas Personagens</span><span class="rule"></span></div>
 
-{% for pers in personagens %}
-  <a href="{% url 'ficha' pers.pk %}">
-    <div class="card tap">
-      <div class="head">
-        <span class="nome">{{ pers.nome }}</span>
-        <span class="meta">nível {{ pers.nivel }}</span>
-        <span class="spacer"></span>
-        <span class="meta" style="color:var(--blood)">PV {{ pers.pv_atual }}/{{ pers.pv_maximo }}</span>
-      </div>
-      <div class="muted mt" style="margin-top:5px;">
-        {{ pers.legado.nome|default:"—" }} · {{ pers.classe.nome|default:"—" }}{% if pers.trilha %} · {{ pers.trilha.nome }}{% endif %}
-      </div>
-    </div>
-  </a>
-{% empty %}
-  <p class="muted">Nenhuma personagem ainda. Crie a primeira!</p>
-{% endfor %}
+<div id="feed-container" class="{% if is_mestre %}mestre-layout{% endif %}">
+  {% include "core/_personagens_conteudo.html" %}
+</div>
+
+{% block scripts %}
+<script>
+  async function toggleOculto(pk, valor) {
+      const body = new URLSearchParams({campo: 'oculto', valor: valor});
+      await fetch('/personagem/' + pk + '/ajuste/', {
+          method: 'POST', 
+          headers: {'X-CSRFToken': CSRF}, 
+          body: body
+      });
+      // A atualização automática a cada 2 seg vai refletir a mudança
+  }
+
+  if ({{ is_mestre|yesno:"true,false" }}) {
+    setInterval(async () => {
+      try {
+        const r = await fetch('{% url "personagens" %}?ajax=1');
+        if (r.ok) {
+          document.getElementById('feed-container').innerHTML = await r.text();
+        }
+      } catch (e) {
+        console.error("Erro ao atualizar logs:", e);
+      }
+    }, 2000); // atualiza a cada 2 segundos
+  }
+</script>
+{% endblock %}
 
 <a href="{% url 'personagem_novo' %}" class="btn mt" style="width:100%;">+ NOVA PERSONAGEM</a>
 {% endblock %}

@@ -3,10 +3,9 @@
 {% block header_title %}Aptidões · {{ p.nome }}{% endblock %}
 {% block content %}
 
-<form method="get" class="flexrow mb">
-  <input type="text" name="q" value="{{ q }}" placeholder="Buscar perícia ou aptidão…" class="field" style="flex:1;">
-  <button class="btn mini">BUSCAR</button>
-</form>
+<div class="flexrow mb">
+  <input type="text" placeholder="Buscar perícia ou aptidão…" class="field" style="flex:1;" oninput="filtraCards(this.value)">
+</div>
 
 <div class="seclabel"><span class="idx">01</span><span class="name">Lista de Aptidões ({{ catalogo|length }})</span><span class="rule"></span></div>
 <p class="muted mb" style="font-size: 12px; line-height: 1.4;">
