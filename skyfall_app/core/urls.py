@@ -9,6 +9,12 @@ urlpatterns = [
     path("registrar/", views.registrar, name="registrar"),
 
     path("", views.personagens, name="personagens"),
+    path("mesas/", views.mesas, name="mesas"),
+    path("mesas/nova/", views.mesa_nova, name="mesa_nova"),
+    path("mesas/entrar/", views.mesa_entrar, name="mesa_entrar"),
+    path("mesas/<int:pk>/", views.mesa_detalhe, name="mesa_detalhe"),
+    path("mesas/<int:pk>/cena/", views.mesa_painel_cena, name="mesa_painel_cena"),
+    path("mesas/<int:pk>/remover/<int:personagem_id>/", views.mesa_remover_personagem, name="mesa_remover_personagem"),
     path("personagem/novo/", views.personagem_novo, name="personagem_novo"),
     path("personagem/<int:pk>/", views.ficha, name="ficha"),
     path("personagem/<int:pk>/editar/", views.personagem_editar, name="personagem_editar"),
@@ -21,6 +27,7 @@ urlpatterns = [
     path("personagem/<int:pk>/inventario/<int:entrada>/", views.inventario_update, name="inventario_update"),
 
     path("personagem/<int:pk>/cena/", views.cena, name="cena"),
+    path("personagem/<int:pk>/cena/sync/", views.cena_sync, name="cena_sync"),
     path("personagem/<int:pk>/catalogo/", views.catalogo, name="catalogo"),
     path("personagem/<int:pk>/notas/", views.notas, name="notas"),
     path("personagem/<int:pk>/logs/", views.logs, name="logs"),

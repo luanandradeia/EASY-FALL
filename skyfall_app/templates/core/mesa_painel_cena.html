@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Painel da Cena — {{ mesa.nome }}{% endblock %}
+{% block header_title %}Cena: {{ mesa.nome }}{% endblock %}
+{% block content %}
+
+<div class="panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div>
+            <div style="font-weight: bold; font-size: 16px; color: {% if cena.ativa %}var(--arc){% else %}var(--ink-3){% endif %};">
+                STATUS: {% if cena.ativa %}CENA ATIVA{% else %}INATIVA{% endif %}
+            </div>
+            <div style="font-size: 12px; color: var(--ink-2); margin-top: 5px;">Tipo: {{ cena.get_tipo_display }}</div>
+        </div>
+        
+        <form method="post" style="margin: 0;">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="toggle_cena">
+            {% if cena.ativa %}
+                <button type="submit" class="btn danger mini">ENCERRAR CENA</button>
+            {% else %}
+                <button type="submit" class="btn mini">INICIAR CENA</button>
+            {% endif %}
+        </form>
+    </div>
+    
+    {% if not cena.ativa %}
+    <form method="post" style="border-top: 1px solid var(--line-2); padding-top: 15px;">
+        {% csrf_token %}
+        <input type="hidden" name="acao" value="mudar_tipo">
+        <label style="display:block; margin-bottom:5px;">Mudar tipo de cena:</label>
+        <div style="display: flex; gap: 10px;">
+            <select name="tipo" class="field" style="flex: 1;">
+                <option value="combate" {% if cena.tipo == 'combate' %}selected{% endif %}>Combate</option>
+                <option value="desafio" {% if cena.tipo == 'desafio' %}selected{% endif %}>Desafio de Perícias</option>
+                <option value="social" {% if cena.tipo == 'social' %}selected{% endif %}>Interação / Social</option>
+                <option value="descanso" {% if cena.tipo == 'descanso' %}selected{% endif %}>Descanso / Acampamento</option>
+            </select>
+            <button type="submit" class="btn ghost mini">ALTERAR</button>
+        </div>
+    </form>
+    {% endif %}
+</div>
+
+{% if cena.ativa %}
+<div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">cycle</span><span class="name">Gerenciar Turnos</span><span class="rule"></span></div>
+<div class="panel-2" style="border-radius: var(--radius); padding: 15px; border: 1px solid var(--line-2);">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div style="font-size: 14px;">Participantes ({{ participantes|length }})</div>
+        <form method="post" style="margin: 0;">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="proximo_turno">
+            <button type="submit" class="btn mini" style="background: var(--catarse); color: var(--void);">PRÓXIMO TURNO ⏭</button>
+        </form>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+        {% for part in participantes %}
+        <div class="card" style="margin:0; padding: 10px; border-left: 4px solid {% if forloop.counter0 == cena.turno_atual %}var(--arc){% else %}transparent{% endif %}; background: {% if forloop.counter0 == cena.turno_atual %}rgba(52,227,224,0.1){% else %}var(--panel){% endif %};">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong style="color: {% if part.personagem %}var(--arc-soft){% else %}var(--blood){% endif %};">{{ part.nome }}</strong>
+                    <div style="font-size: 11px; color: var(--ink-3);">Iniciativa: {{ part.iniciativa }}</div>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    {% if not part.personagem %}
+                    <div style="text-align: right;">
+                        <span style="font-size: 10px; color: var(--ink-3);">PV:</span>
+                        <strong style="color: var(--blood);">{{ part.pv_atual }}</strong>/{{ part.pv_maximo }}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="acao" value="remover_participante">
+                        <input type="hidden" name="participante_id" value="{{ part.id }}">
+                        <button type="submit" class="btn danger mini" style="padding: 4px; font-size: 10px;" title="Remover">X</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div style="color: var(--ink-3); font-size: 12px; text-align: center;">Nenhum participante na cena.</div>
+        {% endfor %}
+    </div>
+    
+    <div style="margin-top: 15px; border-top: 1px solid var(--line-2); padding-top: 15px;">
+        <label>Adicionar NPC / Monstro</label>
+        <form method="post" style="display: flex; gap: 8px; align-items: flex-start; margin-top: 5px;">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="adicionar_npc">
+            <input type="text" name="nome" class="field" placeholder="Nome" required style="flex: 2; padding: 8px;">
+            <input type="number" name="iniciativa" class="field" placeholder="Inic." style="flex: 1; padding: 8px;">
+            <input type="number" name="pv" class="field" placeholder="PV" style="flex: 1; padding: 8px;">
+            <button type="submit" class="btn ghost mini" style="padding: 8px;">+</button>
+        </form>
+    </div>
+</div>
+
+<div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">edit_note</span><span class="name">Anotações da Cena</span><span class="rule"></span></div>
+<form method="post" class="panel">
+    {% csrf_token %}
+    <input type="hidden" name="acao" value="atualizar_anotacoes">
+    <textarea name="anotacoes" class="field" placeholder="Descreva o clima, terreno difícil, efeitos globais..." style="min-height: 80px; margin-bottom: 10px;">{{ cena.anotacoes }}</textarea>
+    <button type="submit" class="btn ghost mini" style="width: 100%;">SALVAR ANOTAÇÕES</button>
+</form>
+
+{% endif %}
+
+<div class="mt" style="text-align: center; margin-top: 30px;">
+  <a href="{% url 'mesa_detalhe' mesa.pk %}" class="btn ghost mini">VOLTAR PARA MESA</a>
+</div>
+{% endblock %}

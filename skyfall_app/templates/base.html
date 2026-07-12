@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% block title %}Skyfall RPG{% endblock %}</title>
+  <title>{% block title %}Easy Fall{% endblock %}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/skyfall.css' %}">
 </head>
 <body>
@@ -13,12 +14,22 @@
   {% if user.is_authenticated %}
   <header class="app-header">
     <div>
-      <div class="brand">SKYFALL · OPATH</div>
+      <div class="brand">EASY FALL</div>
       <div class="title">{% block header_title %}Companion{% endblock %}</div>
     </div>
     <div class="spacer"></div>
     {% block header_extra %}{% endblock %}
-    <a href="{% url 'personagens' %}" class="btn ghost mini" title="Voltar para o Início">VOLTAR</a>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      {% if p and p.is_readonly and p.mesa %}
+      <a href="{% url 'mesa_detalhe' p.mesa.pk %}" class="btn ghost mini" title="Voltar para a Mesa">VOLTAR</a>
+      {% else %}
+      <a href="{% url 'personagens' %}" class="btn ghost mini" title="Voltar para o Início">VOLTAR</a>
+      {% endif %}
+      <form action="{% url 'logout' %}" method="post" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="btn danger mini" title="Sair da Conta (Logout)">SAIR</button>
+      </form>
+    </div>
   </header>
   {% endif %}
 
@@ -29,26 +40,27 @@
 
   {% if user.is_authenticated and p %}
   <nav class="bottom-nav" style="grid-template-columns: repeat(7,1fr);">
-    <a href="{% url 'ficha' p.pk %}" class="{% if tela == 'ficha' %}on{% endif %}"><span class="ico">⛨</span>Ficha</a>
-    <a href="{% url 'inventario' p.pk %}" class="{% if tela == 'inventario' %}on{% endif %}"><span class="ico">🎒</span>Inv.</a>
-    <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico">🎬</span>Cenas</a>
-    <a href="{% url 'notas' p.pk %}" class="{% if tela == 'notas' %}on{% endif %}"><span class="ico">📝</span>Notas</a>
-    <a href="{% url 'logs' p.pk %}" class="{% if tela == 'logs' %}on{% endif %}"><span class="ico">📜</span>Logs</a>
-    <a href="{% url 'catalogo' p.pk %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico">📚</span>Catál.</a>
-    <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Orác.</a>
+    <a href="{% url 'ficha' p.pk %}" class="{% if tela == 'ficha' %}on{% endif %}"><span class="ico material-symbols-outlined">person</span>Ficha</a>
+    <a href="{% url 'inventario' p.pk %}" class="{% if tela == 'inventario' %}on{% endif %}"><span class="ico material-symbols-outlined">backpack</span>Inv.</a>
+    <a href="{% url 'cena' p.pk %}" class="{% if tela == 'cena' %}on{% endif %}"><span class="ico material-symbols-outlined">swords</span>Cenas</a>
+    <a href="{% url 'notas' p.pk %}" class="{% if tela == 'notas' %}on{% endif %}"><span class="ico material-symbols-outlined">notes</span>Notas</a>
+    <a href="{% url 'logs' p.pk %}" class="{% if tela == 'logs' %}on{% endif %}"><span class="ico material-symbols-outlined">history</span>Logs</a>
+    <a href="{% url 'catalogo' p.pk %}" class="{% if tela == 'catalogo' %}on{% endif %}"><span class="ico material-symbols-outlined">menu_book</span>Catál.</a>
+    <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico material-symbols-outlined">casino</span>Orác.</a>
   </nav>
   {% if p.is_readonly %}
   <style>
-    /* Bloqueia interações em modo leitura para o Mestre */
-    button, input, select, textarea, .btn { pointer-events: none; opacity: 0.7; }
+    /* Bloqueia interações em modo leitura para o Mestre (apenas no conteúdo principal) */
+    .screen button, .screen input, .screen select, .screen textarea, .screen .btn { pointer-events: none; opacity: 0.7; }
     .bottom-nav a { pointer-events: auto; opacity: 1; }
     #v-logs { pointer-events: auto; opacity: 1; } /* Permitir editar logs? Normalmente mestre anota no log */
   </style>
   {% endif %}
   {% elif user.is_authenticated %}
-  <nav class="bottom-nav" style="grid-template-columns: repeat(2,1fr);">
-    <a href="{% url 'personagens' %}" class="{% if tela == 'personagens' %}on{% endif %}"><span class="ico">⛨</span>Personagens</a>
-    <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico">🔮</span>Oráculo</a>
+  <nav class="bottom-nav" style="grid-template-columns: repeat(3,1fr);">
+    <a href="{% url 'personagens' %}" class="{% if tela == 'personagens' %}on{% endif %}"><span class="ico material-symbols-outlined">groups</span>Personagens</a>
+    <a href="{% url 'mesas' %}" class="{% if tela == 'mesas' %}on{% endif %}"><span class="ico material-symbols-outlined">table_bar</span>Mesas</a>
+    <a href="{% url 'oraculo' %}" class="{% if tela == 'oraculo' %}on{% endif %}"><span class="ico material-symbols-outlined">casino</span>Oráculo</a>
   </nav>
   {% endif %}
 </div>

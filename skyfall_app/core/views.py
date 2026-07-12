@@ -23,14 +23,21 @@ def registrar(request):
 
 
 def _meu(request, pk):
-    is_mestre = request.user.is_superuser or request.user.username.lower() == 'admin'
-    if is_mestre:
-        p = get_object_or_404(models.Personagem, pk=pk)
+    is_admin = request.user.is_superuser or request.user.username.lower() == 'admin'
+    p = get_object_or_404(models.Personagem, pk=pk)
+    
+    # Pode acessar se for dono ou admin
+    if p.user == request.user or is_admin:
+        p.is_readonly = False
     else:
-        p = get_object_or_404(models.Personagem, pk=pk, user=request.user)
-        
-    p.is_readonly = (p.user != request.user) and not is_mestre
-    if request.method == "POST" and p.is_readonly:
+        # Se não for dono nem admin, checa se é o mestre da mesa atual do personagem
+        if p.mesa and p.mesa.mestre == request.user:
+            p.is_readonly = True
+        else:
+            from django.core.exceptions import PermissionDenied
+            raise PermissionDenied("Você não tem acesso a este personagem.")
+            
+    if request.method == "POST" and getattr(p, 'is_readonly', False):
         # Permite salvar apenas a tela de logs e ocultar personagem no modo visualização
         if request.POST.get("campo") not in ["logs", "oculto"]:
             from django.core.exceptions import PermissionDenied
@@ -58,8 +65,138 @@ def personagens(request):
     return render(request, template_name, {
         "personagens": qs,
         "is_mestre": is_mestre,
-        "logs_gerais": logs_gerais
+        "logs_gerais": logs_gerais,
+        "tela": "personagens",
     })
+
+
+@login_required
+def mesas(request):
+    mesas_mestrando = models.Mesa.objects.filter(mestre=request.user).order_by("-criado_em")
+    mesas_jogando = models.Mesa.objects.filter(personagens__user=request.user).distinct().order_by("-criado_em")
+    return render(request, "core/mesas.html", {
+        "mesas_mestrando": mesas_mestrando,
+        "mesas_jogando": mesas_jogando,
+        "tela": "mesas"
+    })
+
+
+@login_required
+def mesa_nova(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome", "").strip()
+        codigo = request.POST.get("codigo", "").strip()
+        if nome and len(codigo) == 4:
+            if models.Mesa.objects.filter(codigo=codigo).exists():
+                messages.error(request, "Código já em uso.")
+            else:
+                models.Mesa.objects.create(nome=nome, codigo=codigo, mestre=request.user)
+                messages.success(request, "Mesa criada com sucesso!")
+                return redirect("mesas")
+        else:
+            messages.error(request, "Preencha todos os campos corretamente (código de 4 dígitos).")
+    return render(request, "core/mesa_nova.html", {"tela": "mesas"})
+
+
+@login_required
+def mesa_entrar(request):
+    if request.method == "POST":
+        codigo = request.POST.get("codigo", "").strip()
+        personagem_id = request.POST.get("personagem_id")
+        if codigo and personagem_id:
+            mesa = models.Mesa.objects.filter(codigo=codigo).first()
+            personagem = request.user.personagens.filter(pk=personagem_id).first()
+            if mesa and personagem:
+                personagem.mesa = mesa
+                personagem.save(update_fields=["mesa"])
+                messages.success(request, f"{personagem.nome} entrou na mesa {mesa.nome}!")
+                return redirect("mesas")
+            else:
+                messages.error(request, "Mesa não encontrada ou personagem inválido.")
+        else:
+            messages.error(request, "Preencha o código e selecione um personagem.")
+            
+    personagens = request.user.personagens.filter(oculto=False)
+    return render(request, "core/mesa_entrar.html", {"tela": "mesas", "personagens": personagens})
+
+
+@login_required
+def mesa_detalhe(request, pk):
+    mesa = get_object_or_404(models.Mesa, pk=pk)
+    # Somente o mestre ou os jogadores podem acessar
+    if mesa.mestre != request.user and not mesa.personagens.filter(user=request.user).exists():
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied("Você não faz parte desta mesa.")
+        
+    personagens = mesa.personagens.select_related('user', 'classe').all()
+    return render(request, "core/mesa_detalhe.html", {"tela": "mesas", "mesa": mesa, "personagens": personagens})
+
+
+@login_required
+@require_POST
+def mesa_remover_personagem(request, pk, personagem_id):
+    mesa = get_object_or_404(models.Mesa, pk=pk)
+    personagem = get_object_or_404(models.Personagem, pk=personagem_id, mesa=mesa)
+    
+    if mesa.mestre == request.user or personagem.user == request.user:
+        personagem.mesa = None
+        personagem.save(update_fields=["mesa"])
+        messages.success(request, f"{personagem.nome} saiu da mesa.")
+    else:
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied("Sem permissão.")
+        
+    return redirect("mesa_detalhe", pk=mesa.pk)
+
+
+@login_required
+def mesa_painel_cena(request, pk):
+    mesa = get_object_or_404(models.Mesa, pk=pk, mestre=request.user)
+    cena, _ = models.CenaMesa.objects.get_or_create(mesa=mesa)
+    
+    if request.method == "POST":
+        acao = request.POST.get("acao")
+        if acao == "toggle_cena":
+            cena.ativa = not cena.ativa
+            if cena.ativa:
+                # Sincroniza participantes com os personagens da mesa automaticamente
+                for p in mesa.personagens.all():
+                    models.CenaParticipante.objects.get_or_create(
+                        cena=cena, personagem=p, defaults={"nome": p.nome, "iniciativa": p.iniciativa_atual}
+                    )
+            cena.save(update_fields=["ativa"])
+        elif acao == "mudar_tipo":
+            cena.tipo = request.POST.get("tipo", "combate")
+            cena.save(update_fields=["tipo"])
+        elif acao == "adicionar_npc":
+            nome = request.POST.get("nome", "NPC")
+            inic = int(request.POST.get("iniciativa", 0) or 0)
+            pv = int(request.POST.get("pv", 10) or 10)
+            models.CenaParticipante.objects.create(cena=cena, nome=nome, iniciativa=inic, pv_atual=pv, pv_maximo=pv)
+        elif acao == "remover_participante":
+            part_id = request.POST.get("participante_id")
+            models.CenaParticipante.objects.filter(id=part_id, cena=cena).delete()
+        elif acao == "proximo_turno":
+            total = cena.participantes.count()
+            if total > 0:
+                cena.turno_atual = (cena.turno_atual + 1) % total
+                cena.save(update_fields=["turno_atual"])
+        elif acao == "atualizar_anotacoes":
+            cena.anotacoes = request.POST.get("anotacoes", "")
+            cena.save(update_fields=["anotacoes"])
+            
+        return redirect("mesa_painel_cena", pk=mesa.pk)
+        
+    participantes = cena.participantes.all()
+    return render(request, "core/mesa_painel_cena.html", {
+        "tela": "mesas", 
+        "mesa": mesa, 
+        "cena": cena, 
+        "participantes": participantes
+    })
+
+
+
 
 
 @login_required
@@ -215,6 +352,15 @@ def ajuste_rapido(request, pk):
 
     setattr(p, campo, valor)
     p.save(update_fields=[campo])
+    
+    # Se for iniciativa, atualiza também a CenaParticipante (se houver cena ativa na mesa)
+    if campo == "iniciativa_atual":
+        if p.mesa and hasattr(p.mesa, 'cena_atual'):
+            part = models.CenaParticipante.objects.filter(cena=p.mesa.cena_atual, personagem=p).first()
+            if part:
+                part.iniciativa = valor
+                part.save(update_fields=["iniciativa"])
+                
     return JsonResponse({"campo": campo, "valor": valor})
 
 
@@ -436,6 +582,9 @@ def cena(request, pk):
     # Ações especiais de itens
     kit_curandeiro = p.inventario.filter(item__nome__icontains="Kit de Curandeiro").first()
     pocao_cura = p.inventario.filter(item__nome__icontains="Poção de Cura").first()
+    
+    # Verifica se há cena ativa
+    cena_atual = p.mesa.cena_atual if p.mesa and hasattr(p.mesa, 'cena_atual') and p.mesa.cena_atual.ativa else None
 
     return render(request, "core/cena.html", {
         "p": p, "tela": "cena",
@@ -456,6 +605,46 @@ def cena(request, pk):
         "habs_livre": habs_livre,
         "habs_passivas": habs_passivas,
         "atributo_choices": models.Pericia.ATRIBUTOS,
+        "cena_atual": cena_atual,
+    })
+
+
+@login_required
+def cena_sync(request, pk):
+    """Endpoint AJAX para manter a tela de Cena sincronizada em tempo real"""
+    p = get_object_or_404(models.Personagem, pk=pk)
+    
+    if not p.mesa or not hasattr(p.mesa, 'cena_atual') or not p.mesa.cena_atual.ativa:
+        return JsonResponse({"ativa": False})
+        
+    cena = p.mesa.cena_atual
+    participantes = []
+    
+    # Adicionar campo meu_turno para o JS saber se pisca a tela
+    meu_turno = False
+    
+    for i, part in enumerate(cena.participantes.all()):
+        is_ativo = (i == cena.turno_atual)
+        if is_ativo and part.personagem == p:
+            meu_turno = True
+            
+        participantes.append({
+            "nome": part.nome,
+            "iniciativa": part.iniciativa,
+            "ativo": is_ativo,
+            "is_npc": part.personagem is None,
+            "pv_atual": part.personagem.pv_atual if part.personagem else None,
+            "pv_maximo": part.personagem.pv_maximo if part.personagem else None
+        })
+        
+    return JsonResponse({
+        "ativa": True,
+        "tipo": cena.tipo,
+        "tipo_display": cena.get_tipo_display(),
+        "turno_atual": cena.turno_atual,
+        "anotacoes": cena.anotacoes,
+        "participantes": participantes,
+        "meu_turno": meu_turno
     })
 
 

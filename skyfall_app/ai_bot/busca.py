@@ -6,6 +6,9 @@ A busca divide o livro em janelas de parágrafos e pontua por sobreposição
 de termos normalizados, retornando os melhores trechos.
 """
 import re
+import os
+import json
+import urllib.request
 import unicodedata
 from functools import lru_cache
 from pathlib import Path
@@ -65,18 +68,57 @@ def buscar(pergunta, top=3):
     return [b for s, b in pontuados[:top] if s >= 0.3]
 
 
-def responder(pergunta):
-    """Monta a resposta do Oráculo a partir dos trechos do livro."""
+def responder(pergunta, info_personagens=""):
+    """Monta a resposta do Oráculo usando IA (Groq) com base nos trechos do livro."""
     trechos = buscar(pergunta)
     if not trechos:
-        return ("Não encontrei nada no livro de regras sobre isso. "
-                "Tente reformular usando termos do jogo (ex.: 'fragmentação arcana', "
-                "'pontos de ênfase', 'testes de morte').")
-    partes = ["Encontrei isto no livro de regras:"]
-    for t in trechos:
-        corpo = t["texto"]
-        corpo = re.sub(r"\s+\n", "\n", corpo)
-        if len(corpo) > 1100:
-            corpo = corpo[:1100] + " […]"
-        partes.append(f"\n📖 Página {t['pagina']}:\n{corpo}")
-    return "\n".join(partes)
+        return ("As névoas do Aether estão densas... Não encontrei nada nos registros sobre isso. "
+                "Tente reformular sua pergunta usando termos específicos de Easy Fall.")
+                
+    contexto = "\n\n".join([f"--- Página {t['pagina']} ---\n{t['texto']}" for t in trechos])
+    
+    prompt = f"""Você é o Oráculo de Opath, o mestre sábio do mundo de Easy Fall RPG.
+Responda à pergunta do jogador usando APENAS as regras extraídas do livro abaixo.
+Seja imersivo, como um mago antigo respondendo de forma clara e direta às regras.
+Se a resposta não estiver no contexto abaixo, diga que as correntes do Aether não lhe revelaram isso.
+Sempre cite a página correspondente na sua explicação (ex: "Como descrito na página X...").
+
+[TRECHOS DO LIVRO]
+{contexto}
+
+{info_personagens}
+
+[PERGUNTA DO JOGADOR]
+{pergunta}
+"""
+
+    url = "https://api.groq.com/openai/v1/chat/completions"
+    api_key = os.environ.get("GROQ_API_KEY", "")
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    data = {
+        "model": "llama-3.1-8b-instant",
+        "messages": [
+            {"role": "system", "content": "Você é o Oráculo de Opath, especialista em Easy Fall RPG."},
+            {"role": "user", "content": prompt}
+        ],
+        "temperature": 0.3
+    }
+    
+    req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers=headers)
+    try:
+        with urllib.request.urlopen(req) as response:
+            result = json.loads(response.read().decode("utf-8"))
+            return result['choices'][0]['message']['content']
+    except Exception as e:
+        # Fallback para o modo texto em caso de falha na API
+        partes = ["(Erro de conexão com o Aether. Aqui estão os trechos brutos:)"]
+        for t in trechos:
+            corpo = t["texto"]
+            if len(corpo) > 600:
+                corpo = corpo[:600] + " […]"
+            partes.append(f"\n📖 Página {t['pagina']}:\n{corpo}")
+        return "\n".join(partes)

@@ -202,6 +202,57 @@ class Habilidade(CatalogoBase):
 
 # ---------------------------------------------------------------- personagem
 
+class Mesa(models.Model):
+    nome = models.CharField(max_length=120)
+    codigo = models.CharField(max_length=4, unique=True)
+    mestre = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="mesas_mestrando")
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Mesa"
+        verbose_name_plural = "Mesas"
+        ordering = ["-criado_em"]
+
+    def __str__(self):
+        return f"{self.nome} ({self.codigo})"
+
+class CenaMesa(models.Model):
+    TIPOS = [
+        ("combate", "Combate"),
+        ("desafio", "Desafio de Perícias"),
+        ("social", "Interação / Social"),
+        ("descanso", "Descanso / Acampamento")
+    ]
+    mesa = models.OneToOneField(Mesa, on_delete=models.CASCADE, related_name="cena_atual")
+    ativa = models.BooleanField(default=False)
+    tipo = models.CharField(max_length=20, choices=TIPOS, default="combate")
+    turno_atual = models.IntegerField(default=0) # Índice do participante ativo
+    anotacoes = models.TextField(blank=True, default="", help_text="Detalhes globais, clima, pistas")
+    
+    # Progresso para cenas de desafio
+    desafio_sucessos = models.IntegerField(default=0)
+    desafio_falhas = models.IntegerField(default=0)
+    
+    class Meta:
+        verbose_name = "Cena da Mesa"
+
+    def __str__(self):
+        return f"Cena da Mesa: {self.mesa.nome}"
+
+class CenaParticipante(models.Model):
+    cena = models.ForeignKey(CenaMesa, on_delete=models.CASCADE, related_name="participantes")
+    nome = models.CharField(max_length=120)
+    personagem = models.ForeignKey('Personagem', null=True, blank=True, on_delete=models.CASCADE)
+    iniciativa = models.IntegerField(default=0)
+    pv_atual = models.IntegerField(null=True, blank=True) # Útil para monstros criados pelo mestre na hora
+    pv_maximo = models.IntegerField(null=True, blank=True)
+    
+    class Meta:
+        ordering = ["-iniciativa", "id"]
+
+    def __str__(self):
+        return self.nome
+
 class Personagem(models.Model):
     TAMANHOS = [("Pequeno", "Pequeno"), ("Médio", "Médio"), ("Médie", "Médie"), ("Grande", "Grande")]
 
@@ -265,6 +316,8 @@ class Personagem(models.Model):
 
     magias = models.ManyToManyField(Magia, blank=True, related_name="personagens")
     habilidades = models.ManyToManyField(Habilidade, blank=True, related_name="personagens")
+
+    mesa = models.ForeignKey("Mesa", null=True, blank=True, on_delete=models.SET_NULL, related_name="personagens")
 
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)

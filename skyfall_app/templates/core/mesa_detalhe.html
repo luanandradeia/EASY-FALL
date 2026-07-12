@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ mesa.nome }} — Skyfall RPG{% endblock %}
+{% block header_title %}Mesa: {{ mesa.nome }}{% endblock %}
+{% block content %}
+<div class="seclabel"><span class="idx">M</span><span class="name">Mestre</span><span class="rule"></span></div>
+<div class="card mt" style="padding: 15px; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div class="nome" style="font-size: 16px; font-weight: bold;">{{ mesa.mestre.username }}</div>
+            <div style="font-size: 13px; color: var(--ink-2);">Código da Mesa: <strong style="color: var(--arc);">{{ mesa.codigo }}</strong></div>
+        </div>
+        {% if mesa.mestre == user %}
+        <a href="{% url 'mesa_painel_cena' mesa.pk %}" class="btn mini" style="background: var(--catarse); color: var(--void); display: flex; align-items: center; gap: 4px;"><span class="ico material-symbols-outlined" style="font-size: 16px;">movie</span> PAINEL DA CENA</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="seclabel"><span class="idx">P</span><span class="name">Personagens na Mesa</span><span class="rule"></span></div>
+
+<div class="personagens-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px;">
+  {% for p in personagens %}
+  {% if mesa.mestre == user or p.user == user %}
+  <a href="{% url 'ficha' p.pk %}" class="card {% if p.pv_atual <= 0 %}morto{% endif %}" style="display: flex; flex-direction: column; gap: 8px;">
+  {% else %}
+  <div class="card {% if p.pv_atual <= 0 %}morto{% endif %}" style="display: flex; flex-direction: column; gap: 8px;">
+  {% endif %}
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div>
+        <div class="nome" style="font-size: 18px; font-weight: bold;">{{ p.nome }}</div>
+        <div class="specs" style="font-size: 12px; color: var(--ink-2);">
+          {% if p.classe %}{{ p.classe.nome }}{% else %}Sem Classe{% endif %} • Nv {{ p.nivel }}
+        </div>
+      </div>
+      <div style="text-align: right; font-size: 12px;">
+        <div style="color: var(--arc-soft);">{{ p.user.username }}</div>
+        {% if mesa.mestre == user or p.user == user %}
+        <form method="post" action="{% url 'mesa_remover_personagem' mesa.pk p.pk %}" style="margin-top: 5px;" onsubmit="return confirm('Tem certeza que deseja remover este personagem da mesa?');">
+            {% csrf_token %}
+            <button type="submit" class="btn danger mini" style="padding: 3px 6px; font-size: 10px;">{% if p.user == user %}Sair da Mesa{% else %}Remover{% endif %}</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-top: 5px;">
+        <div style="flex:1; background: var(--bg); padding: 5px; border-radius: 4px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 10px; color: var(--ink-3);">PV</div>
+            <div style="font-weight: bold; color: {% if p.pv_atual <= p.pv_maximo|add:"-p.pv_maximo"|add:p.pv_maximo|add:"-p.pv_maximo"|add:p.pv_maximo|add:"-p.pv_maximo" %}#dc2626{% else %}inherit{% endif %};">{{ p.pv_atual }}/{{ p.pv_maximo }}</div>
+        </div>
+        <div style="flex:1; background: var(--bg); padding: 5px; border-radius: 4px; text-align: center; border: 1px solid var(--line);">
+            <div style="font-size: 10px; color: var(--ink-3);">Ênfase</div>
+            <div style="font-weight: bold;">{{ p.enfase_atual }}/{{ p.enfase_total }}</div>
+        </div>
+    </div>
+  {% if mesa.mestre == user or p.user == user %}
+  </a>
+  {% else %}
+  </div>
+  {% endif %}
+  {% empty %}
+  <div style="color: var(--ink-3); font-size: 14px; text-align: center; margin: 20px 0; grid-column: 1 / -1;">
+      Nenhum personagem entrou nesta mesa ainda.
+  </div>
+  {% endfor %}
+</div>
+
+<div class="mt" style="text-align: center; margin-top: 30px;">
+  <a href="{% url 'mesas' %}" class="btn ghost mini">VOLTAR</a>
+</div>
+{% endblock %}

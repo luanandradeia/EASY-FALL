@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Oráculo de Opath{% endblock %}
-{% block header_title %}🔮 Oráculo de Opath{% endblock %}
+{% block header_title %}<span class="ico material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">casino</span> Oráculo de Opath{% endblock %}
 {% block content %}
 
-<p class="muted mb">Pergunte sobre as regras de Skyfall RPG — o Oráculo consulta o livro oficial e devolve os trechos relevantes com página.</p>
+<p class="muted mb">Pergunte sobre as regras de Easy Fall — o Oráculo consulta o livro oficial e devolve os trechos relevantes com página.</p>
 
-<div class="chat" id="chat">
+<div class="chat" id="chat" style="padding-bottom: 70px;">
   {% for c in historico %}
     <div class="msg user">{{ c.pergunta }}</div>
     <div class="msg bot">{{ c.resposta }}</div>
@@ -39,8 +39,30 @@ document.getElementById('form-oraculo').addEventListener('submit', async (ev) =>
   window.scrollTo(0, document.body.scrollHeight);
   const body = new URLSearchParams({pergunta});
   const r = await fetch("{% url 'oraculo_perguntar' %}", {method: 'POST', headers: {'X-CSRFToken': CSRF}, body});
-  pensando.textContent = r.ok ? (await r.json()).resposta : 'O Arcanum está instável. Tente novamente.';
-  window.scrollTo(0, document.body.scrollHeight);
+  if (r.ok) {
+      const data = await r.json();
+      const resposta = data.resposta;
+      pensando.textContent = '';
+      let i = 0;
+      // Velocidade da digitação (ms por caractere)
+      const speed = 15;
+      
+      function typeWriter() {
+          if (i < resposta.length) {
+              pensando.textContent += resposta.charAt(i);
+              i++;
+              // Rola um pouquinho pra baixo pra acompanhar a digitação, caso necessário
+              if (i % 10 === 0) window.scrollTo(0, document.body.scrollHeight);
+              setTimeout(typeWriter, speed);
+          } else {
+              window.scrollTo(0, document.body.scrollHeight);
+          }
+      }
+      typeWriter();
+  } else {
+      pensando.textContent = 'As correntes do Aether se romperam. Tente novamente.';
+      window.scrollTo(0, document.body.scrollHeight);
+  }
 });
 </script>
 {% endblock %}

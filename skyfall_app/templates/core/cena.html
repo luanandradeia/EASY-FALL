@@ -8,10 +8,10 @@
     <input type="number" id="in-iniciativa_atual" value="{{ p.iniciativa_atual }}" class="field" style="width: 45px; padding: 2px 4px; font-size: 13px; text-align: center;" onchange="setValor('{% url 'ajuste_rapido' p.pk %}', 'iniciativa_atual', this)">
   </div>
   <select id="seletor-cena" class="field" style="width: 120px; padding: 4px; font-size: 10px; font-family: var(--mono);" onchange="trocarCena(this.value)">
-    <option value="combate">⚔️ COMBATE</option>
-    <option value="exploracao">🗺️ EXPLORAÇÃO</option>
-    <option value="interacao">🗣️ INTERAÇÃO</option>
-    <option value="descanso">🏕️ DESCANSO</option>
+    <option value="combate">⯎ COMBATE</option>
+    <option value="exploracao">⯏ EXPLORAÇÃO</option>
+    <option value="interacao">◈ INTERAÇÃO</option>
+    <option value="descanso">⟡ DESCANSO</option>
   </select>
 </div>
 {% endblock %}
@@ -45,6 +45,19 @@
   </div>
 </div>
 
+<!-- HUD DA CENA COMPARTILHADA (MESTRE) -->
+{% if cena_atual %}
+<div id="hud-cena" class="panel mb" style="border: 2px solid var(--arc); background: rgba(52,227,224,0.05); transition: all 0.3s ease; display: none; padding: 12px;">
+   <div class="flexrow" style="justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <strong style="color: var(--arc); font-size: 15px; display: flex; align-items: center; gap: 6px;"><span class="ico material-symbols-outlined" style="font-size: 18px;">movie</span> CENA: <span id="sync-tipo"></span></strong>
+      <span id="sync-status" class="micro" style="color: var(--void); background: var(--catarse); padding: 3px 8px; border-radius: 4px; display: none; font-size: 12px;">É O SEU TURNO!</span>
+   </div>
+   <div style="font-size: 13px; margin-bottom: 12px; color: var(--ink-1); min-height: 16px; line-height: 1.4;" id="sync-anotacoes"></div>
+   <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch;" id="sync-participantes">
+   </div>
+</div>
+{% endif %}
+
 <!-- ========================================================================= -->
 <!-- 1. CENA DE COMBATE -->
 <!-- ========================================================================= -->
@@ -77,7 +90,7 @@
      </div>
   </div>
 
-  <div class="seclabel"><span class="idx">⚔️</span><span class="name">Ações de Ataque</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">swords</span><span class="name">Ações de Ataque</span><span class="rule"></span></div>
   <div class="carousel mb">
     {% for arma in armas %}
     <div class="card equipped carousel-item">
@@ -110,7 +123,7 @@
     {% empty %}<p class="muted">Equipe armas no inventário.</p>{% endfor %}
   </div>
 
-  <div class="seclabel"><span class="idx">✦</span><span class="name">Magias (A, B, R)</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">auto_awesome</span><span class="name">Magias (A, B, R)</span><span class="rule"></span></div>
   <div class="flexrow mb" style="gap: 4px;">
     <button class="btn mini ghost sub-tab-btn on" onclick="verSubTab(this, 'magia-a')">A</button>
     <button class="btn mini ghost sub-tab-btn" onclick="verSubTab(this, 'magia-b')">B</button>
@@ -145,7 +158,7 @@
     {% empty %}<p class="muted">Sem magias R.</p>{% endfor %}
   </div>
 
-  <div class="seclabel"><span class="idx">✨</span><span class="name">Habilidades</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">bolt</span><span class="name">Habilidades</span><span class="rule"></span></div>
   <div class="flexrow mb" style="gap: 4px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch;">
     <button class="btn mini ghost sub-tab-btn-hab on" onclick="verSubTabHab(this, 'hab-p')">Ação</button>
     <button class="btn mini ghost sub-tab-btn-hab" onclick="verSubTabHab(this, 'hab-b')">Bônus</button>
@@ -199,7 +212,7 @@
     {% empty %}<p class="muted">Sem habilidades.</p>{% endfor %}
   </div>
 
-  <div class="seclabel"><span class="idx">⚕️</span><span class="name">Ações Especiais</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">medical_services</span><span class="name">Ações Especiais</span><span class="rule"></span></div>
   <div class="mb">
     {% if kit_curandeiro %}
     <div class="card">
@@ -228,7 +241,7 @@
     {% endif %}
   </div>
 
-  <div class="seclabel"><span class="idx">⚠️</span><span class="name">Condições</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">warning</span><span class="name">Condições</span><span class="rule"></span></div>
   <div class="panel flexrow" style="gap: 6px; flex-wrap: wrap; padding: 10px;">
     {% for cond in condicoes_lista %}
       <button class="chip tap cond-btn {% if cond.nome in condicoes_ativas_lista %}danger{% endif %}" 
@@ -243,7 +256,7 @@
 <!-- 2. CENA DE EXPLORAÇÃO -->
 <!-- ========================================================================= -->
 <div id="cena-exploracao" class="sub-cena" style="display: none;">
-  <div class="seclabel"><span class="idx">🧭</span><span class="name">Função na Viagem</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">explore</span><span class="name">Função na Viagem</span><span class="rule"></span></div>
   <div class="flexrow mb" style="gap: 5px; flex-wrap: wrap;">
     <button class="btn mini ghost role-btn" onclick="setRole('Caçador', '<b>Caçador/Coletor:</b> Sobrevivência (SAB). Role para encontrar rações ou água.')">Caçador</button>
     <button class="btn mini ghost role-btn" onclick="setRole('Cartógrafo', '<b>Cartógrafo:</b> Investigação (INT) ou Percepção (SAB). Role para mapear o terreno.')">Cartógrafo</button>
@@ -252,14 +265,14 @@
   </div>
   <div id="role-desc" class="panel mb muted" style="font-size: 12px; min-height: 40px; border: 1px dashed var(--line-2);">Selecione uma função para ver as regras.</div>
 
-  <div class="seclabel"><span class="idx">📦</span><span class="name">Suprimentos</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">inventory_2</span><span class="name">Suprimentos</span><span class="rule"></span></div>
   <div class="grid-2">
-    <div class="counter"><span class="lbl">🥛 Água</span><button onclick="addValor('agua',-1)">−</button><span class="num" id="v-agua">{{p.agua}}</span><button onclick="addValor('agua',1)">+</button></div>
-    <div class="counter"><span class="lbl">🍞 Ração</span><button onclick="addValor('racoes',-1)">−</button><span class="num" id="v-racoes">{{p.racoes}}</span><button onclick="addValor('racoes',1)">+</button></div>
+    <div class="counter"><span class="lbl"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">water_drop</span> Água</span><button onclick="addValor('agua',-1)">−</button><span class="num" id="v-agua">{{p.agua}}</span><button onclick="addValor('agua',1)">+</button></div>
+    <div class="counter"><span class="lbl"><span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">bakery_dining</span> Ração</span><button onclick="addValor('racoes',-1)">−</button><span class="num" id="v-racoes">{{p.racoes}}</span><button onclick="addValor('racoes',1)">+</button></div>
   </div>
   <button class="btn mt danger" style="width: 100%;" onclick="consumirDiaria()">CONSUMIR DIÁRIA (-1 Água, -1 Ração)</button>
 
-  <div class="seclabel mt"><span class="idx">🧪</span><span class="name">Consumíveis em Mãos</span><span class="rule"></span></div>
+  <div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">science</span><span class="name">Consumíveis em Mãos</span><span class="rule"></span></div>
   <div class="carousel">
     {% for c in consumiveis %}
     <div id="cons-{{ c.pk }}" class="card carousel-item" style="flex: 0 0 70%; min-width: 200px;">
@@ -274,7 +287,7 @@
 <!-- 3. CENA DE INTERAÇÃO -->
 <!-- ========================================================================= -->
 <div id="cena-interacao" class="sub-cena" style="display: none;">
-  <div class="seclabel"><span class="idx">🗣️</span><span class="name">Perícias Sociais</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">forum</span><span class="name">Perícias Sociais</span><span class="rule"></span></div>
   <div class="grid-2">
     {% for pp in pericias_sociais %}
     <div class="panel-2" style="padding: 10px; border-radius: 8px; text-align: center;">
@@ -283,7 +296,7 @@
     </div>
     {% endfor %}
   </div>
-  <div class="seclabel mt"><span class="idx">📖</span><span class="name">Lembretes de História</span><span class="rule"></span></div>
+  <div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">history_edu</span><span class="name">Lembretes de História</span><span class="rule"></span></div>
   <div class="panel">
     <div class="mb"><span class="micro">Antecedente:</span> <span style="font-size: 13px;">{{ p.antecedente.nome }}</span></div>
     <div class="mb"><span class="micro">Melancolia:</span> <p class="muted" style="font-size: 12px; margin-top: 4px;">{{ p.melancolia|default:"Não definida." }}</p></div>
@@ -294,7 +307,7 @@
 <!-- 4. CENA DE DESCANSO -->
 <!-- ========================================================================= -->
 <div id="cena-descanso" class="sub-cena" style="display: none;">
-  <div class="seclabel"><span class="idx">🏕️</span><span class="name">Descanso Curto</span><span class="rule"></span></div>
+  <div class="seclabel"><span class="idx material-symbols-outlined" style="font-size: 16px;">camping</span><span class="name">Descanso Curto</span><span class="rule"></span></div>
   <div class="panel">
     <div class="flexrow mb" style="justify-content: space-between;"><span class="micro">DADOS DE VIDA ({{ p.dado_vida_tipo }})</span><span class="mono">Disponíveis: {{ p.dados_vida_total|add:p.dados_vida_usados_neg }}</span></div>
     <div class="flexrow" style="gap: 10px; align-items: flex-end;">
@@ -303,7 +316,7 @@
     </div>
   </div>
 
-  <div class="seclabel mt"><span class="idx">🛌</span><span class="name">Hospedagem</span><span class="rule"></span></div>
+  <div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">bed</span><span class="name">Hospedagem</span><span class="rule"></span></div>
   <div class="panel">
     <select id="sel-hospedagem" class="field mb">
        <option value="0">Ao Ar Livre / Comum</option>
@@ -312,7 +325,7 @@
     </select>
   </div>
 
-  <div class="seclabel mt"><span class="idx">💤</span><span class="name">Descanso Longo</span><span class="rule"></span></div>
+  <div class="seclabel mt"><span class="idx material-symbols-outlined" style="font-size: 16px;">mode_night</span><span class="name">Descanso Longo</span><span class="rule"></span></div>
   <form method="post" action="{% url 'descanso_longo' p.pk %}">{% csrf_token %}
     <button class="btn danger full" onclick="return confirm('Resetar PV, PE e metade dos DVs?')">FINALIZAR DESCANSO LONGO</button>
   </form>
@@ -525,5 +538,76 @@ window.onload = () => {
 .full { width: 100%; }
 .counter { display: flex; align-items: center; justify-content: space-between; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 8px; }
 .num { font-family: var(--mono); font-weight: 700; }
+.hud-piscar { animation: pulsar-turno 1s infinite alternate; box-shadow: 0 0 15px var(--catarse); border-color: var(--catarse) !important; }
+@keyframes pulsar-turno { from { box-shadow: 0 0 5px var(--catarse); } to { box-shadow: 0 0 20px var(--catarse); } }
 </style>
+
+{% if cena_atual %}
+<script>
+async function syncCena() {
+    try {
+        const r = await fetch("{% url 'cena_sync' p.pk %}");
+        if (r.ok) {
+            const data = await r.json();
+            const hud = document.getElementById('hud-cena');
+            
+            if (!data.ativa) {
+                hud.style.display = 'none';
+                return;
+            }
+            
+            hud.style.display = 'block';
+            document.getElementById('sync-tipo').textContent = data.tipo_display.toUpperCase();
+            document.getElementById('sync-anotacoes').textContent = data.anotacoes;
+            
+            // Controle de turno visual
+            const statusEl = document.getElementById('sync-status');
+            if (data.meu_turno) {
+                hud.classList.add('hud-piscar');
+                statusEl.style.display = 'block';
+            } else {
+                hud.classList.remove('hud-piscar');
+                statusEl.style.display = 'none';
+            }
+            
+            // Participantes
+            const listEl = document.getElementById('sync-participantes');
+            let html = '';
+            data.participantes.forEach(part => {
+                const cor = part.is_npc ? 'var(--blood)' : 'var(--arc-soft)';
+                const bg = part.ativo ? 'rgba(52,227,224,0.2)' : 'var(--panel)';
+                const border = part.ativo ? '1px solid var(--catarse)' : '1px solid var(--line-2)';
+                
+                let infoExtra = `<div class="muted" style="font-size: 11px;">Iniciativa: ${part.iniciativa}</div>`;
+                if (!part.is_npc && part.pv_maximo !== null) {
+                    let cor_pv = part.pv_atual <= 0 ? 'var(--blood)' : 'var(--arc-soft)';
+                    infoExtra = `<div style="font-size: 12px; color: var(--ink-2); margin-top: 4px;">
+                                   Inic: <b style="color:var(--ink-1);">${part.iniciativa}</b> <span style="margin: 0 4px;">|</span> PV: <b style="color:${cor_pv};">${part.pv_atual}</b>/${part.pv_maximo}
+                                 </div>`;
+                }
+                
+                html += `<div style="flex: 0 0 auto; padding: 6px 12px; border-radius: 4px; background: ${bg}; border: ${border}; text-align: center; display: flex; flex-direction: column; justify-content: center; min-width: 100px;">
+                           <div style="font-weight: bold; font-size: 13px; color: ${cor};">${part.nome}</div>
+                           ${infoExtra}
+                         </div>`;
+            });
+            listEl.innerHTML = html;
+            
+            // Mudar a aba selecionada se o Mestre mudar o tipo de cena e o usuário não tiver trocado manualmente recem? 
+            // Vamos forçar a sincronização de tela com a cena do mestre
+            const currentTab = document.getElementById('seletor-cena').value;
+            if (currentTab !== data.tipo) {
+                document.getElementById('seletor-cena').value = data.tipo;
+                trocarCena(data.tipo);
+            }
+        }
+    } catch (e) { console.log(e); }
+}
+
+// Inicia o loop de polling
+setInterval(syncCena, 2500);
+// E faz uma chamada inicial logo de cara
+syncCena();
+</script>
+{% endif %}
 {% endblock %}

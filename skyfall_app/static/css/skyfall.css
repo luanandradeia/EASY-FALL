@@ -164,3 +164,61 @@ label { display: block; font-family: var(--mono); font-size: 10px; letter-spacin
 .right { text-align: right; }
 .flexrow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .spacer { flex: 1; }
+
+/* ============================================================
+   RESPONSIVIDADE DESKTOP
+   ============================================================ */
+@media (min-width: 900px) {
+  :root {
+    --app-w: 100%;
+  }
+  body {
+    background: var(--backdrop); /* Limpa o fundo fora do shell caso queira */
+  }
+  .app-shell {
+    max-width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "nav header"
+      "nav main";
+    align-items: start;
+    box-shadow: 0 0 0 1px var(--line);
+    min-height: 100vh;
+  }
+  .app-header {
+    grid-area: header;
+    position: sticky; top: 0;
+    min-width: 0;
+  }
+  .screen {
+    grid-area: main;
+    padding: 40px;
+    padding-bottom: 40px; /* Remove o padding extra que era pro bottom-nav */
+    min-width: 0;
+  }
+  .bottom-nav {
+    grid-area: nav;
+    position: sticky; top: 0; left: 0; transform: none;
+    width: 240px; height: 100vh;
+    display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
+    padding-top: 30px; border-top: none; border-right: 1px solid var(--line-2);
+  }
+  .bottom-nav a {
+    flex-direction: row; justify-content: flex-start; gap: 16px;
+    padding: 16px 24px; font-size: 12px;
+  }
+  .bottom-nav .ico {
+    font-size: 20px; width: 24px; text-align: center;
+  }
+  .bottom-nav a.on::before {
+    top: 15%; bottom: 15%; left: 0; width: 4px; height: 70%; right: auto; border-radius: 0 4px 4px 0;
+  }
+  
+  /* Grids */
+  .attr-grid { grid-template-columns: repeat(6, 1fr); gap: 15px; }
+  .grid-2, .form-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .personagens-list { display: grid !important; grid-template-columns: repeat(2, 1fr); gap: 20px !important; }
+}
