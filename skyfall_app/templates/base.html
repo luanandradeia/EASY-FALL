@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{% static 'css/skyfall.css' %}">
 </head>
 <body>
-<div class="app-shell">
+<div class="app-shell{% if user.is_authenticated %} has-nav{% endif %}">
   {% if user.is_authenticated %}
   <header class="app-header">
     <div>

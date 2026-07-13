@@ -36,6 +36,7 @@
   <span class="micro">{{ resultados|length }} registros</span>
 </div>
 
+<div class="catalog-grid">
 {% for r in resultados %}
 {% with s=r.catalogo_secao|default:secao %}
 <div class="card {% if s == 'magias' and r.pk in minhas_magias %}equipado{% elif s == 'habilidades' and r.pk in minhas_habilidades %}equipado{% endif %}">
@@ -95,6 +96,7 @@
 </div>
 {% endwith %}
 {% empty %}<p class="muted">Nada encontrado nesta seção.</p>{% endfor %}
+</div>
 {% endblock %}
 
 {% block scripts %}

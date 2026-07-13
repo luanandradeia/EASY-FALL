@@ -5,6 +5,8 @@
 <a href="{% url 'personagem_editar' p.pk %}" class="btn ghost mini">EDITAR</a>
 {% endblock %}
 {% block content %}
+<div class="ficha-grid">
+  <div class="ficha-main">
 
 <div class="seclabel"><span class="idx">01</span><span class="name">Identidade</span><span class="rule"></span></div>
 <div class="panel">
@@ -111,7 +113,9 @@
   <span class="chip" style="font-size: 1.15em;">{{ p.tamanho|upper }}</span>
   <span class="chip" style="font-size: 1.15em;">DESLOC {{ p.deslocamento }}</span>
 </div>
+  </div>
 
+  <div class="ficha-pericias">
 <div class="seclabel">
   <span class="idx">05</span><span class="name">Perícias</span><span class="rule"></span>
   <a href="{% url 'pericias_gerenciar' p.pk %}" class="btn ghost mini" style="margin-left: 10px; padding: 2px 8px; font-size: 9px; box-shadow: none; border-color: rgba(52,227,224,.2);">+ APTIDÃO</a>
@@ -127,6 +131,8 @@
     <span class="bonus" id="bonus-{{ pp.pk }}">{% if pp.bonus >= 0 %}+{% endif %}{{ pp.bonus }}</span>
   </div>
   {% endfor %}
+</div>
+  </div>
 </div>
 {% endblock %}
 

@@ -2,6 +2,8 @@
 {% block title %}{{ p.nome }} — Inventário{% endblock %}
 {% block header_title %}Inventário · {{ p.nome }}{% endblock %}
 {% block content %}
+<div class="inventario-grid">
+  <div class="inventario-side">
 
 <div class="seclabel"><span class="idx">01</span><span class="name">Sobrecarga & Fragmentação</span><span class="rule"></span></div>
 <div class="panel">
@@ -25,7 +27,9 @@
     </div>
   </div>
 </div>
+  </div>
 
+  <div class="inventario-main">
 <div class="seclabel"><span class="idx">02</span><span class="name">Inventário</span><span class="rule"></span></div>
 
 <div class="tab-row mb">
@@ -38,6 +42,7 @@
   <input type="text" placeholder="Buscar…" class="field" style="flex:1;" oninput="filtraCards(this.value)">
 </div>
 
+<div class="items-list">
 {% for r in resultados %}
   {% with s=r.inventario_secao|default:secao %}
   
@@ -148,7 +153,10 @@
   {% endif %}
   {% endwith %}
 {% empty %}<p class="muted">Nenhum item encontrado nesta seção.</p>{% endfor %}
+</div>
 
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
